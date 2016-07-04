@@ -135,6 +135,8 @@
   };
 
   ws.onclose = function () {
-    alert('與伺服器失去連線!\n可能為伺服器例行作業，請稍後再重新連接此頁。\n若仍無法開啟網頁，請聯絡網站相關人員。');
+    var message = '與伺服器失去連線!\n可能為伺服器例行作業，請稍後再重新連接此頁。\n若仍無法開啟網頁，請聯絡網站相關人員。';
+    alert(message);
+    $("#block-container")[0].innerHTML = message + $("#block-container")[0].innerHTML;
   }
 </script>
