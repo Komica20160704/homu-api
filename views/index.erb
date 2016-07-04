@@ -88,7 +88,7 @@
     var lines = content.split('\n');
     if (lines.length > 4) {
       var visiable = lines.splice(0, 4).join('<br>');
-      var showButton = '<a id="dialog_show_button' + id + '" onclick="showHideContent(' + id + ');" href="#"><br>顯示完整內容</a>';
+      var showButton = '<a id="dialog_show_button' + id + '" onclick="showHideContent(' + id + ');" href="#dialog_show_button' + id + '"><br>顯示完整內容</a>';
       var unvisiable = '<span id="dialog_hide_content' + id + '" style="display:none;"><br>' + lines.join('<br>') + '</span>';
       $('#dialog_content' + id)[0].innerHTML = visiable + showButton + unvisiable;
     } else {
