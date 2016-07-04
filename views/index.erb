@@ -112,11 +112,11 @@
   }
 
   function showDialog(id, block) {
-    $('#dialog' + id).hide();
+    // $('#dialog' + id).hide();
     setupData(id, block);
     setupContent(id, block.Content);
     setupPicture(id, block.Picture);
-    $('#dialog' + id).fadeIn("slow");
+    // $('#dialog' + id).fadeIn("slow");
   }
 
   var scheme = "ws://";
@@ -125,10 +125,13 @@
 
   ws.onmessage = function (message) {
     var news = JSON.parse(message.data);
-    var id = index++;
-    var dialog = createDialog(id);
-    $("#block-container")[0].innerHTML = dialog + $("#block-container")[0].innerHTML;
-    showDialog(id, news[0]);
+    console.log(news.length);
+    news.forEach(function (e) {
+      var id = index++;
+      var dialog = createDialog(id);
+      $("#block-container")[0].innerHTML = dialog + $("#block-container")[0].innerHTML;
+      showDialog(id, e);
+    });
   };
 
   ws.onclose = function () {
