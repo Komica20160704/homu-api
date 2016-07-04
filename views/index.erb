@@ -8,54 +8,115 @@
     color: rgb(128, 0, 0);
   }
   .dialog {
-    margin: auto;
     margin-top: 5px;
-    padding: 3px 10px;
+    padding: 3px 10px 10px;
     display: inline-block;
+    width: 720px;
     background-color: rgb(240, 224, 214);
+  }
+  .block-container {
+    margin: auto;
+    width: 740px;
+  }
+  .dialog_content {
+    float: left;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+  .dialog_img {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    float: left;
+    vertical-align: top;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 5px;
   }
 
 </style>
 
-<div id='block-container'></div>
-
-<!-- <div id="dialog" class="dialog" style="">
-  <font id="dialog_title" color="#cc1105" size="+1">
-    <b></b>
-  </font>
-  <font id="dialog_name" color="#117743">
-    <b></b>
-  </font>
-  <font id="dialog_data"></font>
-  <blockquote id="dialog_content"></blockquote>
-</div> -->
+<div id='block-container' class='block-container'></div>
 
 <script>
   var index = 0;
-  var weekday = [ "日", "一", "二", "三", "四", "五", "六" ]
+  var weekday = [
+    "日",
+    "一",
+    "二",
+    "三",
+    "四",
+    "五",
+    "六"
+  ]
 
   function createDialog(id) {
     var html = '<div id="dialog' + id + '" class="dialog" style="">';
+    html += '<div>';
     html += '<font id="dialog_title' + id + '" color="#cc1105" size="+1"><b></b></font> ';
     html += '<font id="dialog_name' + id + '" color="#117743"><b></b></font> ';
     html += '<font id="dialog_data' + id + '"></font>';
-    html += '<blockquote id="dialog_content' + id + '"></blockquote>';
+    html += '</div>';
+    html += '<a id="dialog_img_link' + id + '" target="_blank">';
+    html += '<img id="dialog_img' + id + '" class="dialog_img">';
+    html += '</a>';
+    html += '<div id="dialog_content' + id + '" class="dialog_content"></div>';
     html += '</div>';
     return html;
   }
 
-  function showDialog(id, block) {
-    $('#dialog' + id).css("width", "");
-    $('#dialog' + id).css("display", "inline-block");
+  function showHideContent(id) {
+    $('#dialog_show_button' + id).hide();
+    $('#dialog_hide_content' + id).show();
+  }
+
+  function setupData(id, block) {
     var then = new Date("20" + block.Date);
     var theday = then.getDay();
     $('#dialog_title' + id)[0].children[0].innerText = block.Title;
     $('#dialog_name' + id)[0].children[0].innerText = block.Name;
     var data = block.Date + "(" + weekday[theday] + ")" + block.Time + " ID:" + block.Id + " No." + block.No;
     $('#dialog_data' + id)[0].innerText = data;
-    $('#dialog_content' + id)[0].innerText = block.Content;
-    $('#dialog' + id).css("width", ($('#dialog' + id)[0].clientWidth - 19) + "px");
-    $('#dialog' + id).css("display", "block");
+  }
+
+  function setupContent(id, content) {
+    var lines = content.split('\n');
+    if (lines.length > 4) {
+      var visiable = lines.splice(0, 4).join('<br>');
+      var showButton = '<a id="dialog_show_button' + id + '" onclick="showHideContent(' + id + ');" href="#"><br>顯示完整內容</a>';
+      var unvisiable = '<span id="dialog_hide_content' + id + '" style="display:none;"><br>' + lines.join('<br>') + '</span>';
+      $('#dialog_content' + id)[0].innerHTML = visiable + showButton + unvisiable;
+    } else {
+      $('#dialog_content' + id)[0].innerText = content;
+    }
+  }
+
+  function setupPicture(id, picture) {
+    if (picture) {
+      $('#dialog_img' + id).on('load', function () {
+        if ($(this).width() > $(this).height()) {
+          $(this)[0].width = 125;
+        } else {
+          $(this)[0].height = 125;
+        }
+      });
+      var picture_no = picture.split('.')[0];
+      $('#dialog_img' + id)[0]['src'] = 'http://homu.komica.org/00/thumb/' + picture_no + 's.jpg';
+      $('#dialog_img_link' + id)[0]['href'] = 'http://homu.komica.org/00/src/' + picture;
+    }
+  }
+
+  function showDialog(id, block) {
+    $('#dialog' + id).hide();
+    setupData(id, block);
+    setupContent(id, block.Content);
+    setupPicture(id, block.Picture);
+    $('#dialog' + id).fadeIn("slow");
   }
 
   var scheme = "ws://";
@@ -64,12 +125,13 @@
 
   ws.onmessage = function (message) {
     var news = JSON.parse(message.data);
-    // console.log(news[0]);
     var id = index++;
     var dialog = createDialog(id);
-    // $("#block-container").append(dialog);
     $("#block-container")[0].innerHTML = dialog + $("#block-container")[0].innerHTML;
     showDialog(id, news[0]);
-    // $("#block-container").stop().animate({   scrollTop: $('#chat-text')[0].scrollHeight }, 800);
   };
+
+  ws.onclose = function () {
+    alert('與伺服器失去連線!\n可能為伺服器例行作業，請稍後再重新連接此頁。\n若仍無法開啟網頁，請聯絡網站相關人員。');
+  }
 </script>
