@@ -3,7 +3,7 @@ require 'sinatra/base'
 module HomuApi
   class App < Sinatra::Base
     get "/" do
-      erb :index
+      erb :index, :locals => { :css_list => ['index.css'] }
     end
 
     get "/ws" do

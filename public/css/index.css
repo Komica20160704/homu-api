@@ -1,0 +1,44 @@
+.dialog {
+    margin-top: 5px;
+    padding: 3px 10px 10px;
+    display: inline-block;
+    width: 720px;
+    background-color: rgb(240, 224, 214);
+}
+.block-container {
+    margin: auto;
+    width: 740px;
+}
+.dialog_content {
+    float: left;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    width: 540px;
+}
+.dialog_img {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    float: left;
+    vertical-align: top;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 5px;
+}
+.split_line {
+    width: 100%;
+    border-right-width: 0;
+    border-bottom-width: 0;
+}
+.head_block {
+    float: right;
+    overflow: hidden;
+    max-width: 400px;
+    height: 20px;
+    color: rgb(120, 153, 34);
+}
