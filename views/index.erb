@@ -78,7 +78,7 @@
         }
       });
       html += block.Id + '回應了一篇文章';
-      html += '<div style="float:right;overflow:hidden;max-width:400px;height:19px;color:rgb(120,153,34);">';
+      html += '<div style="float:right;overflow:hidden;max-width:400px;height:20px;color:rgb(120,153,34);">';
       html += '>>No.' + head.No + ' ID:' + head.Id + ': '
       html += head.Content.split('\n').join(' ');
       html += '</div>';
@@ -107,7 +107,7 @@
   function setupContent(id, content) {
     var lines = content.split('\n');
     lines.forEach(function (e, i) {
-      if(e.startsWith('>')) {
+      if (e.startsWith('>')) {
         lines[i] = '<span style="color:rgb(120,153,34);">' + e + '</span>';
       }
     });
@@ -169,7 +169,6 @@
 
   ws.onclose = function () {
     var message = '與伺服器失去連線!\n可能為伺服器例行作業，請稍後再重新連接此頁。\n若仍無法開啟網頁，請聯絡網站相關人員。';
-    alert(message);
     $("#block-container")[0].innerHTML = message + $("#block-container")[0].innerHTML;
   }
 </script>
