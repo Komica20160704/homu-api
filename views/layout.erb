@@ -1,8 +1,49 @@
 <html>
   <head>
     <title>HomuAPI - 綜合</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <style>
+      html {
+        width: 99%;
+      }
+      body {
+        width: 100%;
+        background-color: rgb(255, 255, 238);
+        color: rgb(128, 0, 0);
+      }
+      .head_bar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1;
+        background-color: rgb(255, 255, 238);
+        background: -moz-linear-gradient(top, rgba(255,255,238,1) 90%, rgba(255,255,255,0) 100%);
+        background: -webkit-linear-gradient(top, rgba(255,255,238,1) 90%,rgba(255,255,255,0) 100%);
+        background: linear-gradient(to bottom, rgba(255,255,238,1) 90%,rgba(255,255,255,0) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=  '#ffffff', endColorstr='#00ffffff',GradientType=0 );
+      }
+      .head_btn {
+        margin-top: 8px;
+        margin-bottom: 16px;
+        margin-right: 16px;
+      }
+    </style>
   </head>
-  <body><%= yield %></body>
+  <body>
+    <div class='head_bar'>
+      <div align="right" class='head_btn'>
+        [<a href="http://homu.komica.org/00/index.htm" target="_top">回綜合</a>] [<a href="http://homu-homuapi.rhcloud.com/" target="_top">HomuAPI</a>]
+      </div>
+      <p align="center">
+        <font size="5">
+          <b>
+            <span>綜合-即時訊息</span>
+          </b>
+        </font>
+      </p>
+      <hr width="90%" size="1">
+    </div>
+    <div style='margin-top:100px;'><%= yield %></div>
+  </body>
 </html>

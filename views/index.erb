@@ -1,12 +1,4 @@
 <style>
-  html {
-    width: 99%;
-  }
-  body {
-    width: 100%;
-    background-color: rgb(255, 255, 238);
-    color: rgb(128, 0, 0);
-  }
   .dialog {
     margin-top: 5px;
     padding: 3px 10px 10px;
@@ -22,6 +14,7 @@
     float: left;
     margin-top: 16px;
     margin-bottom: 16px;
+    max-width: 540px;
   }
   .dialog_img {
     border-top-width: 0;
@@ -55,17 +48,11 @@
     "六"
   ]
 
-  function createDialog(id) {
+  function createDialog(id, block) {
     var html = '<div id="dialog' + id + '" class="dialog" style="">';
-    html += '<div>';
-    html += '<font id="dialog_title' + id + '" color="#cc1105" size="+1"><b></b></font> ';
-    html += '<font id="dialog_name' + id + '" color="#117743"><b></b></font> ';
-    html += '<font id="dialog_data' + id + '"></font>';
-    html += '</div>';
-    html += '<a id="dialog_img_link' + id + '" target="_blank">';
-    html += '<img id="dialog_img' + id + '" class="dialog_img">';
-    html += '</a>';
-    html += '<div id="dialog_content' + id + '" class="dialog_content"></div>';
+    html += setupData(id, block);
+    html += setupPicture(id, block.Picture);
+    html += setupContent(id, block.Content);
     html += '</div>';
     return html;
   }
@@ -78,45 +65,57 @@
   function setupData(id, block) {
     var then = new Date("20" + block.Date);
     var theday = then.getDay();
-    $('#dialog_title' + id)[0].children[0].innerText = block.Title;
-    $('#dialog_name' + id)[0].children[0].innerText = block.Name;
     var data = block.Date + "(" + weekday[theday] + ")" + block.Time + " ID:" + block.Id + " No." + block.No;
-    $('#dialog_data' + id)[0].innerText = data;
+    var html = '<div>';
+    html += '<font id="dialog_title' + id + '" color="#cc1105" size="+1"><b>';
+    html += block.Title;
+    html += '</b></font> ';
+    html += '<font id="dialog_name' + id + '" color="#117743"><b>';
+    html += block.Name;
+    html += '</b></font> ';
+    html += '<font id="dialog_data' + id + '">' + data + '</font>';
+    html += '</div>';
+    return html;
   }
 
   function setupContent(id, content) {
     var lines = content.split('\n');
+    var html = '<div id="dialog_content' + id + '" class="dialog_content">';
     if (lines.length > 4) {
       var visiable = lines.splice(0, 4).join('<br>');
       var showButton = '<a id="dialog_show_button' + id + '" onclick="showHideContent(' + id + ');" href="#dialog_show_button' + id + '"><br>顯示完整內容</a>';
       var unvisiable = '<span id="dialog_hide_content' + id + '" style="display:none;"><br>' + lines.join('<br>') + '</span>';
-      $('#dialog_content' + id)[0].innerHTML = visiable + showButton + unvisiable;
+      html += visiable + showButton + unvisiable;
     } else {
-      $('#dialog_content' + id)[0].innerText = content;
+      html += lines.join('<br>');
     }
+    html += '</div>';
+    return html;
   }
 
   function setupPicture(id, picture) {
     if (picture) {
-      $('#dialog_img' + id).on('load', function () {
-        if ($(this).width() > $(this).height()) {
-          $(this)[0].width = 125;
-        } else {
-          $(this)[0].height = 125;
-        }
-      });
       var picture_no = picture.split('.')[0];
-      $('#dialog_img' + id)[0]['src'] = 'http://homu.komica.org/00/thumb/' + picture_no + 's.jpg';
-      $('#dialog_img_link' + id)[0]['href'] = 'http://homu.komica.org/00/src/' + picture;
+      var komica = 'http://homu.komica.org'
+      var org_picture = komica + '/00/src/' + picture;
+      var small_picture = komica + '/00/thumb/' + picture_no + 's.jpg';
+      var html = '<a id="dialog_img_link' + id + '" target="_blank" href="';
+      html += org_picture;
+      html += '">';
+      html += '<img id="dialog_img' + id + '" class="dialog_img" src="';
+      html += small_picture;
+      html += '" style="width:125px;">';
+      html += '</a>';
+      return html;
+    } else {
+      return '<img id="dialog_img' + id + '" class="dialog_img">';
     }
   }
 
-  function showDialog(id, block) {
-    // $('#dialog' + id).hide();
+  function setupDialog(id, block) {
     setupData(id, block);
     setupContent(id, block.Content);
     setupPicture(id, block.Picture);
-    // $('#dialog' + id).fadeIn("slow");
   }
 
   var scheme = "ws://";
@@ -125,12 +124,17 @@
 
   ws.onmessage = function (message) {
     var news = JSON.parse(message.data);
-    console.log(news.length);
+    var html = "";
+    var blocks = [];
     news.forEach(function (e) {
       var id = index++;
-      var dialog = createDialog(id);
-      $("#block-container")[0].innerHTML = dialog + $("#block-container")[0].innerHTML;
-      showDialog(id, e);
+      html = createDialog(id, e) + html;
+      blocks.push("#dialog" + id);
+    });
+    $("#block-container")[0].innerHTML = html + $("#block-container")[0].innerHTML;
+    blocks.forEach(function (e) {
+      $(e).hide();
+      $(e).fadeIn();
     });
   };
 
