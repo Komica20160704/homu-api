@@ -1,6 +1,7 @@
 require 'rufus-scheduler'
 require 'open-uri'
 require 'json'
+require 'date'
 
 module HomuApi
   class HomuChecker
@@ -9,7 +10,9 @@ module HomuApi
       @url = 'http://homu-homuapi.rhcloud.com/'
       @scheduler = Rufus::Scheduler.new
       @blocks = Hash.new false
+      @last_check_time = DateTime.new
       check get_data
+      @last_check_time = DateTime.now
       @scheduler.every '10s' do check_news end
     end
 
@@ -23,6 +26,7 @@ module HomuApi
       data = get_data
       news = check data
       notify news if news.size > 0
+      @last_check_time = DateTime.now
     end
 
     def notify data
@@ -39,10 +43,15 @@ module HomuApi
       data.each do |block|
         if @blocks[block['No']] == false
          @blocks[block['No']] = true
-         news << block
+         block_time = get_block_time block
+         news << block if block_time > @last_check_time
         end
       end
       return news
+    end
+
+    def get_block_time block
+      DateTime.parse(block['Date'] + ' ' + block['Time'] + '+8')
     end
 
     def reform_data data
