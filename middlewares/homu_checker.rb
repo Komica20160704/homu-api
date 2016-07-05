@@ -24,8 +24,11 @@ module HomuApi
 
     def check_news
       data = get_data
-      news = check data
-      notify news if news.size > 0
+      new_data = check data
+      if new_data['Blocks'].size > 0
+        new_data['Type'] = 'Notify'
+        notify new_data
+      end
       @last_check_time = DateTime.now
     end
 
@@ -39,24 +42,28 @@ module HomuApi
     end
 
     def check data
-      new_heads = []
-      news = []
+      new_data = { "Heads" => [], "Blocks" => [] }
       data['Blocks'].each do |block|
-        if @blocks[block['No']] == false
-          @blocks[block['No']] = true
-          block_time = get_block_time block
-          if block_time > @last_check_time
-            new_heads << data['HeadHash'][block['HeadNo']]
-            news << block
-          end
+        check_block block, new_data, data['HeadHash']
+      end
+      new_data['Blocks'].sort! { |a, b| a['No'] <=> b['No'] }
+      return new_data
+    end
+
+    def check_block block, new_data, head_hash
+      if @blocks[block['No']] == false
+        @blocks[block['No']] = true
+        block_time = get_block_time block
+        if block_time > @last_check_time
+          new_data['Heads'] << head_hash[block['HeadNo']]
+          new_data['Blocks'] << block
         end
       end
-      news.sort! { |a, b| a['No'] <=> b['No'] }
-      return { "Heads" => new_heads, "Blocks" => news }
     end
 
     def get_block_time block
-      DateTime.parse(block['Date'] + ' ' + block['Time'] + '+8')
+      time_string = block['Date'] + ' ' + block['Time'] + '+8'
+      DateTime.parse time_string
     end
 
     def reform_data data
