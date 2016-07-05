@@ -39,15 +39,20 @@ module HomuApi
     end
 
     def check data
+      new_heads = []
       news = []
-      data.each do |block|
+      data['Blocks'].each do |block|
         if @blocks[block['No']] == false
-         @blocks[block['No']] = true
-         block_time = get_block_time block
-         news << block if block_time > @last_check_time
+          @blocks[block['No']] = true
+          block_time = get_block_time block
+          if block_time > @last_check_time
+            new_heads << data['HeadHash'][block['HeadNo']]
+            news << block
+          end
         end
       end
-      return news
+      news.sort! { |a, b| a['No'] <=> b['No'] }
+      return { "Heads" => new_heads, "Blocks" => news }
     end
 
     def get_block_time block
@@ -55,7 +60,8 @@ module HomuApi
     end
 
     def reform_data data
-      new_data = []
+      head_hash = {}
+      blocks = []
       data.each do |dialog|
         head_no = dialog['Head']['No']
         if dialog['Head']['Hidenbodycount']
@@ -66,9 +72,10 @@ module HomuApi
         new_dialog.each do |block|
           block['HeadNo'] = head_no
         end
-        new_data += new_dialog
+        head_hash[head_no] = dialog['Head']
+        blocks += new_dialog
       end
-      return new_data
+      return { "HeadHash" => head_hash, "Blocks" => blocks }
     end
   end
 end
