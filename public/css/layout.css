@@ -18,6 +18,7 @@ body {
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=0);
 }
 .head_btn {
+    display: inline-block;
     margin-top: 8px;
     margin-bottom: 16px;
     margin-right: 64px;
