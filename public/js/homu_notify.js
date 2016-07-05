@@ -1,6 +1,7 @@
 var index = 0;
 var isClosed = false;
 var block_list = [];
+var komica = 'http://homu.komica.org';
 var weekday = [
   "日",
   "一",
@@ -24,9 +25,11 @@ function createDialog(id, block, heads) {
 }
 
 function setupMessage(id, block, heads) {
+  var url = komica + '/00/index.php?res=' + block.HeadNo;
   var html = '<div style="margin-top:8;margin-left:8;">';
   if (block.No == block.HeadNo) {
-    html += block.Id + '發表了一篇新文章';
+    html += block.Id + '發表了一篇';
+    html += '<a href = "' + url + '" target = "_blank"><b>新文章</b></a>';
   } else {
     var head;
     heads.forEach(function(e) {
@@ -34,7 +37,8 @@ function setupMessage(id, block, heads) {
         head = e;
       }
     });
-    html += block.Id + '回應了一篇文章';
+    html += block.Id + '回應了';
+    html += '<a href = "' + url + '" target = "_blank"><b>討論串</b></a>';
     html += '<div class="head_block">';
     html += '>>No.' + head.No + ' ID:' + head.Id + ': '
     html += head.Content.split('\n').join(' ') + '</div>';
@@ -91,7 +95,6 @@ function setupContent(id, content) {
 function setupPicture(picture) {
   if (picture) {
     var picture_no = picture.split('.')[0];
-    var komica = 'http://homu.komica.org'
     var org_picture = komica + '/00/src/' + picture;
     var small_picture = komica + '/00/thumb/' + picture_no + 's.jpg';
     var html = '<a target="_blank" href="' + org_picture + '">';
@@ -120,7 +123,7 @@ function receivedNotify(data) {
       $(e).fadeIn();
     }, i * 500);
   });
-  block_list += id_list;
+  block_list = block_list.concat(id_list);
   while (block_list.length > 100) {
     var id = block_list.shift();
     $(id).remove();
