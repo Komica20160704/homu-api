@@ -1,10 +1,10 @@
 # config.ru
 require './app'
 require './middlewares/homu_checker'
-require './middlewares/web_socket_backend'
+require './middlewares/homu_notifier'
 
 Faye::WebSocket.load_adapter('thin') if $0.match /thin$/
 
 use HomuApi::HomuChecker
-use HomuApi::WebSocketBackend
+use HomuApi::HomuNotifier
 run HomuApi::App.new

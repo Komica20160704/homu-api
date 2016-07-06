@@ -5,8 +5,8 @@ require 'date'
 
 module HomuApi
   class HomuChecker
-    def initialize web_socket
-      @web_socket = web_socket
+    def initialize notifier
+      @notifier = notifier
       @url = 'http://homu-homuapi.rhcloud.com/'
       @scheduler = Rufus::Scheduler.new
       @blocks = Hash.new false
@@ -17,7 +17,7 @@ module HomuApi
     end
 
     def call env
-      @web_socket.call env
+      @notifier.call env
     end
 
     private
@@ -33,7 +33,7 @@ module HomuApi
     end
 
     def notify data
-      @web_socket.notify data.to_json
+      @notifier.notify data
     end
 
     def get_data
@@ -46,6 +46,7 @@ module HomuApi
       data['Blocks'].each do |block|
         check_block block, new_data, data['HeadHash']
       end
+      new_data['Heads'].uniq!
       new_data['Blocks'].sort! { |a, b| a['No'] <=> b['No'] }
       return new_data
     end
