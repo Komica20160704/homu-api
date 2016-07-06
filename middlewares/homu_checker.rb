@@ -23,17 +23,21 @@ module HomuApi
     private
 
     def check_news
-      data = get_data
-      new_data = check data
-      if new_data['Blocks'].size > 0
-        new_data['Type'] = 'Notify'
+      begin
+        data = get_data
+        new_data = check data
         notify new_data
+        @last_check_time = DateTime.now
+      rescue Exception => e
+        puts e.message
       end
-      @last_check_time = DateTime.now
     end
 
     def notify data
-      @notifier.notify data
+      if data['Blocks'].size > 0
+        data['Type'] = 'Notify'
+        @notifier.notify data
+      end
     end
 
     def get_data
