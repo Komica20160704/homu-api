@@ -44,6 +44,10 @@ module HomuApi
 
     def save_data
       File.write FILE_PATH, @data.to_json
+      @clients.each do |client|
+        client.close
+        client = nil
+      end
     end
 
     def call(env)
