@@ -120,12 +120,14 @@ function receivedNotify(data) {
     id_list.push("#dialog" + id);
   });
   $("#block-container")[0].innerHTML = html + $("#block-container")[0].innerHTML;
-  id_list.forEach(function(e, i) {
-    $(e).hide();
-    setTimeout(function() {
-      $(e).fadeIn();
-    }, i * 500);
-  });
+  if (data.Type == 'Notify') {
+    id_list.forEach(function(e, i) {
+      $(e).hide();
+      setTimeout(function() {
+        $(e).fadeIn();
+      }, i * 500);
+    });
+  }
   block_list = block_list.concat(id_list);
   while (block_list.length > 100) {
     var id = block_list.shift();
@@ -139,7 +141,7 @@ var ws = new WebSocket(uri);
 
 ws.onmessage = function(message) {
   var data = JSON.parse(message.data);
-  if (data.Type == 'Notify') {
+  if (data.Type == 'Notify' || data.Type == 'Cache') {
     receivedNotify(data);
   }
 };

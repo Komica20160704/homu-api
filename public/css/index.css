@@ -10,6 +10,7 @@
     width: 740px;
 }
 .dialog_content {
+    word-wrap: break-word;
     float: left;
     margin-top: 16px;
     margin-bottom: 16px;

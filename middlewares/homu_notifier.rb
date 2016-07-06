@@ -10,7 +10,7 @@ module HomuApi
     def initialize(app)
       @app = app
       @clients = []
-      @data = { 'Heads' => [], 'Blocks' => [], 'Type' => 'Notify' }
+      @data = { 'Heads' => [], 'Blocks' => [], 'Type' => 'Cache' }
       load_data
       ObjectSpace.define_finalizer(self, proc {|id| save_data })
     end
