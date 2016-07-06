@@ -144,19 +144,22 @@ ws.onmessage = function(message) {
   }
 };
 
-ws.onclose = function() {
-  var message = '與伺服器失去連線!\n可能為伺服器例行作業，請稍後再重新連接此頁。\n若仍無法開啟網頁，請聯絡網站相關人員。';
-  $("#block-container")[0].innerHTML = message + $("#block-container")[0].innerHTML;
+function onWebSocketClosed() {
+  if (!isClosed) {
+    var message = '與伺服器失去連線!\n可能為伺服器例行作業，請稍後再重新連接此頁。\n若仍無法開啟網頁，請聯絡網站相關人員。';
+    $("#block-container")[0].innerHTML = message + $("#block-container")[0].innerHTML;
+    isClosed = true;
+  }
 }
+
+ws.onclose = onWebSocketClosed;
 
 setInterval(function() {
   if (ws.readyState == ws.OPEN) {
     ws.send(JSON.stringify({
       Event: "KeepAlive"
     }));
-  } else if (!isClosed) {
-    var message = '與伺服器失去連線!\n可能為伺服器例行作業，請稍後再重新連接此頁。\n若仍無法開啟網頁，請聯絡網站相關人員。';
-    $("#block-container")[0].innerHTML = message + $("#block-container")[0].innerHTML;
-    isClosed = true;
+  } else {
+    onWebSocketClosed();
   }
 }, 10000);
