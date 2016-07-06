@@ -38,6 +38,9 @@ function setupMessage(id, block, heads) {
       }
     });
     html += block.Id + '回應了';
+    if (head.Id == block.Id) {
+      html += '自己的';
+    }
     html += '<a href = "' + url + '" target = "_blank"><b>討論串</b></a>';
     html += '<div class="head_block">';
     html += '>>No.' + head.No + ' ID:' + head.Id + ': '
