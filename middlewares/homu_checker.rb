@@ -10,9 +10,8 @@ module HomuApi
       @url = 'http://homu-homuapi.rhcloud.com/'
       @scheduler = Rufus::Scheduler.new
       @blocks = Hash.new false
-      @last_check_time = DateTime.new
+      @last_block_no = ""
       check get_data
-      @last_check_time = DateTime.now
       @scheduler.every '10s' do check_news end
     end
 
@@ -27,7 +26,6 @@ module HomuApi
         data = get_data
         new_data = check data
         notify new_data
-        @last_check_time = DateTime.now
       rescue Exception => e
         puts e.message
       end
@@ -51,24 +49,15 @@ module HomuApi
         check_block block, new_data, data['HeadHash']
       end
       new_data['Heads'].uniq!
-      new_data['Blocks'].sort! { |a, b| a['No'] <=> b['No'] }
       return new_data
     end
 
     def check_block block, new_data, head_hash
-      if @blocks[block['No']] == false
-        @blocks[block['No']] = true
-        block_time = get_block_time block
-        if block_time > @last_check_time
-          new_data['Heads'] << head_hash[block['HeadNo']]
-          new_data['Blocks'] << block
-        end
+      if block['No'] > @last_block_no
+        @last_block_no = block['No']
+        new_data['Heads'] << head_hash[block['HeadNo']]
+        new_data['Blocks'] << block
       end
-    end
-
-    def get_block_time block
-      time_string = block['Date'] + ' ' + block['Time'] + '+8'
-      DateTime.parse time_string
     end
 
     def reform_data data
@@ -87,6 +76,7 @@ module HomuApi
         head_hash[head_no] = dialog['Head']
         blocks += new_dialog
       end
+      blocks.sort! { |a, b| a['No'] <=> b['No'] }
       return { "HeadHash" => head_hash, "Blocks" => blocks }
     end
   end

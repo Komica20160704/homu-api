@@ -138,12 +138,14 @@ function receivedNotify(data) {
 var scheme = "ws://";
 var uri = scheme + window.document.location.host + "/";
 var ws;
+var isCached = false;
 
 function startWebSocket(uri) {
   ws = new WebSocket(uri);
   ws.onmessage = function(message) {
     var data = JSON.parse(message.data);
-    if (data.Type == 'Notify' || data.Type == 'Cache') {
+    if (data.Type == 'Notify' || (data.Type == 'Cache' && !isCached)) {
+      isCached = true;
       receivedNotify(data);
     }
   };

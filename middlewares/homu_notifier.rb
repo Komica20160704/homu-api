@@ -3,7 +3,6 @@ require 'json'
 
 module HomuApi
   class HomuNotifier
-    FILE_PATH = './public/data.txt' # for save and load
     KEEPALIVE_TIME = 15 # in seconds
     MAX_DATA_COUNT = 10
 
@@ -11,8 +10,6 @@ module HomuApi
       @app = app
       @clients = []
       @data = { 'Heads' => [], 'Blocks' => [], 'Type' => 'Cache' }
-      load_data
-      ObjectSpace.define_finalizer(self, proc {|id| save_data })
     end
 
     def notify(data)
@@ -32,21 +29,6 @@ module HomuApi
           end
         end
         @data['Heads'] = new_heads
-      end
-    end
-
-    def load_data
-      if File.exist? FILE_PATH
-        text = File.read FILE_PATH
-        @data = JSON.parse text
-      end
-    end
-
-    def save_data
-      File.write FILE_PATH, @data.to_json
-      @clients.each do |client|
-        client.close
-        client = nil
       end
     end
 
