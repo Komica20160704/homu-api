@@ -137,24 +137,19 @@ function receivedNotify(data) {
 
 var scheme = "ws://";
 var uri = scheme + window.document.location.host + "/";
-var ws = new WebSocket(uri);
+var ws;
 
-ws.onmessage = function(message) {
-  var data = JSON.parse(message.data);
-  if (data.Type == 'Notify' || data.Type == 'Cache') {
-    receivedNotify(data);
-  }
-};
-
-function onWebSocketClosed() {
-  if (!isClosed) {
-    var message = '與伺服器失去連線!\n可能為伺服器例行作業，請稍後再重新連接此頁。\n若仍無法開啟網頁，請聯絡網站相關人員。';
-    $("#block-container")[0].innerHTML = message + $("#block-container")[0].innerHTML;
-    isClosed = true;
-  }
+function startWebSocket(uri) {
+  ws = new WebSocket(uri);
+  ws.onmessage = function(message) {
+    var data = JSON.parse(message.data);
+    if (data.Type == 'Notify' || data.Type == 'Cache') {
+      receivedNotify(data);
+    }
+  };
 }
 
-ws.onclose = onWebSocketClosed;
+startWebSocket(uri);
 
 setInterval(function() {
   if (ws.readyState == ws.OPEN) {
@@ -162,6 +157,6 @@ setInterval(function() {
       Event: "KeepAlive"
     }));
   } else {
-    onWebSocketClosed();
+    startWebSocket(uri);
   }
 }, 10000);
