@@ -3,7 +3,8 @@ require 'sinatra/base'
 module HomuApi
   class App < Sinatra::Base
     get "/" do
-      erb :index, :locals => { :css_list => ['index.css'] }
+      count = request.env['WsClientCount']
+      erb :index, :locals => { :css_list => ['index.css'], :ws_client_count => count }
     end
 
     run! if app_file == $0

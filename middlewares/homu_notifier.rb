@@ -65,6 +65,7 @@ module HomuApi
         # Return async Rack response
         ws.rack_response
       else
+        env['WsClientCount'] = @clients.size
         @app.call(env)
       end
     end
