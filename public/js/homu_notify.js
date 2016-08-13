@@ -2,6 +2,7 @@ var index = 0;
 var isClosed = false;
 var block_list = [];
 var komica = 'http://homu.komica.org';
+var image_host = 'http://kstatic.tk';
 var weekday = [
   "日",
   "一",
@@ -98,8 +99,8 @@ function setupContent(id, content) {
 function setupPicture(picture) {
   if (picture) {
     var picture_no = picture.split('.')[0];
-    var org_picture = komica + '/00/src/' + picture;
-    var small_picture = komica + '/00/thumb/' + picture_no + 's.jpg';
+    var org_picture = image_host + '/00/src/' + picture;
+    var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
     var html = '<a target="_blank" href="' + org_picture + '">';
     html += '<img class="dialog_img" src="' + small_picture;
     html += '" style="width:125px;"></a>';
