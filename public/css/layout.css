@@ -5,6 +5,10 @@ body {
     width: 100%;
     background-color: rgb(255, 255, 238);
     color: rgb(128, 0, 0);
+    background-image: url("/gorigori.png");
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 .head_bar {
     position: fixed;
