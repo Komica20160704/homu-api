@@ -4,7 +4,8 @@ require 'json'
 module HomuApi
   class HomuNotifier
     KEEPALIVE_TIME = 15 # in seconds
-    MAX_DATA_COUNT = ENV['MAX_DATA_COUNT'] || 50
+    MAX_DATA_COUNT_S = ENV['MAX_DATA_COUNT'] || 50
+    MAX_DATA_COUNT = MAX_DATA_COUNT_S.to_i
 
     def initialize(app)
       @app = app
