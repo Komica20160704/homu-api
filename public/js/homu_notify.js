@@ -3,6 +3,7 @@ var isClosed = false;
 var block_list = [];
 var komica = 'http://homu.komica.org';
 var image_host = 'http://kstatic.tk';
+var max_data_count = 100;
 var weekday = [
   "日",
   "一",
@@ -130,7 +131,7 @@ function receivedNotify(data) {
     });
   }
   block_list = block_list.concat(id_list);
-  while (block_list.length > 100) {
+  while (block_list.length > max_data_count) {
     var id = block_list.shift();
     $(id).remove();
   }

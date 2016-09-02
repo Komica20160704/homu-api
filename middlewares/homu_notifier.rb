@@ -4,7 +4,7 @@ require 'json'
 module HomuApi
   class HomuNotifier
     KEEPALIVE_TIME = 15 # in seconds
-    MAX_DATA_COUNT = 10
+    MAX_DATA_COUNT = ENV['MAX_DATA_COUNT'] || 50
 
     def initialize(app)
       @app = app
@@ -17,7 +17,7 @@ module HomuApi
       log_data data
     end
 
-    def log_data data
+    def log_data(data)
       @data['Heads'] = (@data['Heads'] + data['Heads']).uniq
       @data['Blocks'] += data['Blocks']
       if @data['Blocks'].size > MAX_DATA_COUNT
@@ -35,16 +35,14 @@ module HomuApi
     def call(env)
       if Faye::WebSocket.websocket?(env)
         # WebSockets logic goes here
-        ws = Faye::WebSocket.new(env, nil, { ping: KEEPALIVE_TIME })
+        ws = Faye::WebSocket.new(env, nil, ping: KEEPALIVE_TIME)
 
         ws.on :open do |event|
-          # p [:open, ws.object_id]
           @clients << ws
           ws.send @data.to_json
         end
 
         ws.on :message do |event|
-          # p [:message, event.data]
           data = JSON.parse(event.data)
           if data['Event'] == 'Send'
             @clients.each { |client| client.send(event.data) }
@@ -57,7 +55,6 @@ module HomuApi
         end
 
         ws.on :close do |event|
-          # p [:close, ws.object_id, event.code, event.reason]
           @clients.delete(ws)
           ws = nil
         end
