@@ -2,7 +2,7 @@ var index = 0;
 var isClosed = false;
 var block_list = [];
 var komica = 'http://homu.komica.org';
-var image_host = 'http://kstatic.tk';
+var image_host = komica;
 var max_data_count = 100;
 var weekday = [
   "日",
