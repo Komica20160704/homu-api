@@ -1,13 +1,11 @@
 require 'rufus-scheduler'
-require 'open-uri'
-require 'json'
 require 'date'
+require './helper/homu_getter'
 
 module HomuApi
   class HomuChecker
     def initialize notifier
       @notifier = notifier
-      @url = 'http://homu-homuapi.rhcloud.com/'
       @scheduler = Rufus::Scheduler.new
       @blocks = Hash.new false
       @last_block_no = ""
@@ -39,7 +37,7 @@ module HomuApi
     end
 
     def get_data
-      data = JSON.parse(open(@url + '/page/0').read)
+      data = JSON.parse(HomuGetter::get_page)
       data = reform_data data
     end
 

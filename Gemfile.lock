@@ -1,15 +1,15 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    daemons (1.2.3)
-    eventmachine (1.2.0.1-x86-mingw32)
-    faye-websocket (0.10.4)
+    daemons (1.2.4)
+    eventmachine (1.2.1-x86-mingw32)
+    faye-websocket (0.10.5)
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.5.1)
-    rack (1.6.4)
+    rack (1.6.5)
     rack-protection (1.5.3)
       rack
-    rufus-scheduler (3.2.1)
+    rufus-scheduler (3.2.2)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -33,7 +33,7 @@ DEPENDENCIES
   thin
 
 RUBY VERSION
-   ruby 2.2.4p230
+   ruby 2.2.5p319
 
 BUNDLED WITH
-   1.12.5
+   1.13.6

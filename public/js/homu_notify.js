@@ -1,5 +1,6 @@
 var index = 0;
 var isClosed = false;
+var followingHeadNo = null;
 var block_list = [];
 var komica = 'http://homu.komica.org';
 var image_host = komica;
@@ -29,9 +30,11 @@ function createDialog(id, block, heads) {
 function setupMessage(id, block, heads) {
   var url = komica + '/00/index.php?res=' + block.HeadNo;
   var html = '<div style="margin-top:8;margin-left:8;">';
+  var follow = ' [<a href="#" onclick="follow(' + block.HeadNo + ')">追蹤</a>]';
   if (block.No == block.HeadNo) {
     html += block.Id + '發表了一篇';
     html += '<a href = "' + url + '" target = "_blank"><b>新文章</b></a>';
+    html += follow;
   } else {
     var head;
     heads.forEach(function(e) {
@@ -44,6 +47,7 @@ function setupMessage(id, block, heads) {
       html += '自己的';
     }
     html += '<a href = "' + url + '" target = "_blank"><b>討論串</b></a>';
+    html += follow;
     html += '<div class="head_block">';
     html += '>>No.' + head.No + ' ID:' + head.Id + ': '
     html += head.Content.split('\n').join(' ') + '</div>';
@@ -111,6 +115,79 @@ function setupPicture(picture) {
   }
 }
 
+Vue.component('followBlock', {
+  template: '#followBlock',
+  props: {
+    block: Object
+  },
+  methods: {
+    setupContent: function(content) {
+      var lines = content.split('\n');
+      lines.forEach(function(e, i) {
+        if (e.startsWith('>')) {
+          lines[i] = '<span style="color:rgb(120,153,34);">' + e + '</span>';
+        }
+      });
+      return lines.join('<br>');
+    },
+    setupPicture: function(picture) {
+      if (picture) {
+        var picture_no = picture.split('.')[0];
+        var org_picture = image_host + '/00/src/' + picture;
+        var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
+        var html = '<a target="_blank" href="' + org_picture + '">';
+        html += '<img class="dialog_img" src="' + small_picture;
+        html += '" style="width:125px;"></a>';
+        return html;
+      } else {
+        return '<img class="dialog_img">';
+      }
+    },
+    setupWeekday: function(date) {
+      var then = new Date("20" + date);
+      var theday = then.getDay();
+      return weekday[theday];
+    }
+  }
+});
+
+var followRes = new Vue({
+  el: '#followRes',
+  data: {
+    Head: {},
+    Bodies: {}
+  },
+  methods: {
+    follow: function(headNo) {
+      var that = this;
+      $.ajax({
+        method: 'GET',
+        url: headNo,
+        success: function(res) {
+          that.Head = [res.Head];
+          that.Bodies = res.Bodies;
+          $('#followRes').fadeIn();
+        }
+      })
+    },
+    receivedNotify: function(block) {
+      this.Bodies.push(block);
+      responsiveVoice.speak("You got message!");
+      setTimeout(function() {
+          $('#followRes').scrollTop(document.getElementById("followRes").scrollHeight);
+        },
+        1000
+      );
+    }
+  }
+});
+
+function follow(headNo) {
+  followingHeadNo = headNo;
+  var url = followingHeadNo;
+  followRes.follow(headNo);
+}
+
 function receivedNotify(data) {
   var blocks = data.Blocks;
   var heads = data.Heads;
@@ -120,6 +197,9 @@ function receivedNotify(data) {
     var id = index++;
     html = createDialog(id, e, heads) + html;
     id_list.push("#dialog" + id);
+    if (e.HeadNo == followingHeadNo) {
+      followRes.receivedNotify(e);
+    }
   });
   $("#block-container")[0].innerHTML = html + $("#block-container")[0].innerHTML;
   if (data.Type == 'Notify') {

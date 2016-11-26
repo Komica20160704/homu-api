@@ -5,10 +5,12 @@
     width: 720px;
     background-color: rgb(240, 224, 214);
 }
+
 .block-container {
     margin: auto;
     width: 740px;
 }
+
 .dialog_content {
     word-wrap: break-word;
     float: left;
@@ -16,6 +18,7 @@
     margin-bottom: 16px;
     width: 540px;
 }
+
 .dialog_img {
     border-top-width: 0;
     border-right-width: 0;
@@ -31,15 +34,31 @@
     margin-right: 20px;
     margin-top: 5px;
 }
+
 .split_line {
     width: 100%;
     border-right-width: 0;
     border-bottom-width: 0;
 }
+
 .head_block {
     float: right;
     overflow: hidden;
     max-width: 400px;
     height: 20px;
     color: rgb(120, 153, 34);
+}
+
+#followRes {
+    display: none;
+    position: fixed;
+    width: 760px;
+    height: 300px;
+    border: 10px;
+    border-style: solid;
+    background: rgb(255, 255, 238);
+    overflow: scroll;
+    overflow-x: hidden;
+    right: 0px;
+    bottom: 0px;
 }
