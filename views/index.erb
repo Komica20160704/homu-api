@@ -1,4 +1,4 @@
-<div id="followRes">
+<div id="followRes" style="font-size: 5pt;">
   <div is="followBlock" v-for="block in Head" :block="block"></div>
   <div is="followBlock" v-for="block in Bodies" :block="block"></div>
 </div>
@@ -8,19 +8,13 @@
 <script src="/js/homu_notify.js"></script>
 
 <script type="text/x-template" id="followBlock">
-  <div class="dialog">
+  <div class="dialog" style="width:300px;padding:3px;">
     <div>
-      <span style="color:#cc1105">
-        <b>{{ block.Title }}</b>
-      </span>
-      <span style="color:#117743">
-        <b>{{ block.Name }}</b>
-      </span>
       <span>{{ block.Date }}({{ setupWeekday(block.Date) }}){{ block.Time }}
         ID:{{ block.Id }}
         No.{{ block.No }}</span>
     </div>
     <div v-html="setupPicture(block.Picture)"></div>
-    <div class="dialog_content" v-html="setupContent(block.Content)"></div>
+    <div class="dialog_content" style="width:200;" v-html="setupContent(block.Content)"></div>
   </div>
 </script>

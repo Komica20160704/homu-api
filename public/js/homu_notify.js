@@ -136,11 +136,11 @@ Vue.component('followBlock', {
         var org_picture = image_host + '/00/src/' + picture;
         var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
         var html = '<a target="_blank" href="' + org_picture + '">';
-        html += '<img class="dialog_img" src="' + small_picture;
-        html += '" style="width:125px;"></a>';
+        html += '<img class="dialog_img small" src="' + small_picture;
+        html += '" style="width:75px;"></a>';
         return html;
       } else {
-        return '<img class="dialog_img">';
+        return '<img class="dialog_img small">';
       }
     },
     setupWeekday: function(date) {
