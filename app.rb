@@ -4,6 +4,10 @@ require './helper/homu_getter'
 
 module HomuApi
   class App < Sinatra::Base
+    get '/kumiko' do
+      erb :kumiko, layout: '<%= yield %>'
+    end
+
     get '/' do
       count = request.env['WsClientCount']
       bg = Dir.glob('./public/bgs/*.png').map { |i| File.basename i }.sample

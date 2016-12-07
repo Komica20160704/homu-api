@@ -1,0 +1,69 @@
+<body>
+  <div id="background">
+    <div id="whiteCover">
+    </div>
+    <video id="backVideo" autoplay loop muted>
+      <source src="./kumiko_1.mp4" type='video/mp4'/>
+    </video>
+  </div>
+  <video id="frontVideo" height="720" autoplay loop>
+    <source src="./kumiko_1.mp4" type='video/mp4'/>
+  </video>
+</body>
+
+<style>
+  div#whiteCover {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100vw;
+    min-height: 100vh;
+    width: auto;
+    height: auto;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background: rgba(255, 255, 255, 0.75);
+    z-index: -99;
+  }
+
+  video#backVideo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  video#frontVideo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+</style>
+
+<script>
+  frontVideo = document.getElementById('frontVideo')
+  backVideo = document.getElementById('backVideo')
+
+  frontVideo.onplay = function(){
+    backVideo.play()
+  }
+
+  frontVideo.onpause = function(){
+    backVideo.pause()
+  }
+</script>
