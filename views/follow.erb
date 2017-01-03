@@ -1,0 +1,24 @@
+<div id="followRes">
+  <div id="followHead" is="followBlock" v-for="block in Head" :block="block"></div>
+  <div id="followBody" is="followBlock" v-for="block in Bodies" :block="block"></div>
+</div>
+
+<script type="text/x-template" id="followBlock">
+  <div class="dialog" >
+    <div>
+      <span>
+        <span style="color:rgb(204,17,5)"><b>{{ block.Title }}</b></span>
+        <span style="color:green"><b>{{ block.Name }}</b></span>
+        {{ block.Date }}({{ setupWeekday(block.Date) }}){{ block.Time }}
+        ID:{{ block.Id }}
+        No.{{ block.No }}</span>
+    </div>
+    <div v-html="setupPicture(block.Picture)"></div>
+    <div class="dialog_content" v-html="setupContent(block.Content)"></div>
+  </div>
+</script>
+
+<script>
+  window.followResNo = <%= resNo  %>
+</script>
+<script src="/js/follow.js"></script>

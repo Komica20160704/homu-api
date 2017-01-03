@@ -30,7 +30,7 @@ function createDialog(id, block, heads) {
 function setupMessage(id, block, heads) {
   var url = komica + '/00/index.php?res=' + block.HeadNo;
   var html = '<div style="margin-top:8;margin-left:8;">';
-  var follow = ' [<a href="#" onclick="follow(' + block.HeadNo + ')">追蹤</a>]';
+  var follow = ' [<a href="./follow/' + block.HeadNo + '" target="_blank">追蹤</a>]';
   if (block.No == block.HeadNo) {
     html += block.Id + '發表了一篇';
     html += '<a href = "' + url + '" target = "_blank"><b>新文章</b></a>';
@@ -113,79 +113,6 @@ function setupPicture(picture) {
   } else {
     return '<img class="dialog_img">';
   }
-}
-
-Vue.component('followBlock', {
-  template: '#followBlock',
-  props: {
-    block: Object
-  },
-  methods: {
-    setupContent: function(content) {
-      var lines = content.split('\n');
-      lines.forEach(function(e, i) {
-        if (e.startsWith('>')) {
-          lines[i] = '<span style="color:rgb(120,153,34);">' + e + '</span>';
-        }
-      });
-      return lines.join('<br>');
-    },
-    setupPicture: function(picture) {
-      if (picture) {
-        var picture_no = picture.split('.')[0];
-        var org_picture = image_host + '/00/src/' + picture;
-        var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
-        var html = '<a target="_blank" href="' + org_picture + '">';
-        html += '<img class="dialog_img small" src="' + small_picture;
-        html += '" style="width:75px;"></a>';
-        return html;
-      } else {
-        return '<img class="dialog_img small">';
-      }
-    },
-    setupWeekday: function(date) {
-      var then = new Date("20" + date);
-      var theday = then.getDay();
-      return weekday[theday];
-    }
-  }
-});
-
-var followRes = new Vue({
-  el: '#followRes',
-  data: {
-    Head: {},
-    Bodies: {}
-  },
-  methods: {
-    follow: function(headNo) {
-      var that = this;
-      $.ajax({
-        method: 'GET',
-        url: headNo,
-        success: function(res) {
-          that.Head = [res.Head];
-          that.Bodies = res.Bodies;
-          $('#followRes').fadeIn();
-        }
-      })
-    },
-    receivedNotify: function(block) {
-      this.Bodies.push(block);
-      responsiveVoice.speak("You got message!");
-      setTimeout(function() {
-          $('#followRes').scrollTop(document.getElementById("followRes").scrollHeight);
-        },
-        1000
-      );
-    }
-  }
-});
-
-function follow(headNo) {
-  followingHeadNo = headNo;
-  var url = followingHeadNo;
-  followRes.follow(headNo);
 }
 
 function receivedNotify(data) {
