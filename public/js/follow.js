@@ -1,4 +1,4 @@
-var komica = 'http://homu.komica.org';
+var komica = 'http://rem.komica.org';
 var image_host = komica;
 var weekday = [
   "日",
