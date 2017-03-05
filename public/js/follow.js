@@ -98,7 +98,6 @@ $( document ).ready(function() {
           success: function(res) {
             that.Head = [res.Head];
             that.Bodies = res.Bodies;
-            console.log(res);
             $('#followRes').fadeIn();
           }
         })

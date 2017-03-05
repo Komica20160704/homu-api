@@ -41,5 +41,25 @@
 }
 
 #followHead {
+  margin-top: 0px;
   background-color: rgba(0, 0, 0, 0);
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    width: 90%;
+  }
+  #followRes {
+    width: 100%;
+    margin-top: 80px;
+  }
+  .dialog {
+    width: 100%;
+  }
+  .dialog_content {
+    width: 100%;
+  }
+  .title {
+    margin-top: 30px;
+  }
 }

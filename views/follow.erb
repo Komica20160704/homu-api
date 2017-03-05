@@ -1,4 +1,7 @@
 <div id="followRes">
+  <div style="padding-left: 10px;">
+    [<a href="http://rem.komica.org/00/index.php?res=<%= resNo %>" target="_blank">開啟本串</a>]
+  </div>
   <div id="followHead" is="followBlock" v-for="block in Head" :block="block"></div>
   <div id="followBody" is="followBlock" v-for="block in Bodies" :block="block"></div>
 </div>
@@ -19,6 +22,6 @@
 </script>
 
 <script>
-  window.followResNo = <%= resNo  %>
+  window.followResNo = <%= resNo %>
 </script>
 <script src="/js/follow.js"></script>
