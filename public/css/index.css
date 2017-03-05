@@ -33,6 +33,8 @@
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 5px;
+    max-width: 125px;
+    max-height: 125px;
 }
 
 .small {
@@ -70,4 +72,22 @@
     left: 0px;
     bottom: 0px;
     z-index: 10;
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    width: 90%;
+  }
+  .block-container {
+    width: 100%;
+  }
+  .dialog {
+    width: 100%;
+  }
+  .dialog_content {
+    width: 100%;
+  }
+  .title {
+    margin-top: 30px;
+  }
 }

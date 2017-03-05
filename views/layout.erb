@@ -2,6 +2,7 @@
   <head>
     <title>綜合-即時訊息(仮) - HomuAPI - Komica</title>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
     <script src="/js/jquery-2.2.3.min.js"></script>
     <script src="/js/vue.min.js"></script>
     <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
@@ -12,21 +13,14 @@
   </head>
   <body style='background-image: url("/bgs/<%= bg %>");'>
     <div class='head_bar'>
-      <div class="head_btn" style="float:left;" onmouseover="document.getElementById('about').style.display = 'inline-block';">
-        [?]
-        <div id="about" class="dialog" style="position:absolute;display:none;width:auto;" onmouseout="document.getElementById('about').style.display = 'none';">
-          <b>關於本頁</b>
-          <li>GitHub: <a href="https://github.com/Komica20160704/homu-api" target="_blank">https://github.com/Komica20160704/homu-api</a></li>
-          <li>聯絡我: <a href="mailto:bluecrazybear@gmail.com">bluecrazybear@gmail.com</a></li>
-        </div>
-      </div>
-      <div class="head_btn" style="float:right;">
+      <div class="head_btn" style="position:fixed;right:0px;">
         [<a href="http://rem.komica.org/00/index.htm" target="_top">回綜合</a>]
         [<a href="http://homu-homuapi.rhcloud.com/" target="_top">HomuAPI</a>]
-        [<a href="http://ronpa.herokuapp.com" >狛枝論破</a>]
+        [<a href="https://github.com/Komica20160704/homu-api" target="_blank">GitHub</a>]
+        [<a href="http://ronpa.herokuapp.com" target="_blank">狛枝論破</a>]
         [<%= ws_client_count %>]
       </div>
-      <p align="center">
+      <p align="center" class="title">
         <font size="5">
           <b>
             <span>綜合-即時訊息(仮)</span>

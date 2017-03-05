@@ -108,7 +108,7 @@ function setupPicture(picture) {
     var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
     var html = '<a target="_blank" href="' + org_picture + '">';
     html += '<img class="dialog_img" src="' + small_picture;
-    html += '" style="width:125px;"></a>';
+    html += '"></a>';
     return html;
   } else {
     return '<img class="dialog_img">';
