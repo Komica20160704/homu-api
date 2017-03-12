@@ -1,9 +1,14 @@
 # encoding: utf-8
 require 'sinatra/base'
+require "sinatra/reloader"
 require './helper/homu_getter'
 
 module HomuApi
   class App < Sinatra::Base
+    configure :development do
+      register Sinatra::Reloader
+    end
+
     get '/kumiko' do
       erb :kumiko, layout: '<%= yield %>'
     end
