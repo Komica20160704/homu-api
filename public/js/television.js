@@ -20,6 +20,7 @@ var Television = {
   },
   close: () => {
     var video = Television.$element.find('.video').get(0)
+    video.pause()
     Television.$element.hide()
   },
 }
