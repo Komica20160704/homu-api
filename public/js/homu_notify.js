@@ -106,10 +106,14 @@ function setupPicture(picture) {
     var picture_no = picture.split('.')[0];
     var org_picture = image_host + '/00/src/' + picture;
     var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
-    var html = '<a target="_blank" href="' + org_picture + '">';
-    html += '<img class="dialog_img" src="' + small_picture;
-    html += '"></a>';
-    return html;
+    var element_a = $('<a>').attr('target', '_blank').attr('href', org_picture)
+    var element_div = $('<div>').attr('data-video', org_picture).attr('onclick', 'Television.loadVideo(this)')
+    var element_img = $('<img>').attr('class', 'dialog_img').attr('src', small_picture)
+    if (picture.split('.')[1] == 'webm') {
+      return $('<div>').append(element_div.append(element_img)).html()
+    } else {
+      return $('<div>').append(element_a.append(element_img)).html()
+    }
   } else {
     return '<img class="dialog_img">';
   }

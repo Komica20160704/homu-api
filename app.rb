@@ -29,7 +29,8 @@ module HomuApi
     private
 
     def view_erb tag, opt = {}
-      css_list = ["#{tag}.css"] if opt[:css].nil?
+      css_list = ["#{tag}.css", "television.css"]
+      css_list = css_list.concat(opt[:css].to_a)
       count = request.env['WsClientCount']
       bg = Dir.glob('./public/bgs/*.png').map { |i| File.basename i }.sample
       locals = { css_list: css_list, ws_client_count: count, bg: bg }

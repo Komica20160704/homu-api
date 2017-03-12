@@ -1,0 +1,17 @@
+#television {
+  background-color: rgb(240, 224, 214);
+  padding: 10px;
+  position: fixed;
+  top: 70px;
+  left: 30px;
+}
+
+#television .video {
+  width: 100%;
+}
+
+@media only screen and (max-width: 1240px) {
+  #television {
+    display: none;
+  }
+}
