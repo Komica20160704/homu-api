@@ -1,0 +1,18 @@
+#reporter {
+  width: 400px;
+  display: block;
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.red {
+  font-weight: bold;
+  color: red;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+}

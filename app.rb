@@ -13,6 +13,10 @@ module HomuApi
       erb :kumiko, layout: '<%= yield %>'
     end
 
+    get '/report' do
+      view_erb :report
+    end
+
     get '/' do
       view_erb :index
     end

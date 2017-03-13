@@ -1,0 +1,37 @@
+<div id="reporter">
+  <div class="red"></div>
+  <textarea></textarea>
+  <button onclick="report()">送出</button>
+  <button onclick="window.history.back()" disabled="true">回前頁</button>
+</div>
+
+<script>
+  $('textarea').attr('placeholder',
+    '在此輸入你的意見，像是Bug、新功能或是背景右下角的圖片'
+  )
+  report = function () {
+    var message = $('textarea').val()
+    if (!message) {
+      return
+    }
+    $('textarea').prop('disabled', true)
+    $('button').prop('disabled', true)
+    $.ajax({
+      url: 'https://script.google.com/macros/s/AKfycbzHiPcLye34IOB_I2KboQXubpIiaXBfRxSlygj0lBQKR_wfAc8/exec',
+      method:"POST",
+      data: {
+        message: message,
+      },
+    }).done((e) => {
+      console.log(e)
+      if (e.success) {
+        $('.red').text('資料已送出')
+      } else {
+        $('.red').text('資料送出失敗')
+      }
+    }).always((e) => {
+      $('textarea').prop('disabled', false)
+        $('button').prop('disabled', false)
+    })
+  }
+</script>
