@@ -6,6 +6,7 @@
 </div>
 
 <script>
+  var api_url = 'https://script.google.com/macros/s/AKfycbzHiPcLye34IOB_I2KboQXubpIiaXBfRxSlygj0lBQKR_wfAc8/exec'
   $('textarea').attr('placeholder',
     '在此輸入你的意見，像是Bug、新功能或是背景右下角的圖片'
   )
@@ -17,21 +18,53 @@
     $('textarea').prop('disabled', true)
     $('button').prop('disabled', true)
     $.ajax({
-      url: 'https://script.google.com/macros/s/AKfycbzHiPcLye34IOB_I2KboQXubpIiaXBfRxSlygj0lBQKR_wfAc8/exec',
+      url: api_url,
       method:"POST",
       data: {
         message: message,
       },
     }).done((e) => {
-      console.log(e)
       if (e.success) {
         $('.red').text('資料已送出')
+        getReports()
       } else {
         $('.red').text('資料送出失敗')
-      }
-    }).always((e) => {
-      $('textarea').prop('disabled', false)
+        $('textarea').prop('disabled', false)
         $('button').prop('disabled', false)
+      }
     })
   }
+
+  getReports = function () {
+    $('.dialog').fadeOut()
+    $.ajax({
+      url: api_url,
+      method:"GET",
+    }).done((e) => {
+      if (e.success) {
+        $('.dialog').remove()
+        e.reports.reverse().forEach(function (r) {
+          var dialog = $('<div class="dialog" style="display:none">')
+          var datetime = $('<div class="datetime">')
+          var message = $('<div class="message">')
+          var answer = $('<div class="answer">')
+          var d = new Date(r.datetime)
+          var t = $('<font color="#cc1105" size="+1"><b>無題</b></font>')
+          var n = $('<font color="#117743"><b>無名</b></font>')
+          datetime.append(t).append(' ').append(n).append(' ')
+          datetime.append(d.toLocaleDateString()).append(' ').append(d.toLocaleTimeString())
+          dialog.append(datetime).append(message.append(r.message))
+          if (r.answer.trim()) {
+            dialog.append(answer.append('>>').append(r.answer))
+          }
+          $('body').append(dialog)
+          dialog.fadeIn()
+        })
+      }
+    })
+  }
+
+
+
+  $(document).ready(getReports)
 </script>
