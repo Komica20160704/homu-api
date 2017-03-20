@@ -58,7 +58,7 @@ $( document ).ready(function() {
         var lines = content.split('\n');
         lines.forEach(function(e, i) {
           if (e.startsWith('>')) {
-            lines[i] = '<span style="color:rgb(120,153,34);">' + e + '</span>';
+            lines[i] = '<span class="reuse">' + e + '</span>';
           }
         });
         return lines.join('<br>');
@@ -68,12 +68,14 @@ $( document ).ready(function() {
           var picture_no = picture.split('.')[0];
           var org_picture = image_host + '/00/src/' + picture;
           var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
-          var html = '<a target="_blank" href="' + org_picture + '">';
+          var html = '<a class="dialog-img-link" target="_blank" href="' + org_picture + '">';
           html += '<img class="dialog_img small" src="' + small_picture;
-          html += '" style="max-width:125px;max-height:125px"></a>';
+          html += '" style="max-width:125px;max-height:125px">';
+          html += '<div class="dialog-img-after"></div>';
+          html += '</a>';
           return html;
         } else {
-          return '<img class="dialog_img small">';
+          return '<div class="dialog-img-link"><img class="dialog_img small"></div>';
         }
       },
       setupWeekday: function(date) {

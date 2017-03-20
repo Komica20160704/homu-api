@@ -23,6 +23,14 @@
   background-color: rgb(240, 224, 214);
 }
 
+.dialog .title {
+  color:rgb(204,17,5);
+}
+
+.dialog .name {
+  color:green;
+}
+
 .message {
   white-space: pre;
   margin-top: 16px;

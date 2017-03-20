@@ -62,8 +62,8 @@ function setupData(id, block) {
   var date_time = block.Date + "(" + weekday[theday] + ")" + block.Time;
   var id_no = " ID:" + block.Id + " No." + block.No;
   var html = '<hr class="split_line"><div>'
-  html += '<font color="#cc1105" size="+1"><b>' + block.Title + '</b></font>';
-  html += ' <font color="#117743"><b>' + block.Name + '</b></font>';
+  html += '<font class="title" size="+1"><b>' + block.Title + '</b></font>';
+  html += ' <font class="name"><b>' + block.Name + '</b></font>';
   html += ' <font>' + date_time + id_no + '</font></div>';
   return html;
 }
@@ -88,7 +88,7 @@ function setupContent(id, content) {
   var lines = content.split('\n');
   lines.forEach(function(e, i) {
     if (e.startsWith('>')) {
-      lines[i] = '<span style="color:rgb(120,153,34);">' + e + '</span>';
+      lines[i] = '<span class="reuse">' + e + '</span>';
     }
   });
   var html = '<div class="dialog_content">';
@@ -106,16 +106,17 @@ function setupPicture(picture) {
     var picture_no = picture.split('.')[0];
     var org_picture = image_host + '/00/src/' + picture;
     var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
-    var element_a = $('<a>').attr('target', '_blank').attr('href', org_picture)
-    var element_div = $('<div>').attr('data-video', org_picture).attr('onclick', 'Television.loadVideo(this)')
+    var element_a = $('<a>').attr('class', 'dialog-img-link').attr('target', '_blank').attr('href', org_picture)
+    var element_div = $('<div>').attr('class', 'dialog-img-link').attr('data-video', org_picture).attr('onclick', 'Television.loadVideo(this)')
     var element_img = $('<img>').attr('class', 'dialog_img').attr('src', small_picture)
+    var element_img_after = $('<div>').attr('class', 'dialog-img-after')
     if (picture.split('.')[1] == 'webm') {
-      return $('<div>').append(element_div.append(element_img)).html()
+      return $('<div>').append(element_div.append(element_img).append(element_img_after)).html()
     } else {
-      return $('<div>').append(element_a.append(element_img)).html()
+      return $('<div>').append(element_a.append(element_img).append(element_img_after)).html()
     }
   } else {
-    return '<img class="dialog_img">';
+    return '<div class="dialog-img-link"><img class="dialog_img small"></div>';
   }
 }
 

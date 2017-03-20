@@ -8,10 +8,10 @@
     <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
     <link rel="stylesheet" type="text/css" href="/css/layout.css">
     <% css_list.each do |e| %>
-    <%= "<link rel='stylesheet' type='text/css' href='/css/#{e}'>" %>
+    <%= "<link rel='stylesheet' type='text/css' href='/css/#{e}?#{Time.now.to_i}'>" %>
     <% end %>
   </head>
-  <body style='background-image: url("/bgs/<%= bg %>");'>
+  <body style='background-image: url("<%= bg %>");'>
     <div class='head_bar'>
       <div class="head_btn" style="position:fixed;right:0px;">
         [<a href="http://rem.komica.org/00/index.htm" target="_top">回綜合</a>]

@@ -6,6 +6,14 @@
     background-color: rgb(240, 224, 214);
 }
 
+.dialog .title {
+  color:rgb(204,17,5);
+}
+
+.dialog .name {
+  color:green;
+}
+
 .block-container {
     margin: auto;
     width: 740px;
@@ -20,15 +28,8 @@
 }
 
 .dialog_img {
+  position: relative;
   cursor: pointer;
-  border-top-width: 0;
-  border-right-width: 0;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-top-style: solid;
-  border-right-style: solid;
-  border-bottom-style: solid;
-  border-left-style: solid;
   float: left;
   vertical-align: top;
   margin-left: 20px;
@@ -45,17 +46,21 @@
 }
 
 .split_line {
-    width: 100%;
-    border-right-width: 0;
-    border-bottom-width: 0;
+  width: 100%;
+  border-right-width: 0;
+  border-bottom-width: 0;
 }
 
 .head_block {
-    float: right;
-    overflow: hidden;
-    max-width: 400px;
-    height: 20px;
-    color: rgb(120, 153, 34);
+  float: right;
+  overflow: hidden;
+  max-width: 400px;
+  height: 20px;
+  color: rgb(120, 153, 34);
+}
+
+.reuse {
+  color:rgb(120,153,34);
 }
 
 #followRes {

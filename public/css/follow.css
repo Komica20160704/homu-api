@@ -25,19 +25,27 @@
 }
 
 .dialog_img {
-    border-top-width: 0;
-    border-right-width: 0;
-    border-bottom-width: 0;
-    border-left-width: 0;
-    border-top-style: solid;
-    border-right-style: solid;
-    border-bottom-style: solid;
-    border-left-style: solid;
-    float: left;
-    vertical-align: top;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 5px;
+  position: relative;
+  cursor: pointer;
+  float: left;
+  vertical-align: top;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 5px;
+  max-width: 125px;
+  max-height: 125px;
+}
+
+.reuse {
+  color:rgb(120,153,34);
+}
+
+.dialog .title {
+  color:rgb(204,17,5);
+}
+
+.dialog .name {
+  color:green;
 }
 
 #followHead {
