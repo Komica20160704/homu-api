@@ -6,7 +6,7 @@
     <script src="/js/jquery-2.2.3.min.js"></script>
     <script src="/js/vue.min.js"></script>
     <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
-    <link rel="stylesheet" type="text/css" href="/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="/css/layout.css?<%= Time.now.to_i %>">
     <% css_list.each do |e| %>
     <%= "<link rel='stylesheet' type='text/css' href='/css/#{e}?#{Time.now.to_i}'>" %>
     <% end %>
