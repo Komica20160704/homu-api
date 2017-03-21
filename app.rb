@@ -34,7 +34,7 @@ module HomuApi
     private
 
     def view_erb tag, opt = {}
-      css_list = ["#{tag}.css", "television.css"]
+      css_list = ["#{tag}.css", "television.css", "id-hider.css"]
       css_list = css_list.concat(opt[:css].to_a)
       if Time.now.monday?
         css_list.push("tawawa.css")
