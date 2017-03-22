@@ -28,7 +28,7 @@ function createDialog(id, block, heads) {
 }
 
 function setupMessage(id, block, heads) {
-  var url = komica + '/00/index.php?res=' + block.HeadNo;
+  var url = komica + '/00/pixmicat.php?res=' + block.HeadNo;
   var html = '<div style="margin-top:8;margin-left:8;">';
   var follow = ' [<a href="./follow/' + block.HeadNo + '" target="_blank">追蹤</a>]';
   if (block.No == block.HeadNo) {
