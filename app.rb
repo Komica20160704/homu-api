@@ -10,6 +10,11 @@ module HomuApi
       register Sinatra::Reloader
     end
 
+    get '/css/tawawa.css' do
+      content_type :'text/css'
+      erb :'css/tawawa.css', layout: '<%= yield %>'
+    end
+
     get '/kumiko' do
       erb :kumiko, layout: '<%= yield %>'
     end
@@ -36,6 +41,7 @@ module HomuApi
     def view_erb tag, opt = {}
       css_list = ["#{tag}.css", "television.css", "id-hider.css"]
       css_list = css_list.concat(opt[:css].to_a)
+      js_list = ["tawawa.js"]
       if Time.now.monday?
         css_list.push("tawawa.css")
         bg_dir = './public/bgs/tawawa/*.png'
@@ -44,7 +50,7 @@ module HomuApi
       end
       count = request.env['WsClientCount']
       bg = Dir.glob(bg_dir).map { |i| i.sub!('./public', '') }.sample
-      locals = { css_list: css_list, ws_client_count: count, bg: bg }
+      locals = { css_list: css_list, js_list: js_list, ws_client_count: count, bg: bg }
       locals.merge!(opt[:locals]) unless opt[:locals].nil?
       erb(tag, locals: locals)
     end

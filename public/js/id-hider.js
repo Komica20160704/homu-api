@@ -12,13 +12,13 @@ function IdHinder() {
       var x = $el.find('.close')
       var hiding = x.data('hide')
       if (hiding) {
-        $el.css('background-color', 'rgb(240, 224, 214)')
+        $el.removeClass('hide')
         $('.new-id-row').show()
         $('.id-rows').show()
         x.data('hide', '')
         x.text('[X]')
       } else {
-        $el.css('background-color', 'rgba(0, 0, 0, 0)')
+        $el.addClass('hide')
         $('.new-id-row').hide()
         $('.id-rows').hide()
         x.data('hide', 'hiding')

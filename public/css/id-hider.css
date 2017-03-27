@@ -7,6 +7,10 @@
   right: 30px;
 }
 
+#id-hider.hide {
+  background-color: rgba(0, 0, 0, 0);
+}
+
 #id-hider .close {
   float: right;
   margin-bottom: 5px;
