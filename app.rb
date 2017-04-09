@@ -19,6 +19,10 @@ module HomuApi
       erb :kumiko, layout: '<%= yield %>'
     end
 
+    get '/tawawa' do
+      view_erb :index, tawawa: true
+    end
+
     get '/report' do
       view_erb :report
     end
@@ -42,7 +46,7 @@ module HomuApi
       css_list = ["#{tag}.css", "television.css", "id-hider.css"]
       css_list = css_list.concat(opt[:css].to_a)
       js_list = ["tawawa.js"]
-      if Time.now.monday?
+      if Time.now.monday? || opt[:tawawa]
         css_list.push("tawawa.css")
         bg_dir = './public/bgs/tawawa/*.png'
       else
