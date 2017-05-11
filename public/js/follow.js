@@ -1,5 +1,5 @@
-var komica = 'http://rem.komica.org';
-var image_host = komica;
+var komica = 'http://rem.komica2.net';
+var image_host = 'http://p2.komica.ml';
 var weekday = [
   "日",
   "一",

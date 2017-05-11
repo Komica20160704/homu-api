@@ -2,8 +2,8 @@ var index = 0;
 var isClosed = false;
 var followingHeadNo = null;
 var block_list = [];
-var komica = 'http://rem.komica.org';
-var image_host = komica;
+var komica = 'http://rem.komica2.net';
+var image_host = 'http://p2.komica.ml';
 var max_data_count = 100;
 var weekday = [
   "日",
