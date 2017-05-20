@@ -18,7 +18,9 @@ var weekday = [
 function createDialog(id, block, heads) {
   var then = new Date("20" + block.Date);
   var theday = then.getDay();
-  var html = '<div id="dialog' + id + '" class="dialog" style="">';
+  var classNames = ['dialog'];
+  if (block.No == block.HeadNo) { classNames.push('head'); }
+  var html = '<div id="dialog' + id + '" class="' + classNames.join(' ') + '">';
   html += setupMessage(id, block, heads);
   html += setupData(id, block);
   html += setupPicture(block.Picture);

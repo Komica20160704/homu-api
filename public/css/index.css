@@ -6,6 +6,10 @@
     background-color: rgb(240, 224, 214);
 }
 
+.dialog.head {
+  background-color: transparent;
+}
+
 .dialog .title {
   color:rgb(204,17,5);
 }
