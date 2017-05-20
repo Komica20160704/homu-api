@@ -36,7 +36,7 @@ module HomuApi
       view_erb(:follow, locals: { resNo: resNo, token: token })
     end
 
-    get /\/(?<headNo>[0-9]+)$/ do |headNo|
+    get /\A\/(?<headNo>[0-9]+)\Z/ do |headNo|
       return 403 if params[:token] != token
       content_type :json, :charset => 'utf-8'
       HomuGetter::get_res headNo
