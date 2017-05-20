@@ -96,7 +96,7 @@ $( document ).ready(function() {
         var that = this;
         $.ajax({
           method: 'GET',
-          url: 'http://' + window.document.location.host + '/' + headNo,
+          url: 'http://' + window.document.location.host + '/' + headNo + '?token=' + window.token,
           success: function(res) {
             that.Head = [res.Head];
             that.Bodies = res.Bodies;

@@ -3,6 +3,7 @@ require 'sinatra/base'
 require "sinatra/reloader"
 require './helper/homu_getter'
 require 'date'
+require 'digest'
 
 module HomuApi
   class App < Sinatra::Base
@@ -32,11 +33,12 @@ module HomuApi
     end
 
     get '/follow/:resNo' do |resNo|
-      view_erb(:follow, locals: { resNo: resNo })
+      view_erb(:follow, locals: { resNo: resNo, token: token })
     end
 
-    get '/:headNo' do |headNo|
-      content_type :json
+    get /^\/(?<headNo>[0-9]+)$/ do |headNo|
+      return 403 if params[:token] != token
+      content_type :json, :charset => 'utf-8'
       HomuGetter::get_res headNo
     end
 
@@ -57,6 +59,15 @@ module HomuApi
       locals = { css_list: css_list, js_list: js_list, ws_client_count: count, bg: bg }
       locals.merge!(opt[:locals]) unless opt[:locals].nil?
       erb(tag, locals: locals)
+    end
+
+    def token
+      md5 = Digest::MD5.new
+      secret = ENV['SECRET'].to_s
+      today = Time.now.strftime("%Y/%m/%d")
+      ip = request.ip.to_s
+      md5 << secret << today << ip
+      md5.hexdigest[9..16]
     end
 
     run! if app_file == $PROGRAM_NAME
