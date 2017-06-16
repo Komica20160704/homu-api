@@ -48,17 +48,23 @@ module HomuApi
       css_list = ["#{tag}.css", "television.css", "id-hider.css"]
       css_list = css_list.concat(opt[:css].to_a)
       js_list = ["tawawa.js"]
-      if Time.now.monday? || opt[:tawawa]
-        css_list.push("tawawa.css")
-        bg_dir = './public/bgs/tawawa/*.png'
-      else
-        bg_dir = './public/bgs/*.png'
-      end
       count = request.env['WsClientCount']
-      bg = Dir.glob(bg_dir).map { |i| i.sub!('./public', '') }.sample
+      bg = pick_background_img opt[:tawawa]
       locals = { css_list: css_list, js_list: js_list, ws_client_count: count, bg: bg }
       locals.merge!(opt[:locals]) unless opt[:locals].nil?
       erb(tag, locals: locals)
+    end
+
+    def pick_background_img is_tawawa
+      if Time.now.monday? || is_tawawa
+        css_list.push("tawawa.css")
+        bg_dir = './public/bgs/tawawa/*.png'
+      elsif Random.rand * 256 > 255
+        bg_dir = './public/bgs/koiking/*.png'
+      else
+        bg_dir = './public/bgs/*.png'
+      end
+      Dir.glob(bg_dir).map { |i| i.sub!('./public', '') }.sample
     end
 
     def token
