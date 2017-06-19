@@ -49,13 +49,13 @@ module HomuApi
       css_list = css_list.concat(opt[:css].to_a)
       js_list = ["tawawa.js"]
       count = request.env['WsClientCount']
-      bg = pick_background_img opt[:tawawa]
+      bg = pick_background_img opt[:tawawa], css_list
       locals = { css_list: css_list, js_list: js_list, ws_client_count: count, bg: bg }
       locals.merge!(opt[:locals]) unless opt[:locals].nil?
       erb(tag, locals: locals)
     end
 
-    def pick_background_img is_tawawa
+    def pick_background_img is_tawawa, css_list
       if Time.now.monday? || is_tawawa
         css_list.push("tawawa.css")
         bg_dir = './public/bgs/tawawa/*.png'
