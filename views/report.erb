@@ -10,7 +10,7 @@
   $('textarea').attr('placeholder',
     '在此輸入你的意見，像是Bug、新功能或是背景右下角的圖片'
   )
-  report = function () {
+  var report = function() {
     var message = $('textarea').val()
     if (!message) {
       return
@@ -19,11 +19,11 @@
     $('button').prop('disabled', true)
     $.ajax({
       url: api_url,
-      method:"POST",
+      method: 'POST',
       data: {
         message: message,
       },
-    }).done((e) => {
+    }).done(function(e) {
       if (e.success) {
         $('.red').text('資料已送出')
         getReports()
@@ -35,15 +35,15 @@
     })
   }
 
-  getReports = function () {
+  var getReports = function() {
     $('.dialog').fadeOut()
     $.ajax({
       url: api_url,
       method:"GET",
-    }).done((e) => {
+    }).done(function(e) {
       if (e.success) {
         $('.dialog').remove()
-        e.reports.reverse().forEach(function (r) {
+        e.reports.reverse().forEach(function(r) {
           var dialog = $('<div class="dialog" style="display:none">')
           var datetime = $('<div class="datetime">')
           var message = $('<div class="message">')
@@ -63,8 +63,6 @@
       }
     })
   }
-
-
 
   $(document).ready(getReports)
 </script>
