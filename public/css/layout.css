@@ -10,6 +10,9 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 .head_bar {
     position: fixed;
     width: 100%;
