@@ -1,32 +1,36 @@
 html {
-    width: 99%;
+  width: 99%;
 }
 body {
-    width: 100%;
-    background-color: rgb(255, 255, 238);
-    color: rgb(128, 0, 0);
-    background-image: url("/gorigori.png");
-    background-position: right bottom;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  width: 100%;
+  background-color: rgb(255, 255, 238);
+  color: rgb(128, 0, 0);
+  background-image: url("/gorigori.png");
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 ::-webkit-scrollbar {
   display: none;
 }
 .head_bar {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1;
-    background-color: rgb(255, 255, 238);
-    background: -moz-linear-gradient(top, rgba(255, 255, 238, 1) 90%, rgba(255, 255, 255, 0) 100%);
-    background: -webkit-linear-gradient(top, rgba(255, 255, 238, 1) 90%, rgba(255, 255, 255, 0) 100%);
-    background: linear-gradient(to bottom, rgba(255, 255, 238, 1) 90%, rgba(255, 255, 255, 0) 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=0);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+  background-color: rgb(255, 255, 238);
+  background: -moz-linear-gradient(top, rgba(255, 255, 238, 1) 90%, rgba(255, 255, 255, 0) 100%);
+  background: -webkit-linear-gradient(top, rgba(255, 255, 238, 1) 90%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 238, 1) 90%, rgba(255, 255, 255, 0) 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=0);
 }
 .head_btn {
-    display: inline-block;
-    margin-top: 8px;
-    margin-bottom: 16px;
-    margin-right: 64px;
+  display: inline-block;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  margin-right: 64px;
+}
+.japariman {
+  height: 17px;
+  vertical-align: text-bottom;
 }
