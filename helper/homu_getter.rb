@@ -4,7 +4,7 @@ require 'json'
 
 module HomuApi
   module HomuGetter
-    @url = 'http://homu-homuapi.rhcloud.com/'
+    @url = 'http://homu.homu-api.com/'
 
     def self.get_page page = '0'
       begin
