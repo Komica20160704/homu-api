@@ -1,5 +1,14 @@
 <html>
   <head>
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-103022327-4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments)};
+      gtag('js', new Date());
+      gtag('config', 'UA-103022327-4');
+    </script>
+
     <title>綜合-即時訊息(仮) - HomuAPI - Komica</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -22,6 +31,15 @@
     <% end %>
   </head>
   <body style='background-image: url("<%= bg %>");'>
+    <div id="new_host" style="z-index: 100; padding: 5px; background: #f0e0d6; position: fixed; left: 20px; top: 20px;">
+      本站新網址
+      <a href="http://www.homu-api.com/">http://www.homu-api.com/</a>
+      <i class="fa fa-times" style="cursor: pointer;"></i>
+      <script>
+        if (location.host == 'www.homu-api.com') {  $('#new_host').hide() }
+        $('#new_host .fa.fa-times').click(function() { $('#new_host').hide() })
+      </script>
+    </div>
     <div class='head_bar'>
       <div class="head_btn" style="position:fixed;right:0px;">
         [<a href="http://rem.komica2.net/00/index.htm" target="_top">回綜合</a>]
