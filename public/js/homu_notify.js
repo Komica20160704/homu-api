@@ -165,6 +165,7 @@ function startWebSocket(uri) {
     var data = JSON.parse(message.data);
     if (data.Type == 'Notify' || (data.Type == 'Cache' && !isCached)) {
       isCached = true;
+      $('#loader').hide();
       receivedNotify(data);
     }
   };
