@@ -12,7 +12,7 @@ module HomuApi
       @blocks = Hash.new false
       @last_block_no = ""
       check get_data
-      @scheduler.every "#{REFRESH_TIME}s" { check_news }
+      @scheduler.every "#{REFRESH_TIME}s" do check_news end
     end
 
     def call env
