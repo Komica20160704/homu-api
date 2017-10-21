@@ -4,13 +4,15 @@ require './helper/homu_getter'
 
 module HomuApi
   class HomuChecker
+    REFRESH_TIME = ENV['REFRESH_TIME'] || 30
+
     def initialize notifier
       @notifier = notifier
       @scheduler = Rufus::Scheduler.new
       @blocks = Hash.new false
       @last_block_no = ""
       check get_data
-      @scheduler.every '10s' do check_news end
+      @scheduler.every "#{REFRESH_TIME}s" { check_news }
     end
 
     def call env
