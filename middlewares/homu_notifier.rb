@@ -37,7 +37,7 @@ module HomuApi
           attachemnt[:author_name] = "No.#{head['No']} ID:#{head['Id']}: #{head['Content'].split("\n").first[0..8]}⋯⋯"
           attachemnt[:color] = '#ffffee'
         else
-          attachemnt[:pretext] = "#{block['Id']}發了一篇<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|#{block['Id']}新文章>"
+          attachemnt[:pretext] = "#{block['Id']}發了一篇<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|新文章>"
           attachemnt[:color] = '#f0e0d6'
         end
         if block['Picture']
