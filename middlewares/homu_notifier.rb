@@ -40,6 +40,7 @@ module HomuApi
           attachemnt[:image_url] = "http://p2.komica.ml/00/src/#{block['Picture']}"
           attachemnt[:thumb_url] = "http://p2.komica.ml/00/thumb/#{block['Picture'].split('.').first}s.jpg"
         end
+        attachemnt
       end
       NotyAllWorker.perform_async attachments
     end
