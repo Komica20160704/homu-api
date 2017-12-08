@@ -35,10 +35,10 @@ module HomuApi
           head = data['Heads'].find { |head| head['No'] == block['HeadNo'] }
           attachemnt[:pretext] = "#{block['Id']}回應了<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|討論串>"
           attachemnt[:author_name] = "No.#{head['No']} ID:#{head['Id']}: #{head['Content'].split("\n").first[0..8]}⋯⋯"
-          attachemnt[:color] = '#ffffee'
+          attachemnt[:color] = '#f0e0d6'
         else
           attachemnt[:pretext] = "#{block['Id']}發了一篇<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|新文章>"
-          attachemnt[:color] = '#f0e0d6'
+          attachemnt[:color] = '#ffffee'
         end
         if block['Picture']
           attachemnt[:image_url] = "http://p2.komica.ml/00/src/#{block['Picture']}"
