@@ -25,7 +25,7 @@ module HomuApi
       attachments = data['Blocks'].map do |block|
         attachemnt = {
           fallback: message(block),
-          color: '#F0E0D6',
+
           author_name: block['Name'],
           title: block['Title'],
           text: "#{block['Content']}",
@@ -33,9 +33,11 @@ module HomuApi
         }
         if block['HeadNo'] != block['No']
           head = data['Heads'].find { |head| head['No'] == block['HeadNo'] }
-          attachemnt[:pretext] = "\n\n<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|新的回應> #{head['Content'].lines.first}"
+          attachemnt[:pretext] = "#{block['Id']}回應了<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|討論串> #{head['Id']}: #{head['Content'].lines.first.first(7)}⋯⋯"
+          attachemnt[:color] = '#ffffee'
         else
-          attachemnt[:pretext] = "\n\n<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|新的討論串>"
+          attachemnt[:pretext] = "#{block['Id']}發了一篇<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|#{block['Id']}新文章>"
+          attachemnt[:color] = '#f0e0d6'
         end
         if block['Picture']
           attachemnt[:image_url] = "http://p2.komica.ml/00/src/#{block['Picture']}"
