@@ -33,7 +33,7 @@ module HomuApi
           ts: Time.parse("#{block['Date']} #{block['Time']} +0800").to_i,
         }
         if block['HeadNo'] != block['No']
-          head = data['Blocks'].find { |head| head['No'] == block['HeadNo'] }
+          head = data['Heads'].find { |head| head['No'] == block['HeadNo'] }
           attachemnt[:pretext] = head['Content'].lines.first
         end
         if block['Picture']
