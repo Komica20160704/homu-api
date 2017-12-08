@@ -1,4 +1,5 @@
 require 'sidekiq'
+require 'sidekiq/web'
 
 class SayHiWorker
   include Sidekiq::Worker

@@ -35,7 +35,7 @@ module HomuApi
     end
 
     get '/oauth/slack' do
-      if params[:error].nil?
+      if params['error'].nil?
         code = params[:code]
         url = 'https://slack.com/api/oauth.access'
         response = RestClient.post('https://slack.com/api/oauth.access', {
@@ -44,7 +44,9 @@ module HomuApi
           code: code,
         })
         tokens = JSON.parse(response.body)
-        SayHiWorker.perform_async tokens['incoming_webhook']['url']
+        if tokens['error'].nil?
+          SayHiWorker.perform_async tokens['incoming_webhook']['url']
+        end
       end
       view_erb :slack
     end

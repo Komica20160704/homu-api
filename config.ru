@@ -11,4 +11,4 @@ $stdout.sync = true
 
 use HomuApi::HomuChecker
 use HomuApi::HomuNotifier
-run HomuApi::App.new
+run Rack::URLMap.new('/' => HomuApi::App.new, '/sidekiq' => Sidekiq::Web)
