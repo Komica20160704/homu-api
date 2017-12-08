@@ -1,4 +1,6 @@
 # config.ru
+require './heroku_config'
+require './sidekiq'
 require './app'
 require './middlewares/homu_checker'
 require './middlewares/homu_notifier'

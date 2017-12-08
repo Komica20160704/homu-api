@@ -4,6 +4,8 @@ require "sinatra/reloader"
 require './helper/homu_getter'
 require 'date'
 require 'digest'
+require 'rest-client'
+require 'json'
 
 module HomuApi
   class App < Sinatra::Base
@@ -26,6 +28,25 @@ module HomuApi
 
     get '/report' do
       view_erb :report
+    end
+
+    get '/slack' do
+      view_erb :slack
+    end
+
+    get '/oauth/slack' do
+      if params[:error].nil?
+        code = params[:code]
+        url = 'https://slack.com/api/oauth.access'
+        response = RestClient.post('https://slack.com/api/oauth.access', {
+          client_id: ENV['HOMUMI_ID'],
+          client_secret: ENV['HOMUMI_SECRET'],
+          code: code,
+        })
+        tokens = JSON.parse(response.body)
+        SayHiWorker.perform_async tokens['incoming_webhook']['url']
+      end
+      view_erb :slack
     end
 
     get '/' do
