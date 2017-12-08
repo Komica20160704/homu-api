@@ -33,7 +33,7 @@ module HomuApi
         }
         if block['HeadNo'] != block['No']
           head = data['Heads'].find { |head| head['No'] == block['HeadNo'] }
-          attachemnt[:pretext] = "#{block['Id']}回應了<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|討論串> #{head['Id']}: #{head['Content'].lines.first.first(7)}⋯⋯"
+          attachemnt[:pretext] = "#{block['Id']}回應了<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|討論串> #{head['Id']}: #{head['Content'].split("\n").first[0..8]}⋯⋯"
           attachemnt[:color] = '#ffffee'
         else
           attachemnt[:pretext] = "#{block['Id']}發了一篇<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|#{block['Id']}新文章>"
