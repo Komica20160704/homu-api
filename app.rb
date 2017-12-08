@@ -34,6 +34,11 @@ module HomuApi
       view_erb :slack
     end
 
+    post '/slack' do
+      NotyAllWorker.perform_async(params.to_json)
+      params['challenge']
+    end
+
     get '/oauth/slack' do
       if params['error'].nil?
         code = params[:code]
