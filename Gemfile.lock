@@ -29,6 +29,8 @@ GEM
     rack-test (0.6.3)
       rack (>= 1.0)
     redis (4.0.1)
+    redis-namespace (1.6.0)
+      redis (>= 3.0.4)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
@@ -79,6 +81,7 @@ DEPENDENCIES
   faye-websocket
   foreman
   json
+  redis-namespace
   rest-client
   rufus-scheduler
   sidekiq
