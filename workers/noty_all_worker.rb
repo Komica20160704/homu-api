@@ -9,6 +9,7 @@ class NotyAllWorker
         }.to_json
       rescue Exception => e
         puts "url: #{url}, message: #{e.message}"
+        raise e
       end
     end
   end
