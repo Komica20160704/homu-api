@@ -17,10 +17,37 @@ module HomuApi
       @clients.each { |client| client.send(data.to_json) }
       log_data data
       if data['Type'] == 'Notify' && !data['Blocks'].nil?
-        data['Blocks'].each do |block|
-          NotyAllWorker.perform_async(block)
+        noty_all(data)
+      end
+    end
+
+    def noty_all(data)
+      attachments = data['Blocks'].map do |block|
+        attachemnt = {
+          fallback: message(block),
+          color: '#F0E0D6',
+          author_name: block['Name'],
+          title: block['Title'],
+          title_link: "http://rem.komica2.net/00/pixmicat.php?res=#{block['No']}",
+          text: block['Content'],
+          ts: Time.parse("#{block['Date']} #{block['Time']} +0800").to_i,
+        }
+        if block['HeadNo'] != block['No']
+          head = data['Blocks'].find { |head| head['No'] == block['HeadNo'] }
+          attachemnt[:pretext] = head['Content'].lines.first
+        end
+        if block['Picture']
+          attachemnt[:image_url] = "http://p2.komica.ml/00/src/#{block['Picture']}"
+          attachemnt[:thumb_url] = "http://p2.komica.ml/00/thumb/#{block['Picture'].split('.').first}s.jpg"
         end
       end
+    end
+
+    def message(block)
+      result = "#{block['Title']} #{block['Name']} #{block['Date']} #{block['Time']} ID:#{block['Id']} No.#{block['No']}\n"
+      result += "http://p2.komica.ml/00/thumb/#{block['Picture'].split('.').first}s.jpg\n" if block['Picture']
+      result += block['Content']
+      result
     end
 
     def log_data(data)
