@@ -1,3 +1,5 @@
+require 'rest-client'
+
 class SayHiWorker
   include Sidekiq::Worker
   def perform(url)
