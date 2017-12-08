@@ -33,9 +33,9 @@ module HomuApi
         }
         if block['HeadNo'] != block['No']
           head = data['Heads'].find { |head| head['No'] == block['HeadNo'] }
-          attachemnt[:pretext] = "<http://rem.komica2.net/00/pixmicat.php?res=#{block['Heads']}|新的回應> #{head['Content'].lines.first}..."
+          attachemnt[:pretext] = "\n\n<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|新的回應> #{head['Content'].lines.first}"
         else
-          attachemnt[:pretext] = "<http://rem.komica2.net/00/pixmicat.php?res=#{block['Heads']}|新的討論串>"
+          attachemnt[:pretext] = "\n\n<http://rem.komica2.net/00/pixmicat.php?res=#{block['HeadNo']}|新的討論串>"
         end
         if block['Picture']
           attachemnt[:image_url] = "http://p2.komica.ml/00/src/#{block['Picture']}"
