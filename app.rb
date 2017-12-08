@@ -56,7 +56,7 @@ module HomuApi
           SayHiWorker.perform_async tokens['incoming_webhook']['url']
         end
       end
-      view_erb :slack
+      redirect '/slack'
     end
 
     get '/' do

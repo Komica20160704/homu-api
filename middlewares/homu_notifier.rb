@@ -15,8 +15,12 @@ module HomuApi
 
     def notify(data)
       @clients.each { |client| client.send(data.to_json) }
-      NotyAllWorker.perform_async(data.to_json)
       log_data data
+      if data['Type'] == 'Notify' && !data['Blocks'].nil?
+        data['Blocks'].each do |block|
+          NotyAllWorker.perform_async(block)
+        end
+      end
     end
 
     def log_data(data)
