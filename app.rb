@@ -36,9 +36,9 @@ module HomuApi
 
     post '/slack' do
       body = request.body.read
-      NotyAllWorker.perform_async(body)
+      # NotyAllWorker.perform_async(body)
       request_payload = JSON.parse body
-      NotyAllWorker.perform_async(request_payload['challenge'])
+      # NotyAllWorker.perform_async(request_payload['challenge'])
       request_payload['challenge']
     end
 
