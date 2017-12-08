@@ -28,13 +28,12 @@ module HomuApi
           color: '#F0E0D6',
           author_name: block['Name'],
           title: block['Title'],
-          title_link: "http://rem.komica2.net/00/pixmicat.php?res=#{block['No']}",
-          text: block['Content'],
+          text: "#{block['Content']}\n<http://rem.komica2.net/00/pixmicat.php?res=#{block['No']}|討論串>",
           ts: Time.parse("#{block['Date']} #{block['Time']} +0800").to_i,
         }
         if block['HeadNo'] != block['No']
           head = data['Heads'].find { |head| head['No'] == block['HeadNo'] }
-          attachemnt[:pretext] = head['Content'].lines.first
+          attachemnt[:pretext] = ">> #{head['Content'].lines.first}"
         end
         if block['Picture']
           attachemnt[:image_url] = "http://p2.komica.ml/00/src/#{block['Picture']}"
