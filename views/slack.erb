@@ -1,3 +1,24 @@
-<a href="https://slack.com/oauth/authorize?client_id=<%= ENV['HOMUMI_ID'] %>&scope=incoming-webhook">
-  <img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" />
-</a>
+<div class="block-container">
+  <div>
+    <a href="https://slack.com/oauth/authorize?client_id=<%= ENV['HOMUMI_ID'] %>&scope=incoming-webhook">
+      <img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" />
+    </a>
+  </div>
+  <br/>
+  <form method="POST" action="/slack">
+    加入Webhook:
+    <input name="webhook" style="width: 400px;"/>
+    <button>加入</button>
+  </form>
+  </form>
+  <div style="padding: 0px 10px; margin-top: 10px;">已加入的連結:</div>
+  <% $homu_redis.smembers('webhooks').each do |url| %>
+    <% uri = URI(url) %>
+    <div style="background-color: #f0e0d6; padding: 5px 10px; margin-top: 5px;">
+      <%= "#{uri.scheme}://****/********#{uri.path[-16..-1]}" %>
+      <div>
+        <%= $homu_redis.hget('webhooks_results', url) %>
+      </div>
+    </div>
+  <% end %>
+</div>

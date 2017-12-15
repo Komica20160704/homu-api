@@ -35,11 +35,8 @@ module HomuApi
     end
 
     post '/slack' do
-      body = request.body.read
-      # NotyAllWorker.perform_async(body)
-      request_payload = JSON.parse body
-      # NotyAllWorker.perform_async(request_payload['challenge'])
-      request_payload['challenge']
+      $homu_redis.sadd('webhooks', params[:webhook])
+      redirect '/slack'
     end
 
     get '/oauth/slack' do
@@ -76,7 +73,7 @@ module HomuApi
     private
 
     def view_erb tag, opt = {}
-      css_list = ["#{tag}.css", "television.css", "id-hider.css"]
+      css_list = ["main.css", "#{tag}.css", "television.css", "id-hider.css"]
       css_list = css_list.concat(opt[:css].to_a)
       js_list = ["tawawa.js"]
       count = request.env['WsClientCount']

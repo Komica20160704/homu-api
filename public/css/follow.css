@@ -3,71 +3,14 @@
   margin: auto;
 }
 
-.dialog {
-    margin-top: 5px;
-    padding: 3px 10px 10px;
-    display: inline-block;
-    width: 720px;
-    background-color: rgb(240, 224, 214);
-}
-
-.block-container {
-    margin: auto;
-    width: 740px;
-}
-
-.dialog_content {
-    word-wrap: break-word;
-    float: left;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    width: 540px;
-}
-
-.dialog_img {
-  position: relative;
-  cursor: pointer;
-  float: left;
-  vertical-align: top;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-top: 5px;
-  max-width: 125px;
-  max-height: 125px;
-}
-
-.reuse {
-  color:rgb(120,153,34);
-}
-
-.dialog .title {
-  color:rgb(204,17,5);
-}
-
-.dialog .name {
-  color:green;
-}
-
 #followHead {
   margin-top: 0px;
   background-color: rgba(0, 0, 0, 0);
 }
 
 @media only screen and (max-width: 768px) {
-  body {
-    width: 90%;
-  }
   #followRes {
     width: 100%;
     margin-top: 80px;
-  }
-  .dialog {
-    width: 100%;
-  }
-  .dialog_content {
-    width: 100%;
-  }
-  .title {
-    margin-top: 30px;
   }
 }
