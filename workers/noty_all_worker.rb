@@ -13,7 +13,12 @@ class NotyAllWorker
         $homu_redis.srem('webhooks', url)
       rescue Exception => e
         $homu_redis.hset('webhooks_results', url, e.message)
-        $homu_redis.hincrby('webhooks_error_count', url, 1)
+        count = $homu_redis.hincrby('webhooks_error_count', url, 1)
+        if count >= 5
+          $homu_redis.srem('webhooks', url)
+          $homu_redis.hdel('webhooks_results', url)
+          $homu_redis.hdel('webhooks_error_count', url)
+        end
       end
     end
   end
