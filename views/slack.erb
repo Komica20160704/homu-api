@@ -13,7 +13,7 @@
       cot = $homu_redis.hget('webhooks_error_count', url)
     %>
     <div style="background-color: #f0e0d6; padding: 5px 10px; margin-top: 5px;">
-      <%= "#{uri.scheme}://****/********#{uri.path[-16..-1]}" %>
+      <%= "#{uri.scheme}://#{uri.host[0..3]}****#{uri.host[-4..-1]}/********#{uri.path[-16..-1]}" %>
       <% if err %>
         <div>這個連結有錯誤: <%= err %><br>錯誤次數過多將會移除此連結(<%= cot %>)</div>
       <% end %>
