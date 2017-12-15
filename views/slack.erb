@@ -1,12 +1,6 @@
 <div class="block-container">
-  <div>
-    <a href="https://slack.com/oauth/authorize?client_id=<%= ENV['HOMUMI_ID'] %>&scope=incoming-webhook">
-      <img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" />
-    </a>
-  </div>
-  <br/>
   <form method="POST" action="/slack">
-    加入Webhook:
+    加入Slack Webhook:
     <input name="webhook" style="width: 400px;"/>
     <button>加入</button>
   </form>
