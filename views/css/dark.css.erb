@@ -1,0 +1,52 @@
+<%
+  background_color = '#263238'
+  dialog_color     = '#37474F'
+  text_color       = '#90A4AE'
+  text_color_light = '#607D8B'
+  link_color       = '#BDBDBD'
+  link_color_light = '#757575'
+%>
+
+body.dark {
+  background-color: <%=background_color%>;
+  color: <%=text_color%>;
+}
+
+body.dark .head_bar {
+  background-color: #e5eeff;
+  background: -moz-linear-gradient(top, <%=background_color%> 90%, rgba(255, 255, 255, 0) 100%);
+  background: -webkit-linear-gradient(top, <%=background_color%> 90%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to bottom, <%=background_color%> 90%, rgba(255, 255, 255, 0) 100%);
+}
+
+body.dark .head_block {
+  color: <%=text_color_light%>;
+}
+
+body.dark #television, body.dark #id-hider:not(.hide), body.dark #new_host {
+  background-color: <%=dialog_color%>;
+}
+
+body.dark .dialog {
+  background-color: <%=dialog_color%>;
+}
+
+body.dark .dialog .title {
+  color: <%=text_color%>;
+}
+
+body.dark .dialog .name {
+  color: <%=text_color%>;
+}
+
+body.dark .reuse, body.dark .answer {
+  color: <%=text_color_light%>;
+}
+
+body.dark a {
+  color: <%=link_color%>;
+}
+
+body.dark a:visited {
+  color: <%=link_color_light%>;
+}

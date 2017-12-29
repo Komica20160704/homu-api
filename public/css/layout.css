@@ -30,7 +30,18 @@ body {
   margin-bottom: 16px;
   margin-right: 64px;
 }
+.head_btn a[href="https://japariman.herokuapp.com/"] {
+  display: inline-flex;
+  vertical-align: sub;
+}
 .japariman {
-  height: 17px;
-  vertical-align: text-bottom;
+  height: 19px;
+}
+#new_host {
+  z-index: 100;
+  padding: 5px;
+  background: #f0e0d6;
+  position: fixed;
+  left: 20px;
+  top: 20px;
 }

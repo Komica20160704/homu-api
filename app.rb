@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'sinatra/base'
-require "sinatra/reloader"
+require 'sinatra/cookies'
+require 'sinatra/reloader'
 require './helper/homu_getter'
 require 'date'
 require 'digest'
@@ -9,13 +10,24 @@ require 'json'
 
 module HomuApi
   class App < Sinatra::Base
+    helpers Sinatra::Cookies
+
     configure :development do
       register Sinatra::Reloader
     end
 
-    get '/css/tawawa.css' do
+    get '/css/:style.css' do |style|
       content_type :'text/css'
-      erb :'css/tawawa.css', layout: '<%= yield %>'
+      erb :"css/#{style}.css", layout: '<%= yield %>'
+    end
+
+    get '/dark' do
+      if cookies[:dark]
+        cookies.delete :dark
+      else
+        cookies[:dark] = 1
+      end
+      redirect back
     end
 
     get '/kumiko' do
@@ -58,13 +70,14 @@ module HomuApi
     end
 
     def pick_background_img is_tawawa, css_list
+      bg_dir = './public/bgs/*.png'
       if Time.now.monday? || is_tawawa
-        css_list.push("tawawa.css")
+        css_list.push('tawawa.css')
         bg_dir = './public/bgs/tawawa/*.png'
+      elsif cookies[:dark]
+        css_list.push('dark.css')
       elsif Random.rand * 256 > 255
         bg_dir = './public/bgs/koiking/*.png'
-      else
-        bg_dir = './public/bgs/*.png'
       end
       Dir.glob(bg_dir).map { |i| i.sub!('./public', '') }.sample
     end
@@ -72,7 +85,7 @@ module HomuApi
     def token
       md5 = Digest::MD5.new
       secret = ENV['SECRET'].to_s
-      today = Time.now.strftime("%Y/%m/%d")
+      today = Time.now.strftime '%Y/%m/%d'
       ip = request.ip.to_s
       md5 << secret << today << ip
       md5.hexdigest[9..16]

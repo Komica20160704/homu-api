@@ -16,6 +16,7 @@ body {
 }
 
 .dialog {
+  display: block;
   text-align: left;
   margin-top: 5;
   margin-left: auto;
