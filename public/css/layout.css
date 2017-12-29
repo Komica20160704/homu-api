@@ -5,7 +5,6 @@ body {
   width: 100%;
   background-color: rgb(255, 255, 238);
   color: rgb(128, 0, 0);
-  background-image: url("/gorigori.png");
   background-position: right bottom;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -35,7 +34,8 @@ body {
   vertical-align: sub;
 }
 .japariman {
-  height: 19px;
+  width: 16px;
+  height: 20px;
 }
 #new_host {
   z-index: 100;

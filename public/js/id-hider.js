@@ -24,6 +24,7 @@ function IdHinder() {
         x.data('hide', 'hiding')
         x.text('[+]')
       }
+      window.gtag('event', 'toggle', { 'event_category': 'idHider' })
     })
     resize()
   }
@@ -33,6 +34,7 @@ function IdHinder() {
       ids.push(id)
       updateView()
     }
+    window.gtag('event', 'addId', { event_category: 'idHider', homu_id: id })
   }
 
   function removeId(el) {
@@ -41,6 +43,7 @@ function IdHinder() {
       return i.id == id
     })
     updateView()
+    window.gtag('event', 'removeId', { event_category: 'idHider', homu_id: id })
   }
 
   function updateView() {
