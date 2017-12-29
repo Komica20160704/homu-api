@@ -68,18 +68,21 @@
 }
 
 @media only screen and (max-width: 768px) {
+  html {
+    width: 100vw;
+  }
   body {
-    width: 90%;
+    margin: 0;
   }
   .block-container {
-    width: 100%;
+    width: 100vw;
     margin-top: 80px;
   }
   .dialog {
-    width: 100%;
+    width: auto;
   }
   .dialog_content {
-    width: 100%;
+    width: auto;
   }
   .title {
     margin-top: 30px;
