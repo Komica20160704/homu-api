@@ -8,7 +8,6 @@
       gtag('js', new Date());
       gtag('config', 'UA-103022327-4');
     </script>
-
     <title>綜合-即時訊息(仮) - HomuAPI - Komica</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -22,12 +21,18 @@
     <script src="/js/vue.min.js"></script>
     <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
     <% js_list.each do |e| %>
-    <%= "<script src='/js/#{e}?#{Time.now.to_i}'></script>" %>
+    <%= "<script src='/js/#{e}?#{File.mtime("./public/js/#{e}").to_i}'></script>" %>
     <% end %>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/layout.css?<%= Time.now.to_i %>">
+    <link rel="stylesheet" type="text/css" href="/css/layout.css?<%= File.mtime('./public/css/layout.css').to_i %>">
     <% css_list.each do |e| %>
-    <%= "<link rel='stylesheet' type='text/css' data-title='#{e.split('.').first}' href='/css/#{e}?#{Time.now.to_i}'>" %>
+    <%
+      public_path = "./public/css/#{e}"
+      views_path = "./views/css/#{e}.erb"
+      mtime = File.mtime(public_path).to_i if File.exist?(public_path)
+      mtime ||= File.mtime(views_path).to_i
+    %>
+    <%= "<link rel='stylesheet' type='text/css' data-title='#{e.split('.').first}' href='/css/#{e}?#{mtime}'>" %>
     <% end %>
   </head>
   <% if cookies[:dark] %>
