@@ -75,7 +75,8 @@
     margin: 0;
   }
   .block-container {
-    width: 100vw;
+    width: auto;
+    padding: 0 10px;
     margin-top: 80px;
     display: flex;
     flex-direction: column;

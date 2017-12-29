@@ -10,7 +10,10 @@
 
 @media only screen and (max-width: 768px) {
   #followRes {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    width: auto;
     margin-top: 80px;
   }
 }

@@ -9,6 +9,15 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+h1.title {
+  font-size: 24px;
+  text-align: center;
+  color: rgb(128, 0, 0);
+}
+h1.title > a {
+  text-decoration: none;
+  color: inherit;
+}
 ::-webkit-scrollbar {
   display: none;
 }
