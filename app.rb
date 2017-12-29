@@ -30,32 +30,6 @@ module HomuApi
       view_erb :report
     end
 
-    get '/slack' do
-      view_erb :slack
-    end
-
-    post '/slack' do
-      $homu_redis.sadd('webhooks', params[:webhook])
-      redirect '/slack'
-    end
-
-    get '/oauth/slack' do
-      if params['error'].nil?
-        code = params[:code]
-        url = 'https://slack.com/api/oauth.access'
-        response = RestClient.post('https://slack.com/api/oauth.access', {
-          client_id: ENV['HOMUMI_ID'],
-          client_secret: ENV['HOMUMI_SECRET'],
-          code: code,
-        })
-        tokens = JSON.parse(response.body)
-        if tokens['error'].nil?
-          SayHiWorker.perform_async tokens['incoming_webhook']['url']
-        end
-      end
-      redirect '/slack'
-    end
-
     get '/' do
       view_erb :index
     end
