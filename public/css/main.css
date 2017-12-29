@@ -77,6 +77,8 @@
   .block-container {
     width: 100vw;
     margin-top: 80px;
+    display: flex;
+    flex-direction: column;
   }
   .dialog {
     width: auto;
@@ -86,5 +88,8 @@
   }
   .title {
     margin-top: 30px;
+  }
+  #id-hider {
+    display: none;
   }
 }
