@@ -4,7 +4,8 @@ require 'json'
 
 module HomuApi
   module HomuGetter
-    @url = 'http://homu.homu-api.com/'
+    @url = 'http://homu.homu-api.com/' if ENV['RACK_ENV'] == 'production'
+    @url = 'http://api-homu.dev/' if ENV['RACK_ENV'] == 'development'
 
     def self.get_page page = '0'
       begin
