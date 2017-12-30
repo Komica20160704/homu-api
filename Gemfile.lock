@@ -19,6 +19,7 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     json (2.1.0)
+    jwt (2.1.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -83,6 +84,7 @@ DEPENDENCIES
   faye-websocket
   foreman
   json
+  jwt
   redis-namespace
   rest-client
   rufus-scheduler

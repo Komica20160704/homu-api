@@ -1,0 +1,9 @@
+<script src="https://unpkg.com/hyperapp@1.0.0/dist/hyperapp.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrsasign/8.0.4/jsrsasign-all-min.js" integrity="sha256-bHtNW3ZefiN5Vi/pDfiO+4ULXNHNx+ZMh/iiHqBeqZM=" crossorigin="anonymous"></script>
+<div id="root"></div>
+<script>
+  var isPass = <%= is_pass %>
+  var messages = <%= messages.to_json %>
+  var token = '<%= token %>'
+</script>
+<script src="/js/bomb.min.js"></script>
