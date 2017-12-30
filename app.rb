@@ -49,7 +49,7 @@ module HomuApi
         begin
           decoded_token = JWT.decode token, secret, true, { algorithm: 'HS256' }
         rescue JWT::DecodeError
-          json success: false, message: '密碼是錯的，不要亂來好嗎？'
+          return json success: false, message: '密碼是錯的，不要亂來好嗎？'
         end
       else
         decoded_token = JWT.decode token, nil, false
