@@ -10,7 +10,7 @@ var state = {
   message: '',
   safe: isPass,
   sec: '',
-  messages: messages,
+  messages: messages.sort().reverse(),
 }
 var actions = {
   safe: function(password) {
