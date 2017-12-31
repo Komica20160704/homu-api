@@ -101,7 +101,7 @@ var view = function(state, actions) {
   return(
     h('div', { class: 'container' },
       h('i', { class: 'fa fa-bomb fa-4x' }),
-      diff <= 0 ? h('p', null,
+      (diff <= 0 && !safe) ? h('p', null,
         h('h2', null, '炸彈解除失敗！'),
         h('p', null, '新年快樂！')
       ) : state.safe ? safe : bomb,
