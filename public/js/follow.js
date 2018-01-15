@@ -1,5 +1,6 @@
+var isSSL = location.protocol == 'https:';
 var komica = 'http://rem.komica2.net';
-var image_host = 'http://p2.komica.ml';
+var image_host = '//p2.komica.ml';
 var weekday = [
   "日",
   "一",
@@ -20,7 +21,10 @@ function receivedNotify(data) {
   });
 }
 
-var scheme = "ws://";
+var scheme = 'wss://';
+if (location.protocol == 'http:') {
+  scheme = 'ws://'
+}
 var uri = scheme + window.document.location.host + "/";
 var ws;
 var isCached = false;
