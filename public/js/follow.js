@@ -1,5 +1,5 @@
 var isSSL = location.protocol == 'https:';
-var komica = 'http://rem.komica2.net';
+var komica = 'https://rem.komica2.net';
 var image_host = '//p2.komica.ml';
 var weekday = [
   "日",
@@ -100,7 +100,7 @@ $( document ).ready(function() {
         var that = this;
         $.ajax({
           method: 'GET',
-          url: 'http://' + window.document.location.host + '/' + headNo + '?token=' + window.token,
+          url: '/' + headNo + '?token=' + window.token,
           success: function(res) {
             that.Head = [res.Head];
             that.Bodies = res.Bodies;
