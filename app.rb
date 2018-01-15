@@ -23,43 +23,6 @@ module HomuApi
       erb :"css/#{style}.css", layout: '<%= yield %>'
     end
 
-    get '/2018bomb' do
-      is_pass = $homu_redis.get('2018bomb') == 'pass'
-      messages = $homu_redis.smembers('2018bomb_messages')
-      puts messages.to_json
-      view_erb :'2018bomb', locals: { is_pass: is_pass, token: ENV['BOMB_TOKEN'], messages: messages }
-    end
-
-    post '/2018bomb' do
-      secret = params[:secret]
-      token = ENV['BOMB_TOKEN']
-      begin
-        decoded_token = JWT.decode token, secret, true, { algorithm: 'HS256' }
-        $homu_redis.set '2018bomb', 'pass'
-        json success: true
-      rescue JWT::DecodeError
-        json success: false, message: '密碼是錯的，不要亂來好嗎？'
-      end
-    end
-
-    post '/2018bomb/messages' do
-      secret = ENV['2018BOMB']
-      token = params[:token]
-      if Time.now < Time.new('2018/1/1')
-        begin
-          decoded_token = JWT.decode token, secret, true, { algorithm: 'HS256' }
-        rescue JWT::DecodeError
-          return json success: false, message: '密碼是錯的，不要亂來好嗎？'
-        end
-      else
-        decoded_token = JWT.decode token, nil, false
-      end
-      payload = decoded_token.first
-      message = "[#{Time.now.strftime('%Y/%m/%d %H:%M:%S')}] #{payload['name']}: #{payload['message']}"
-      $homu_redis.sadd '2018bomb_messages', message
-      json success: true, message: message
-    end
-
     get '/dark' do
       if cookies[:dark]
         cookies.delete :dark
