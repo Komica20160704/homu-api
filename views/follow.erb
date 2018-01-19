@@ -14,15 +14,25 @@
 <script type="text/x-template" id="followBlock">
   <div class="dialog" >
     <div>
-      <span>
-        <span class="title"><b>{{ block.Title }}</b></span>
-        <span class="name"><b>{{ block.Name }}</b></span>
-        {{ block.Date }}({{ setupWeekday(block.Date) }}){{ block.Time }}
-        ID:{{ block.Id }}
-        No.{{ block.No }}</span>
+      <span class="title"><b>{{ block.Title }}</b></span>
+      <span class="name"><b>{{ block.Name }}</b></span>
+      {{ block.Date }}({{ setupWeekday(block.Date) }}){{ block.Time }}
+      ID:{{ block.Id }}
+      No.{{ block.No }}
     </div>
-    <div v-html="setupPicture(block.Picture)"></div>
-    <div class="dialog_content" v-html="setupContent(block.Content)"></div>
+    <a class="dialog-img-link" target="_blank" v-if="block.Picture" :href="pictureUrl()">
+      <img class="dialog-img" :src="smallPictureUrl()"/>
+      <div class="dialog-img-after"></div>
+    </a>
+    <div class="dialog-img-link" v-if="!block.Picture">
+      <img class="dialog-img small"/>
+    </div>
+    <div class="dialog_content">
+      <div v-for="line in block.Content.split('\n')">
+        <span class="reuse" v-if="line.startsWith('>')">{{ line }}</span>
+        <span v-if="!line.startsWith('>')">{{ line }}</span>
+      </div>
+    </div>
   </div>
 </script>
 

@@ -31,7 +31,7 @@
   width: 540px;
 }
 
-.dialog_img {
+.dialog-img {
   position: relative;
   cursor: pointer;
   float: left;
@@ -41,6 +41,15 @@
   margin-top: 5px;
   max-width: 125px;
   max-height: 125px;
+}
+
+.dialog.head .dialog-img {
+  max-width: 250px;
+  max-height: 250px;
+}
+
+.dialog.head .dialog_content {
+  width: 415px;
 }
 
 .small {

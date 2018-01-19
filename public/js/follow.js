@@ -1,99 +1,71 @@
-var isSSL = location.protocol == 'https:';
-var komica = 'https://rem.komica2.net';
-var image_host = '//p2.komica.ml';
-var weekday = [
-  "日",
-  "一",
-  "二",
-  "三",
-  "四",
-  "五",
-  "六"
-];
-
-function receivedNotify(data) {
-  var blocks = data.Blocks;
-  var heads = data.Heads;
-  blocks.forEach(function(e) {
-    if (e.HeadNo == followResNo) {
-      followRes.receivedNotify(e);
-    }
-  });
-}
-
-var scheme = 'wss://';
+var isSSL = location.protocol == 'https:'
+var komica = 'https://rem.komica2.net'
+var image_host = '//p2.komica.ml'
+var weekday = ['日', '一', '二', '三', '四', '五', '六']
+var scheme = 'wss://'
 if (location.protocol == 'http:') {
   scheme = 'ws://'
 }
-var uri = scheme + window.document.location.host + "/";
-var ws;
-var isCached = false;
+var uri = scheme + window.document.location.host + '/'
+var ws = null
+var isCached = false
 
-function startWebSocket(uri) {
-  ws = new WebSocket(uri);
-  ws.onmessage = function(message) {
-    var data = JSON.parse(message.data);
-    if (data.Type == 'Notify') {
-      receivedNotify(data);
+function receivedNotify(data) {
+  var blocks = data.Blocks
+  var heads = data.Heads
+  blocks.forEach(function(e) {
+    if (e.HeadNo == followResNo) {
+      followRes.receivedNotify(e)
     }
-  };
+  })
 }
 
-startWebSocket(uri);
+function startWebSocket(uri) {
+  ws = new WebSocket(uri)
+  ws.onmessage = function(message) {
+    var data = JSON.parse(message.data)
+    if (data.Type == 'Notify') {
+      receivedNotify(data)
+    }
+  }
+}
 
+startWebSocket(uri)
 setInterval(function() {
   if (ws.readyState == ws.OPEN) {
-    ws.send(JSON.stringify({
-      Event: "KeepAlive"
-    }));
+    ws.send(JSON.stringify({ Event: 'KeepAlive' }))
   } else {
-    startWebSocket(uri);
+    startWebSocket(uri)
   }
-}, 10000);
+}, 10000)
 
-$( document ).ready(function() {
+$(document).ready(function() {
   Vue.component('followBlock', {
     template: '#followBlock',
     props: {
-      block: Object
+      block: {},
     },
     methods: {
-      setupContent: function(content) {
-        var lines = content.split('\n');
-        lines.forEach(function(e, i) {
-          if (e.startsWith('>')) {
-            lines[i] = '<span class="reuse">' + e + '</span>';
-          }
-        });
-        return lines.join('<br>');
+      pictureUrl: function() {
+        return image_host + '/00/src/' + this.block.Picture
       },
-      setupPicture: function(picture) {
-        if (picture) {
-          var picture_no = picture.split('.')[0];
-          var org_picture = image_host + '/00/src/' + picture;
-          var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
-          var html = '<a class="dialog-img-link" target="_blank" href="' + org_picture + '">';
-          html += '<img class="dialog_img small" src="' + small_picture;
-          html += '" style="max-width:125px;max-height:125px">';
-          html += '<div class="dialog-img-after"></div>';
-          html += '</a>';
-          return html;
-        } else {
-          return '<div class="dialog-img-link"><img class="dialog_img small"></div>';
-        }
+      smallPictureUrl: function() {
+        var picture = this.block.Picture.split('.')[0] + 's.jpg'
+        return image_host + '/00/thumb/' + picture
       },
       setupWeekday: function(date) {
-        var then = new Date("20" + date);
-        var theday = then.getDay();
-        return weekday[theday];
-      }
-    }
-  });
+        var then = new Date(date)
+        var theday = then.getDay()
+        return weekday[theday]
+      },
+    },
+  })
+
   window.followRes = new Vue({
     el: '#followRes',
     data: {
       Head: [],
-      Bodies: []
+      Bodies: [],
     },
     methods: {
       follow: function(headNo) {
@@ -109,10 +81,11 @@ $( document ).ready(function() {
         })
       },
       receivedNotify: function(block) {
-        this.Bodies.push(block);
-        responsiveVoice.speak("You got message!");
-      }
-    }
-  });
-  followRes.follow(followResNo);
-});
+        this.Bodies.push(block)
+        responsiveVoice.speak('You got message!')
+      },
+    },
+  })
+
+  followRes.follow(followResNo)
+})

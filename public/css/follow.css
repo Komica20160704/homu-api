@@ -8,6 +8,15 @@
   background-color: rgba(0, 0, 0, 0);
 }
 
+#followHead .dialog-img {
+  max-width: 250px;
+  max-height: 250px;
+}
+
+#followHead .dialog_content {
+  width: 415px;
+}
+
 @media only screen and (max-width: 768px) {
   #followRes {
     display: flex;

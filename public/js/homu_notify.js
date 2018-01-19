@@ -111,7 +111,7 @@ function setupPicture(picture) {
     var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
     var element_a = $('<a>').attr('class', 'dialog-img-link').attr('target', '_blank').attr('href', org_picture)
     var element_div = $('<div>').attr('class', 'dialog-img-link').attr('data-video', org_picture).attr('onclick', 'Television.loadVideo(this)')
-    var element_img = $('<img>').attr('class', 'dialog_img').attr('src', small_picture)
+    var element_img = $('<img>').attr('class', 'dialog-img').attr('src', small_picture)
     var element_img_after = $('<div>').attr('class', 'dialog-img-after')
     if (picture.split('.')[1] == 'webm') {
       return $('<div>').append(element_div.append(element_img).append(element_img_after)).html()
@@ -119,7 +119,7 @@ function setupPicture(picture) {
       return $('<div>').append(element_a.append(element_img).append(element_img_after)).html()
     }
   } else {
-    return '<div class="dialog-img-link"><img class="dialog_img small"></div>';
+    return '<div class="dialog-img-link"><img class="dialog-img small"></div>';
   }
 }
 
