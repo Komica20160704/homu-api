@@ -27,7 +27,7 @@
     <div class="dialog-img-link" v-if="!block.Picture">
       <img class="dialog-img small"/>
     </div>
-    <div class="dialog_content">
+    <div class="dialog-content">
       <div v-for="line in block.Content.split('\n')">
         <span class="reuse" v-if="line.startsWith('>')">{{ line }}</span>
         <span v-if="!line.startsWith('>')">{{ line }}</span>

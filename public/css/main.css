@@ -23,7 +23,7 @@
   width: 740px;
 }
 
-.dialog_content {
+.dialog-content {
   word-wrap: break-word;
   float: left;
   margin-top: 16px;
@@ -48,7 +48,7 @@
   max-height: 250px;
 }
 
-.dialog.head .dialog_content {
+.dialog.head .dialog-content {
   width: 415px;
 }
 
@@ -93,7 +93,7 @@
   .dialog {
     width: auto;
   }
-  .dialog_content {
+  .dialog-content {
     width: auto;
   }
   .title {

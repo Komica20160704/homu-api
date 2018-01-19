@@ -8,15 +8,3 @@
 
 <%= erb 'partials/television'.to_sym  %>
 <%= erb 'partials/id_hider'.to_sym  %>
-
-<script type="text/x-template" id="followBlock">
-  <div class="dialog" style="width:300px;padding:3px;">
-    <div>
-      <span>{{ block.Date }}({{ setupWeekday(block.Date) }}){{ block.Time }}
-        ID:{{ block.Id }}
-        No.{{ block.No }}</span>
-    </div>
-    <div v-html="setupPicture(block.Picture)"></div>
-    <div class="dialog_content" style="width:200;" v-html="setupContent(block.Content)"></div>
-  </div>
-</script>

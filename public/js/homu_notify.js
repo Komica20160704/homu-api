@@ -77,31 +77,31 @@ function showHideContent(id) {
 }
 
 function setTooLongContent(id, lines) {
-  var visiable = lines.splice(0, 4).join('<br>');
-  var showButton = '<a id="dialog_show_button' + id + '" ';
-  showButton += 'onclick="showHideContent(' + id + ')" ';
-  showButton += 'href="#dialog_show_button' + id + '"><br>顯示完整內容</a>';
-  var unvisiable = '<span id="dialog_hide_content' + id + '" ';
-  unvisiable += 'style="display:none;">';
-  unvisiable += '<br>' + lines.join('<br>') + '</span>';
-  return visiable + showButton + unvisiable;
+  var visiable = lines.splice(0, 4)
+  var showButton = $('<a>').attr('id', 'dialog_show_button' + id)
+  showButton.attr('onclick', 'showHideContent(' + id + ')')
+  showButton.attr('href', '#dialog_show_button' + id)
+  showButton.text('顯示完整內容')
+  var unvisiable = $('<span>').attr('id', 'dialog_hide_content' + id)
+  unvisiable.append(lines)
+  unvisiable.hide()
+  return visiable.concat([showButton, unvisiable])
 }
 
 function setupContent(id, content) {
-  var lines = content.split('\n');
-  lines.forEach(function(e, i) {
-    if (e.startsWith('>')) {
-      lines[i] = '<span class="reuse">' + e + '</span>';
-    }
-  });
-  var html = '<div class="dialog_content">';
+  var lines = content.split('\n')
+  var contentElement = $('<div>').addClass('dialog-content')
+  var lineElements = lines.map(function(line, index) {
+    var element = $('<div>').text(line)
+    if (line.startsWith('>')) { element.addClass('reuse') }
+    return element
+  })
   if (lines.length > 5) {
-    html += setTooLongContent(id, lines);
+    contentElement.append(setTooLongContent(id, lineElements))
   } else {
-    html += lines.join('<br>');
+    contentElement.append(lineElements)
   }
-  html += '</div>';
-  return html;
+  return $('<div>').append(contentElement).html()
 }
 
 function setupPicture(picture) {
