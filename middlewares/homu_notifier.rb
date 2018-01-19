@@ -13,7 +13,7 @@ module HomuApi
       @data = { 'Heads' => [], 'Blocks' => [], 'Type' => 'Cache' }
       cached_data = $homu_redis.get 'data'
       if cached_data
-        @data.merge JSON.parse cached_data
+        @data.merge! JSON.parse cached_data
       end
     end
 
