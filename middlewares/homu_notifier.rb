@@ -11,9 +11,9 @@ module HomuApi
       @app = app
       @clients = []
       @data = { 'Heads' => [], 'Blocks' => [], 'Type' => 'Cache' }
-      if data = $homu_redis.get 'data'
-        JSON.parse data
-        @data.merge data
+      cached_data = $homu_redis.get 'data'
+      if cached_data
+        @data.merge JSON.parse cached_data
       end
     end
 
