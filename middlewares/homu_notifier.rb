@@ -11,6 +11,10 @@ module HomuApi
       @app = app
       @clients = []
       @data = { 'Heads' => [], 'Blocks' => [], 'Type' => 'Cache' }
+      if data = $homu_redis.get 'data'
+        JSON.parse data
+        @data.merge data
+      end
     end
 
     def notify(data)
@@ -31,6 +35,7 @@ module HomuApi
         end
         @data['Heads'] = new_heads
       end
+      $homu_redis.set 'data', @data.to_json
     end
 
     def call(env)
