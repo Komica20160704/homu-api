@@ -1,6 +1,6 @@
 var isSSL = location.protocol == 'https:'
 var komica = 'https://rem.komica2.net'
-var image_host = '//p2.komica.ml'
+var image_host = '//ram.komica2.net'
 var weekday = ['日', '一', '二', '三', '四', '五', '六']
 var scheme = 'wss://'
 if (location.protocol == 'http:') {

@@ -4,7 +4,7 @@ var isClosed = false;
 var followingHeadNo = null;
 var block_list = [];
 var komica = 'https://rem.komica2.net';
-var image_host = '//p2.komica.ml';
+var image_host = '//ram.komica2.net';
 var max_data_count = 100;
 var weekday = [
   "日",
