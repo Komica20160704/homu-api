@@ -3,8 +3,8 @@ var index = 0;
 var isClosed = false;
 var followingHeadNo = null;
 var block_list = [];
-var komica = 'https://rem.komica.org';
-var image_host = '//rem.komica.org';
+var komica = 'https://ram.komica2.net';
+var image_host = '//ram.komica2.net';
 var max_data_count = 100;
 var weekday = [
   "日",
@@ -31,7 +31,7 @@ function createDialog(id, block, heads) {
 }
 
 function setupMessage(id, block, heads) {
-  var url = komica + '/00test/pixmicat.php?res=' + block.HeadNo;
+  var url = komica + '/00/pixmicat.php?res=' + block.HeadNo;
   var html = '<div style="margin-top:8;margin-left:8;">';
   var follow = ' [<a href="./follow/' + block.HeadNo + '" target="_blank">追蹤</a>]';
   if (block.No == block.HeadNo) {
@@ -107,8 +107,8 @@ function setupContent(id, content) {
 function setupPicture(picture) {
   if (picture) {
     var picture_no = picture.split('.')[0];
-    var org_picture = image_host + '/00test/src/' + picture;
-    var small_picture = image_host + '/00test/thumb/' + picture_no + 's.jpg';
+    var org_picture = image_host + '/00/src/' + picture;
+    var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
     var element_a = $('<a>').attr('class', 'dialog-img-link').attr('target', '_blank').attr('href', org_picture)
     var element_div = $('<div>').attr('class', 'dialog-img-link').attr('data-video', org_picture).attr('onclick', 'Television.loadVideo(this)')
     var element_img = $('<img>').attr('class', 'dialog-img').attr('src', small_picture)

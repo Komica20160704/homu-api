@@ -1,6 +1,6 @@
 var isSSL = location.protocol == 'https:'
-var komica = 'https://rem.komica.org'
-var image_host = '//rem.komica.org'
+var komica = 'https://ram.komica2.net'
+var image_host = '//ram.komica2.net'
 var weekday = ['日', '一', '二', '三', '四', '五', '六']
 var scheme = 'wss://'
 if (location.protocol == 'http:') {
@@ -47,11 +47,11 @@ $(document).ready(function() {
     },
     methods: {
       pictureUrl: function() {
-        return image_host + '/00test/src/' + this.block.Picture
+        return image_host + '/00/src/' + this.block.Picture
       },
       smallPictureUrl: function() {
         var picture = this.block.Picture.split('.')[0] + 's.jpg'
-        return image_host + '/00test/thumb/' + picture
+        return image_host + '/00/thumb/' + picture
       },
       setupWeekday: function(date) {
         var then = new Date(date)
