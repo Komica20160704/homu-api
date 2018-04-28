@@ -62,7 +62,7 @@ module HomuApi
     private
 
     DEFAULT_JS_LIST = %w[tawawa.js].map(&:freeze).freeze
-    DEFAULT_CSS_LIST = %w[main.css television.css id-hider.css].map(&:freeze).freeze
+    DEFAULT_CSS_LIST = %w[main.css television.css].map(&:freeze).freeze
 
     def view_erb tag, opt = {}
       css_list = DEFAULT_CSS_LIST.dup

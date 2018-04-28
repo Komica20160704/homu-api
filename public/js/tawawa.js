@@ -1,5 +1,4 @@
 function Tawawa() {
-
   function initialize() {
     var el = $('<div>').addClass('tawawa-point')
     $('body').append(el)

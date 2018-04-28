@@ -129,9 +129,6 @@ function receivedNotify(data) {
   var html = "";
   var id_list = [];
   blocks.forEach(function(e) {
-    if (window.id_hider && id_hider.isHideId(e.Id)) {
-      return
-    }
     var id = index++;
     html = createDialog(id, e, heads) + html;
     id_list.push("#dialog" + id);
