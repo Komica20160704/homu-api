@@ -1,17 +1,21 @@
 <div id="follow-res" class="block-container">
-  <div style="padding-left: 10px;">
+  <div class="nav" style="display: none; padding-left: 10px;">
     [<a href="https://ram.komica2.net/00/pixmicat.php?res=<%= resNo %>" target="_blank">開啟本串</a>]
+    [<a v-on:click="sound = !sound" href="javascript:void(0)">
+      <i v-if="sound" class="fa fa-volume-up"></i>
+      <i v-else class="fa fa-volume-off"></i>
+    </a>]
   </div>
-  <div id="follow-head" is="followBlock" v-for="block in Head" :block="block">
+  <div id="follow-head" is="followBlock" v-for="block in Head" :block="block" :isHead=true>
     <div style="text-align: center;">
       <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <div id="followBody" is="followBlock" v-for="block in Bodies" :block="block"></div>
+  <div id="follow-body" is="followBlock" v-for="block in Bodies" :block="block"></div>
 </div>
 
-<script type="text/x-template" id="followBlock">
+<script type="text/x-template" id="follow-block">
   <div class="dialog" >
     <div>
       <span class="title"><b>{{ block.Title }}</b></span>
@@ -20,11 +24,17 @@
       ID:{{ block.Id }}
       No.{{ block.No }}
     </div>
-    <a class="dialog-img-link" target="_blank" v-if="block.Picture" :href="pictureUrl()">
+    <div v-if="isWebm()" class="dialog-img-link" target="_blank"
+      :data-video="pictureUrl()" onclick="television.loadVideo(this)">
       <img class="dialog-img" :src="smallPictureUrl()"/>
       <div class="dialog-img-after"></div>
-    </a>
-    <div class="dialog-img-link" v-if="!block.Picture">
+    </div>
+    <div v-else-if="hasPicture" class="dialog-img-link" target="_blank"
+      :data-image="pictureUrl()" onclick="television.loadImage(this)">
+      <img class="dialog-img" :src="smallPictureUrl()"/>
+      <div class="dialog-img-after"></div>
+    </div>
+    <div v-else class="dialog-img-link">
       <img class="dialog-img small"/>
     </div>
     <div class="content">

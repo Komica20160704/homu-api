@@ -41,17 +41,30 @@ setInterval(function() {
 
 $(document).ready(function() {
   Vue.component('followBlock', {
-    template: '#followBlock',
+    template: '#follow-block',
     props: {
+      isHead: false,
       block: {},
     },
+    created: function() {
+      this.hasPicture = !!this.block.Picture
+    },
     methods: {
+      isWebm: function() {
+        if (this.hasPicture) {
+          return this.block.Picture.split('.')[1] == 'webm'
+        }
+      },
       pictureUrl: function() {
-        return image_host + '/00/src/' + this.block.Picture
+        if (this.hasPicture) {
+          return image_host + '/00/src/' + this.block.Picture
+        }
       },
       smallPictureUrl: function() {
-        var picture = this.block.Picture.split('.')[0] + 's.jpg'
-        return image_host + '/00/thumb/' + picture
+        if (this.hasPicture) {
+          var picture = this.block.Picture.split('.')[0] + 's.jpg'
+          return image_host + '/00/thumb/' + picture
+        }
       },
       setupWeekday: function(date) {
         var then = new Date(date)
@@ -66,6 +79,10 @@ $(document).ready(function() {
     data: {
       Head: [],
       Bodies: [],
+      sound: true,
+    },
+    mounted: function() {
+      this.$el.querySelector('.nav').style.display = ''
     },
     methods: {
       follow: function(headNo) {
@@ -82,7 +99,9 @@ $(document).ready(function() {
       },
       receivedNotify: function(block) {
         this.Bodies.push(block)
-        responsiveVoice.speak('You got message!')
+        if (this.sound) {
+          responsiveVoice.speak('You got message!')
+        }
       },
     },
   })
