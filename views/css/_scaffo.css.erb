@@ -1,0 +1,47 @@
+body.theme {
+  background-color: <%= @background_color %>;
+  color: <%= @text_color %>;
+}
+
+body.theme h1.title > a {
+  color: <%= @text_color %>;
+}
+
+body.theme .head_bar {
+  background-color: #e5eeff;
+  background: -moz-linear-gradient(top, <%= @background_color %> 90%, rgba(255, 255, 255, 0) 100%);
+  background: -webkit-linear-gradient(top, <%= @background_color %> 90%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to bottom, <%= @background_color %> 90%, rgba(255, 255, 255, 0) 100%);
+}
+
+body.theme .head_block {
+  color: <%= @text_color_light %>;
+}
+
+body.theme #television, body.theme #id-hider:not(.hide), body.theme #new_host {
+  background-color: <%= @dialog_color %>;
+}
+
+body.theme .dialog:not(.head) {
+  background-color: <%= @dialog_color %>;
+}
+
+body.theme .dialog .title {
+  color: <%= @text_color %>;
+}
+
+body.theme .dialog .name {
+  color: <%= @text_color %>;
+}
+
+body.theme .reuse, body.theme .answer {
+  color: <%= @text_color_light %>;
+}
+
+body.theme a {
+  color: <%= @link_color %>;
+}
+
+body.theme a:visited {
+  color: <%= @link_color_light %>;
+}

@@ -35,8 +35,8 @@
     <%= "<link rel='stylesheet' type='text/css' data-title='#{e.split('.').first}' href='/css/#{e}?#{mtime}'>" %>
     <% end %>
   </head>
-  <% if cookies[:dark] %>
-    <body class="dark">
+  <% if curren_theme %>
+    <body class="theme">
   <% else %>
     <body style='background-image: url("<%= bg %>");'>
   <% end %>

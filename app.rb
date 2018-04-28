@@ -23,21 +23,22 @@ module HomuApi
       erb :"css/#{style}.css", layout: '<%= yield %>'
     end
 
-    get '/dark' do
-      if cookies[:dark]
-        cookies.delete :dark
-      else
-        cookies[:dark] = 1
+    THEMES = %i[tawawa dark hatobatsugu].map(&:freeze).freeze
+
+    THEMES.each do |theme|
+      get "/#{theme}" do
+        if cookies[theme] && !params[:force]
+          cookies.delete theme
+        else
+          THEMES.each { |theme| cookies.delete theme }
+          cookies[theme] = 1
+        end
+        redirect back
       end
-      redirect back
     end
 
     get '/kumiko' do
       erb :kumiko, layout: '<%= yield %>'
-    end
-
-    get '/tawawa' do
-      view_erb :index, tawawa: true
     end
 
     get '/report' do
@@ -54,30 +55,34 @@ module HomuApi
 
     get /\/(?<headNo>[0-9]+)/ do |headNo|
       return 403 if params[:token] != token
-      content_type :json, :charset => 'utf-8'
+      content_type :json, charset: 'utf-8'
       HomuGetter::get_res headNo
     end
 
     private
 
+    DEFAULT_JS_LIST = %w[tawawa.js].map(&:freeze).freeze
+    DEFAULT_CSS_LIST = %w[main.css television.css id-hider.css].map(&:freeze).freeze
+
     def view_erb tag, opt = {}
-      css_list = ["main.css", "#{tag}.css", "television.css", "id-hider.css"]
-      css_list = css_list.concat(opt[:css].to_a)
-      js_list = ["tawawa.js"]
+      css_list = DEFAULT_CSS_LIST.dup
+      css_list.push("#{tag}.css")
+      css_list.push("#{curren_theme}.css") if curren_theme
+      js_list = DEFAULT_JS_LIST
       count = request.env['WsClientCount']
-      bg = pick_background_img opt[:tawawa], css_list
+      bg = pick_background_img css_list
       locals = { css_list: css_list, js_list: js_list, ws_client_count: count, bg: bg }
       locals.merge!(opt[:locals]) unless opt[:locals].nil?
       erb(tag, locals: locals)
     end
 
-    def pick_background_img is_tawawa, css_list
+    def pick_background_img css_list
       bg_dir = './public/bgs/*.png'
-      if Time.now.monday? || is_tawawa
-        css_list.push('tawawa.css')
+      if Time.now.monday? && curren_theme.nil?
+        css_list.push 'tawawa.css'
         bg_dir = './public/bgs/tawawa/*.png'
-      elsif cookies[:dark]
-        css_list.push('dark.css')
+      elsif curren_theme == :tawawa
+        bg_dir = './public/bgs/tawawa/*.png'
       elsif Random.rand * 256 > 255
         bg_dir = './public/bgs/koiking/*.png'
       end
@@ -91,6 +96,10 @@ module HomuApi
       ip = request.ip.to_s
       md5 << secret << today << ip
       md5.hexdigest[9..16]
+    end
+
+    def curren_theme
+      @curren_theme ||= THEMES.find { |theme| !!cookies[theme] }
     end
 
     run! if app_file == $PROGRAM_NAME
