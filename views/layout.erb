@@ -9,30 +9,23 @@
       gtag('config', 'UA-103022327-4');
     </script>
     <title>綜合-即時訊息(仮) - HomuAPI - Komica</title>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="description" content="綜合-即時訊息(仮) - HomuAPI - Komica">
     <meta name="author" content="Komica20160704">
     <meta name="github:account" content="Komica20160704">
     <meta name="github:repository" content="homu-api">
-    <meta name="google-site-verification" content="B2ixkTFtkydWvAZkkr16TocxnQHN20hn4Ns0tu0sa8k" />
+    <meta name="google-site-verification" content="B2ixkTFtkydWvAZkkr16TocxnQHN20hn4Ns0tu0sa8k">
     <script src="/js/jquery-2.2.3.min.js"></script>
     <script src="/js/underscore-min.js"></script>
     <script src="/js/vue.min.js"></script>
     <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
-    <% js_list.each do |e| %>
-    <%= "<script src='/js/#{e}?#{File.mtime("./public/js/#{e}").to_i}'></script>" %>
+    <% js_list.each do |js| %>
+    <%= js_tag js %>
     <% end %>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/layout.css?<%= File.mtime('./public/css/layout.css').to_i %>">
-    <% css_list.each do |e| %>
-    <%
-      public_path = "./public/css/#{e}"
-      views_path = "./views/css/#{e}.erb"
-      mtime = File.mtime(public_path).to_i if File.exist?(public_path)
-      mtime ||= File.mtime(views_path).to_i
-    %>
-    <%= "<link rel='stylesheet' type='text/css' data-title='#{e.split('.').first}' href='/css/#{e}?#{mtime}'>" %>
+    <% css_list.each do |css| %>
+    <%= css_tag css %>
     <% end %>
   </head>
   <% if curren_theme %>
@@ -40,41 +33,32 @@
   <% else %>
     <body style='background-image: url("<%= bg %>");'>
   <% end %>
-    <div id="new_host">
-      本站新網址
-      <a href="https://www.homu-api.com/">https://www.homu-api.com/</a>
-      <i class="fa fa-times" style="cursor: pointer;"></i>
-      <script>
-        if (location.host == 'www.homu-api.com') {  $('#new_host').hide() }
-        $('#new_host .fa.fa-times').click(function() { $('#new_host').hide() })
-      </script>
-    </div>
-    <div class='head_bar'>
-      <div class="head_btn" style="position:fixed;right:0px;">
-        [<a href="https://ram.komica2.net/00/index.htm" target="_top">回綜合</a>]
-        [<a href="http://homu.homu-api.com/" target="_top">HomuAPI</a>]
-        [<a href="/report" target="_top">留言</a>]
-        [<a href="https://github.com/Komica20160704/homu-api" target="_blank"><i class="fa fa-github" style="color:<% if cookies[:dark] %>white<% else %>black<% end %>;" aria-hidden="true"></i></a>]
-        [<a href="https://japariman.herokuapp.com/" target="_blank"><img src="/japariman<%= '-white' if cookies[:dark] %>.svg" class="japariman"></a>]
-        [<a href="https://test-0722.herokuapp.com/just-do-it.html" target="_blank"><i class="fa fa-diamond" style="color:#D54F5D;" aria-hidden="true"></i></a>]
-        [<a href="/hatobatsugu">鳩</a>]
-        [<a href="/dark"><i class="fa fa-lightbulb-o" style="<% if cookies[:dark] %>color: gold;<% end %>" aria-hidden="true"></i></a>]
-        <!-- [<%= ws_client_count %>] -->
+    <div class="head_bar">
+      <div id="new_host">
+        本站新網址
+        <a href="https://www.homu-api.com/">https://www.homu-api.com/</a>
+        <i class="fa fa-times" style="cursor: pointer;"></i>
+        <script>
+          if (location.host != 'www.homu-api.com') { $('#new_host').show() }
+          $('#new_host .fa.fa-times').click(function() { $('#new_host').hide() })
+        </script>
+      </div>
+      <div class="head_btn">
+        <span>[<a href="https://ram.komica2.net/00/index.htm" target="_top">回綜合</a>]</span>
+        <span>[<a href="http://homu.homu-api.com/" target="_top">HomuAPI</a>]</span>
+        <span>[<a href="/report" target="_top">留言</a>]</span>
+        <span>[<a href="https://github.com/Komica20160704/homu-api" target="_blank"><i class="fa fa-github" style="color:<% if cookies[:dark] %>white<% else %>black<% end %>;" aria-hidden="true"></i></a>]</span>
+        <span>[<a href="https://japariman.herokuapp.com/" target="_blank"><img src="/japariman<%= '-white' if cookies[:dark] %>.svg" class="japariman"></a>]</span>
+        <span>[<a href="https://test-0722.herokuapp.com/just-do-it.html" target="_blank"><i class="fa fa-diamond" style="color:#D54F5D;" aria-hidden="true"></i></a>]</span>
+        <span>[<a href="/hatobatsugu">鳩</a>]</span>
+        <span>[<a href="/dark"><i class="fa fa-lightbulb-o" style="<% if cookies[:dark] %>color: gold;<% end %>" aria-hidden="true"></i></a>]</span>
+        <!-- <span>[<%= ws_client_count %>]</span> -->
       </div>
       <h1 class="title">
         <a href="/">
           綜合-即時訊息(仮)
         </a>
       </h1>
-      <a>
-        <p align="center" class="title">
-          <font size="5">
-            <b>
-              <span></span>
-            </b>
-          </font>
-        </p>
-      </a>
       <hr width="90%" size="1">
     </div>
     <div class="main">

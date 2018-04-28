@@ -62,7 +62,7 @@ $(document).ready(function() {
   })
 
   window.followRes = new Vue({
-    el: '#followRes',
+    el: '#follow-res',
     data: {
       Head: [],
       Bodies: [],
@@ -76,7 +76,7 @@ $(document).ready(function() {
           success: function(res) {
             that.Head = [res.Head];
             that.Bodies = res.Bodies;
-            $('#followRes').fadeIn();
+            $('#follow-res').fadeIn();
           }
         })
       },

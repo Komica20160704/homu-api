@@ -1,6 +1,7 @@
 html {
   width: 99%;
 }
+
 body {
   width: 100%;
   background-color: rgb(255, 255, 238);
@@ -15,13 +16,12 @@ h1.title {
   text-align: center;
   color: rgb(128, 0, 0);
 }
+
 h1.title > a {
   text-decoration: none;
   color: inherit;
 }
-::-webkit-scrollbar {
-  display: none;
-}
+
 .head_bar {
   position: fixed;
   width: 100%;
@@ -33,34 +33,69 @@ h1.title > a {
   background: linear-gradient(to bottom, rgba(255, 255, 238, 1) 90%, rgba(255, 255, 255, 0) 100%);
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=0);
 }
+
 .head_btn {
-  display: inline-block;
+  position: fixed;
+  right: 0px;
   margin-top: 8px;
   margin-bottom: 16px;
   margin-right: 64px;
 }
+
 .head_btn a[href="https://japariman.herokuapp.com/"] {
   display: inline-flex;
   vertical-align: sub;
 }
+
 .japariman {
   width: 16px;
   height: 20px;
 }
+
 #new_host {
+  display: none;
   z-index: 100;
   padding: 5px;
   background: #f0e0d6;
   position: fixed;
   left: 20px;
-  top: 20px;
+  top: 10px;
 }
+
 .main {
   margin-top: 85px;
   position: relative;
 }
+
 @media only screen and (max-width: 768px) {
+  #new_host {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  #new_host .fa-times {
+    float: right;
+    line-height: 22px;
+    font-size: 1.33333333em;
+    vertical-align: -15%;
+  }
   .main {
-    margin-top: 100px;
+    margin-top: 0px;
+  }
+  .head_bar {
+    position: sticky;
+    padding-bottom: 10px;
+  }
+  .head_bar hr {
+    margin-bottom: 0;
+  }
+  .head_btn {
+    position: initial;
+    padding: 5px 10px 0 10px;
+    margin: 0 0 -10px 0;
+  }
+  .head_btn span {
+    display: inline-block;
   }
 }

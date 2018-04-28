@@ -3,16 +3,18 @@ require 'sinatra/base'
 require 'sinatra/cookies'
 require 'sinatra/reloader'
 require 'sinatra/json'
-require './helper/homu_getter'
 require 'date'
 require 'digest'
 require 'rest-client'
 require 'json'
 require 'jwt'
+require './lib/homu_getter'
+require './lib/view_helpers'
 
 module HomuApi
   class App < Sinatra::Base
     helpers Sinatra::Cookies
+    helpers ViewHelpers
 
     configure :development do
       register Sinatra::Reloader
@@ -62,7 +64,7 @@ module HomuApi
     private
 
     DEFAULT_JS_LIST = %w[tawawa.js].map(&:freeze).freeze
-    DEFAULT_CSS_LIST = %w[main.css television.css].map(&:freeze).freeze
+    DEFAULT_CSS_LIST = %w[layout.css main.css television.css].map(&:freeze).freeze
 
     def view_erb tag, opt = {}
       css_list = DEFAULT_CSS_LIST.dup

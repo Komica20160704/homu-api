@@ -32,7 +32,7 @@ function createDialog(id, block, heads) {
 
 function setupMessage(id, block, heads) {
   var url = komica + '/00/pixmicat.php?res=' + block.HeadNo;
-  var html = '<div style="margin-top:8;margin-left:8;">';
+  var html = '<div class="message">';
   var follow = ' [<a href="./follow/' + block.HeadNo + '" target="_blank">追蹤</a>]';
   if (block.No == block.HeadNo) {
     html += block.Id + '發表了一篇';
@@ -90,7 +90,7 @@ function setTooLongContent(id, lines) {
 
 function setupContent(id, content) {
   var lines = content.split('\n')
-  var contentElement = $('<div>').addClass('dialog-content')
+  var contentElement = $('<div>').addClass('content')
   var lineElements = lines.map(function(line, index) {
     var element = $('<div>').text(line)
     if (line.startsWith('>')) { element.addClass('reuse') }

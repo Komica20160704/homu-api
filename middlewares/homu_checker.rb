@@ -1,6 +1,6 @@
 require 'rufus-scheduler'
 require 'date'
-require './helper/homu_getter'
+require './lib/homu_getter'
 
 module HomuApi
   class HomuChecker

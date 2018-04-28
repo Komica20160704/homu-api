@@ -1,13 +1,21 @@
 .dialog {
-  margin-top: 5px;
   padding: 3px 10px 10px;
   display: inline-block;
   width: 720px;
   background-color: rgb(240, 224, 214);
 }
 
+.dialog + .dialog {
+  margin-top: 5px;
+}
+
 .dialog.head {
   background-color: transparent;
+}
+
+.dialog .message {
+  margin-top: 8;
+  margin-left: 8;
 }
 
 .dialog .title {
@@ -23,7 +31,7 @@
   width: 740px;
 }
 
-.dialog-content {
+.content {
   word-wrap: break-word;
   float: left;
   margin-top: 16px;
@@ -48,7 +56,7 @@
   max-height: 250px;
 }
 
-.dialog.head .dialog-content {
+.dialog.head .content {
   width: 415px;
 }
 
@@ -68,8 +76,10 @@
   float: right;
   overflow: hidden;
   max-width: 400px;
-  height: 20px;
   color: rgb(120, 153, 34);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .reuse {
@@ -80,23 +90,52 @@
   html {
     width: 100vw;
   }
+
   body {
     margin: 0;
   }
+
   .block-container {
     width: auto;
     padding: 0 10px;
-    margin-top: 80px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
   }
+
   .dialog {
     width: auto;
+    padding: 10px 15px;
   }
-  .dialog-content {
+
+  .dialog .message {
+    margin: 0;
+  }
+
+  .dialog .split_line {
+    margin-bottom: 5px;
+  }
+
+  .dialog .dialog-img {
+    margin-left: 10;
+    margin-right: 0;
+  }
+
+  .dialog .dialog-img:not([src]) {
+    margin: 0;
+  }
+
+  .dialog .content {
+    width: auto;
+    margin: 0 0 0 10px;
+  }
+
+  .dialog.head .content {
     width: auto;
   }
-  .title {
-    margin-top: 30px;
+
+  .head_block {
+    max-width: 100%;
+    float: left;
   }
 }
