@@ -1,17 +1,44 @@
+#television-back {
+  text-align: center;
+  background-color: rgba(0, 0, 0, .25);
+  position: fixed;
+  z-index: 1000;
+  display: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 #television {
   background-color: rgb(240, 224, 214);
-  padding: 10px;
-  position: fixed;
-  top: 70px;
-  left: 30px;
+  padding: 5px 10px 10px 10px;
+  margin-top: 10px;
+  text-align: left;
+  display: inline-block;
 }
 
-#television .video {
-  width: 100%;
+#television .medias {
+  margin-top: 10px;
 }
 
-@media only screen and (max-width: 1240px) {
+#television .video, #television .img {
+  display: none;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+@media only screen and (max-width: 768px) {
+  #television-back {
+    overflow-y: auto;
+  }
+
   #television {
-    display: none;
+    margin: 5px;
+  }
+
+  #television .video, #television .img {
+    max-width: 100%;
+    max-height: initial;
   }
 }

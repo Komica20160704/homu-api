@@ -1,8 +1,14 @@
-<div id="television" style="display:none">
-  <a href="javascript:void(0)" onclick="Television.close()">
-    [X]
-  </a>
-  <video class="video" controls src="/kumiko_1.mp4" style="margin-top:10px;" preload="none">
-  </video>
+<div id="television-back">
+  <div id="television">
+    <div>
+      [<a href="javascript:void(0)" class="close-button">X</a>]
+      [<a target="_blank" class="open-button">↗</a>]
+    </div>
+    <div class="medias">
+      <video class="video" controls src="/kumiko_1.mp4" preload="none"></video>
+      <img class="img" src="/bgs/fosu.png">
+    </div>
+  </div>
 </div>
+
 <script src="/js/television.js?<%= Time.now.to_i %>"></script>

@@ -106,17 +106,17 @@ function setupContent(id, content) {
 
 function setupPicture(picture) {
   if (picture) {
-    var picture_no = picture.split('.')[0];
-    var org_picture = image_host + '/00/src/' + picture;
-    var small_picture = image_host + '/00/thumb/' + picture_no + 's.jpg';
-    var element_a = $('<a>').attr('class', 'dialog-img-link').attr('target', '_blank').attr('href', org_picture)
-    var element_div = $('<div>').attr('class', 'dialog-img-link').attr('data-video', org_picture).attr('onclick', 'Television.loadVideo(this)')
-    var element_img = $('<img>').attr('class', 'dialog-img').attr('src', small_picture)
-    var element_img_after = $('<div>').attr('class', 'dialog-img-after')
+    var pictureNo = picture.split('.')[0];
+    var orgPicture = image_host + '/00/src/' + picture;
+    var smallPicture = image_host + '/00/thumb/' + pictureNo + 's.jpg';
+    var imgDiv = $('<div>').attr('class', 'dialog-img-link').attr('data-image', orgPicture).attr('onclick', 'television.loadImage(this)')
+    var webmDiv = $('<div>').attr('class', 'dialog-img-link').attr('data-video', orgPicture).attr('onclick', 'television.loadVideo(this)')
+    var elementImg = $('<img>').attr('class', 'dialog-img').attr('src', smallPicture)
+    var elementImgAfter = $('<div>').attr('class', 'dialog-img-after')
     if (picture.split('.')[1] == 'webm') {
-      return $('<div>').append(element_div.append(element_img).append(element_img_after)).html()
+      return $('<div>').append(webmDiv.append(elementImg).append(elementImgAfter)).html()
     } else {
-      return $('<div>').append(element_a.append(element_img).append(element_img_after)).html()
+      return $('<div>').append(imgDiv.append(elementImg).append(elementImgAfter)).html()
     }
   } else {
     return '<div class="dialog-img-link"><img class="dialog-img small"></div>';

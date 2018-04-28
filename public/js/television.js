@@ -1,29 +1,56 @@
-var Television = {
-  element: document.getElementById('television'),
-  $element: $('#television'),
-  initialize: () => {
-    Television.handleSizeChange()
-    Television.$element.hide()
-  },
-  handleSizeChange: () => {
-    if (window.innerWidth > 1240) {
-      var width = ((window.innerWidth - 900) / 2)
-      Television.$element.css('width', width)
-    }
-  },
-  loadVideo: (element) => {
-    var src = $(element).attr('data-video')
-    var video = Television.$element.find('.video').get(0)
-    Television.$element.show()
+function Television() {
+  var $back = $('#television-back')
+  var $element = $('#television')
+  var $video = $element.find('.video')
+  var $img = $element.find('.img')
+  var $closeButton = $element.find('.close-button')
+  var $openButton = $element.find('.open-button')
+  var video = $video.get(0)
+  var img = $img.get(0)
+
+  function initialize() {
+    $closeButton.click(close)
+  }
+
+  function loadImage(element) {
+    var src = element.dataset.image
+    img.src = src
+    $openButton.attr('href', src)
+    show('img')
+  }
+
+  function loadVideo(element) {
+    var src = element.dataset.video
     video.src = src
+    $openButton.attr('href', src)
+    show('video')
     video.play()
-  },
-  close: () => {
-    var video = Television.$element.find('.video').get(0)
+  }
+
+  function show(type) {
+    $back.show()
+    if (type == 'video') {
+      $video.show()
+    } else {
+      $img.show()
+    }
+  }
+
+  function close() {
     video.pause()
-    Television.$element.hide()
-  },
+    $back.hide()
+    $video.hide()
+    $img.hide()
+  }
+
+  return {
+    initialize: initialize,
+    loadVideo: loadVideo,
+    loadImage: loadImage,
+    show: show,
+    close: close,
+  }
 }
 
-$(window).resize(Television.handleSizeChange)
-$(window).ready(Television.initialize)
+var television = new Television()
+$(window).ready(television.initialize)
