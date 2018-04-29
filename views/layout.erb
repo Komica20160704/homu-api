@@ -28,11 +28,7 @@
     <%= css_tag css %>
     <% end %>
   </head>
-  <% if curren_theme %>
-    <body class="theme">
-  <% else %>
-    <body style='background-image: url("<%= bg %>");'>
-  <% end %>
+  <body class="theme" style='background-image: url("<%= bg %>");'>
     <div class="head_bar">
       <div id="new_host">
         本站新網址

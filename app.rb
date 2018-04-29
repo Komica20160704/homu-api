@@ -83,8 +83,8 @@ module HomuApi
       if Time.now.monday? && curren_theme.nil?
         css_list.push 'tawawa.css'
         bg_dir = './public/bgs/tawawa/*.png'
-      elsif curren_theme == :tawawa
-        bg_dir = './public/bgs/tawawa/*.png'
+      elsif curren_theme
+        bg_dir = "./public/bgs/#{curren_theme}/*.png"
       elsif Random.rand * 256 > 255
         bg_dir = './public/bgs/koiking/*.png'
       end

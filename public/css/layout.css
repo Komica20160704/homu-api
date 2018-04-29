@@ -68,33 +68,48 @@ h1.title > a {
 }
 
 @media only screen and (max-width: 768px) {
+  html {
+    width: 100vw;
+  }
+
+  body {
+    margin: 0;
+    background-size: contain;
+  }
+
   #new_host {
     position: sticky;
     top: 0;
     left: 0;
     right: 0;
   }
+
   #new_host .fa-times {
     float: right;
     line-height: 22px;
     font-size: 1.33333333em;
     vertical-align: -15%;
   }
+
   .main {
     margin-top: 0px;
   }
+
   .head_bar {
     position: sticky;
     padding-bottom: 10px;
   }
+
   .head_bar hr {
     margin-bottom: 0;
   }
+
   .head_btn {
     position: initial;
     padding: 5px 10px 0 10px;
     margin: 0 0 -10px 0;
   }
+
   .head_btn span {
     display: inline-block;
   }
