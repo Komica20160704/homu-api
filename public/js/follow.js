@@ -71,6 +71,13 @@ $(document).ready(function() {
         var theday = then.getDay()
         return weekday[theday]
       },
+      lineClass: function(line) {
+        var classes = ['line']
+        if (line.startsWith('>')) {
+          classes.push('reuse')
+        }
+        return classes.join(' ')
+      },
     },
   })
 

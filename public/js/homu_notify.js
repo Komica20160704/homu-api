@@ -92,7 +92,7 @@ function setupContent(id, content) {
   var lines = content.split('\n')
   var contentElement = $('<div>').addClass('content')
   var lineElements = lines.map(function(line, index) {
-    var element = $('<div>').text(line)
+    var element = $('<div>').text(line).addClass('line')
     if (line.startsWith('>')) { element.addClass('reuse') }
     return element
   })

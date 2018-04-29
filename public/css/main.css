@@ -31,12 +31,15 @@
   width: 740px;
 }
 
-.content {
-  word-wrap: break-word;
+.dialog .content {
   float: left;
   margin-top: 16px;
   margin-bottom: 16px;
   width: 540px;
+}
+
+.dialog .content .line {
+  word-break: break-all;
 }
 
 .dialog-img {
@@ -97,7 +100,7 @@
 
   .dialog {
     width: auto;
-    padding: 10px 15px;
+    padding: 10px 15px 15px 15px;
   }
 
   .dialog .message {

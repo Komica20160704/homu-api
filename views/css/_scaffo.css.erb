@@ -22,6 +22,10 @@ body.theme #television, body.theme #new_host {
   background-color: <%= @dialog_color %>;
 }
 
+body.theme .dialog.head {
+  background-color: <%= hex_alpha @background_color, '.5' %>;
+}
+
 body.theme .dialog:not(.head) {
   background-color: <%= @dialog_color %>;
 }

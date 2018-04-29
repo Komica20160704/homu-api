@@ -38,4 +38,10 @@ module ViewHelpers
       Time.now.to_i
     end
   end
+
+  def hex_alpha hex, alpha
+    t = '([0-9a-fA-F]{2})'
+    r, g, b = /##{t}#{t}#{t}/.match(hex).to_a[1..3].map { |e| e.to_i(16) }
+    "rgba(#{r}, #{g}, #{b}, #{alpha})"
+  end
 end

@@ -38,9 +38,8 @@
       <img class="dialog-img small"/>
     </div>
     <div class="content">
-      <div v-for="line in block.Content.split('\n')">
-        <span class="reuse" v-if="line.startsWith('>')">{{ line }}</span>
-        <span v-if="!line.startsWith('>')">{{ line }}</span>
+      <div v-for="line in block.Content.split('\n')" :class="lineClass(line)">
+        {{ line }}
       </div>
     </div>
   </div>
