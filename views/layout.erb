@@ -16,9 +16,9 @@
     <meta name="github:account" content="Komica20160704">
     <meta name="github:repository" content="homu-api">
     <meta name="google-site-verification" content="B2ixkTFtkydWvAZkkr16TocxnQHN20hn4Ns0tu0sa8k">
-    <script src="/js/jquery-2.2.3.min.js"></script>
-    <script src="/js/underscore-min.js"></script>
-    <script src="/js/vue.min.js"></script>
+    <%= js_tag 'jquery-2.2.3.min.js' %>
+    <%= js_tag 'underscore-min.js' %>
+    <%= js_tag vue_js_url %>
     <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
     <% js_list.each do |js| %>
     <%= js_tag js %>

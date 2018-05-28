@@ -10,11 +10,14 @@ require 'rest-client'
 require 'json'
 require 'jwt'
 require './lib/homu_getter'
+require './lib/app_helpers'
 require './lib/view_helpers'
 
 module HomuApi
   class App < Sinatra::Base
+    set :env, ENV['RACK_ENV']
     helpers Sinatra::Cookies
+    helpers AppHelpers
     helpers ViewHelpers
 
     configure :development do
