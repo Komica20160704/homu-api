@@ -1,4 +1,5 @@
-# encoding: utf-8
+# frozen_string_literal: true
+
 require 'sinatra/base'
 require 'sinatra/cookies'
 require 'sinatra/reloader'
@@ -32,7 +33,7 @@ module HomuApi
         if cookies[theme] && !params[:force]
           cookies.delete theme
         else
-          THEMES.each { |theme| cookies.delete theme }
+          THEMES.each { |t| cookies.delete t }
           cookies[theme] = 1
         end
         redirect back
@@ -51,34 +52,42 @@ module HomuApi
       view_erb :index
     end
 
-    get '/follow/:resNo' do |resNo|
-      view_erb(:follow, locals: { resNo: resNo, token: token })
+    get '/follow/:res_no' do |res_no|
+      view_erb(:follow, locals: { resNo: res_no, token: token })
     end
 
-    get /\/(?<headNo>[0-9]+)/ do |headNo|
+    get %r{/(?<head_no>[0-9]+)} do |head_no|
       return 403 if params[:token] != token
       content_type :json, charset: 'utf-8'
-      HomuGetter::get_res headNo
+      HomuGetter.get_res head_no
     end
 
     private
 
-    DEFAULT_JS_LIST = %w[tawawa.js].map(&:freeze).freeze
-    DEFAULT_CSS_LIST = %w[layout.css main.css television.css].map(&:freeze).freeze
+    DEFAULT_JS_LIST = %w[tawawa.js].freeze
+    DEFAULT_CSS_LIST = %w[layout.css main.css television.css].freeze
 
-    def view_erb tag, opt = {}
+    def get_css_list(tag)
       css_list = DEFAULT_CSS_LIST.dup
       css_list.push("#{tag}.css")
       css_list.push("#{curren_theme}.css") if curren_theme
+      css_list
+    end
+
+    def view_erb(tag, opt = {})
+      css_list = get_css_list tag
       js_list = DEFAULT_JS_LIST
       count = request.env['WsClientCount']
       bg = pick_background_img css_list
-      locals = { css_list: css_list, js_list: js_list, ws_client_count: count, bg: bg }
+      locals = { css_list: css_list,
+                 js_list: js_list,
+                 ws_client_count: count,
+                 bg: bg }
       locals.merge!(opt[:locals]) unless opt[:locals].nil?
       erb(tag, locals: locals)
     end
 
-    def pick_background_img css_list
+    def pick_background_img(css_list)
       bg_dir = './public/bgs/*.png'
       if Time.now.monday? && curren_theme.nil?
         css_list.push 'tawawa.css'
@@ -88,6 +97,10 @@ module HomuApi
       elsif Random.rand * 256 > 255
         bg_dir = './public/bgs/koiking/*.png'
       end
+      sample_background bg_dir
+    end
+
+    def sample_background(bg_dir)
       Dir.glob(bg_dir).map { |i| i.sub!('./public', '') }.sample
     end
 
@@ -101,7 +114,7 @@ module HomuApi
     end
 
     def curren_theme
-      @curren_theme ||= THEMES.find { |theme| !!cookies[theme] }
+      @curren_theme ||= THEMES.find { |theme| cookies[theme] }
     end
 
     run! if app_file == $PROGRAM_NAME

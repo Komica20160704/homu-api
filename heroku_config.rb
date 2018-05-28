@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 unless ENV['RACK_ENV'] == 'production'
   heroku_config = JSON.parse(`heroku config --json`)
