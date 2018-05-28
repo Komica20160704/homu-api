@@ -1,0 +1,58 @@
+new Vue({
+  el: '#search',
+  data: {
+    loading: false,
+    query: '',
+    blockType: 'full',
+    blocks: [],
+  },
+  mounted: function() {
+    var url = new URL(location)
+    var query = url.searchParams.get('id')
+    if (query) {
+      this.query = query
+      var data = { id: query }
+      this.searchAjax(data)
+    }
+  },
+  methods: {
+    search: function(event) {
+      event.preventDefault()
+      if (!this.query) {
+        return
+      }
+      var data = { id: this.query }
+      var replaceUrl = '/search?' + $.param(data)
+      window.history.pushState(data, document.title, replaceUrl)
+      this.searchAjax(data)
+    },
+    beforeSearch: function() {
+      this.loading = true
+    },
+    searchSuccess: function(data) {
+      this.blocks = data.map(this.transferBlock)
+    },
+    afterSearch: function() {
+      this.loading = false
+    },
+    searchAjax: function(data) {
+      $.ajax({
+        method: 'GET',
+        url: 'https://api-homu.dev/posts',
+        data: data,
+        beforeSend: this.beforeSearch,
+        success: this.searchSuccess,
+        complete: this.afterSearch,
+      })
+    },
+    transferBlock: function(block) {
+      block.postAt = block.post_at
+      block.headNumber = block.head_number
+      block.hiddenBodyCount = block.hidden_body_count
+      delete block.post_at
+      delete block.head_number
+      delete block.hidden_body_count
+      return block
+    },
+  },
+})

@@ -1,0 +1,23 @@
+<div id="search" class="block-container">
+  <div class="nav" style="padding-left: 10px; margin-bottom: 10px;">
+    <form v-on:submit.prevent="search">
+      搜尋ID:
+      <input type="text" size="30" v-model="query">
+      <input type="submit" value="搜尋">
+    </form>
+  </div>
+  <div v-if="loading" style="text-align: center;">
+    <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
+  </div>
+  <block
+    v-else
+    v-for="block in blocks"
+    :type="blockType"
+    :key="block.number"
+    :block="block"
+  />
+</div>
+
+<%= erb :'component/block' %>
+<%= js_tag 'search.js' %>

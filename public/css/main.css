@@ -69,7 +69,7 @@
   margin-top: 3px;
 }
 
-.split_line {
+.split-line {
   width: 100%;
   border-right-width: 0;
   border-bottom-width: 0;
@@ -107,7 +107,7 @@
     margin: 0;
   }
 
-  .dialog .split_line {
+  .dialog .split-line {
     margin-bottom: 5px;
   }
 

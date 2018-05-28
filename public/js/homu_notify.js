@@ -64,7 +64,7 @@ function setupData(id, block) {
   var theday = then.getDay();
   var date_time = block.Date + "(" + weekday[theday] + ")" + block.Time;
   var id_no = " ID:" + block.Id + " No." + block.No;
-  var html = '<hr class="split_line"><div>'
+  var html = '<hr class="split-line"><div>'
   html += '<font class="title" size="+1"><b>' + block.Title + '</b></font>';
   html += ' <font class="name"><b>' + block.Name + '</b></font>';
   html += ' <font>' + date_time + id_no + '</font></div>';

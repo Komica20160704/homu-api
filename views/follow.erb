@@ -6,47 +6,18 @@
       <i v-else class="fa fa-volume-off"></i>
     </a>]
   </div>
-  <div id="follow-head" is="followBlock" v-for="block in Head" :block="block" :is-head=true>
-    <div style="text-align: center;">
-      <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-      <span class="sr-only">Loading...</span>
-    </div>
+  <div id="follow-head" is="block" v-if="head" :block="head"></div>
+  <div v-else style="text-align: center;">
+    <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
   </div>
-  <div id="follow-body" is="followBlock" v-for="block in Bodies" :block="block"></div>
+  <div id="follow-body" is="block" v-for="block in bodies" :block="block"></div>
 </div>
-
-<script type="text/x-template" id="follow-block">
-  <div class="dialog" >
-    <div>
-      <span class="title"><b>{{ block.Title }}</b></span>
-      <span class="name"><b>{{ block.Name }}</b></span>
-      {{ block.Date }}({{ setupWeekday(block.Date) }}){{ block.Time }}
-      ID:{{ block.Id }}
-      No.{{ block.No }}
-    </div>
-    <div v-if="isWebm()" class="dialog-img-link" target="_blank"
-      :data-video="pictureUrl()" onclick="television.loadVideo(this)">
-      <img class="dialog-img" :src="smallPictureUrl()"/>
-      <div class="dialog-img-after"></div>
-    </div>
-    <div v-else-if="hasPicture" class="dialog-img-link" target="_blank"
-      :data-image="pictureUrl()" onclick="television.loadImage(this)">
-      <img class="dialog-img" :src="smallPictureUrl()"/>
-      <div class="dialog-img-after"></div>
-    </div>
-    <div v-else class="dialog-img-link">
-      <img class="dialog-img small"/>
-    </div>
-    <div class="content">
-      <div v-for="line in block.Content.split('\n')" :class="lineClass(line)">
-        {{ line }}
-      </div>
-    </div>
-  </div>
-</script>
 
 <script>
   window.followResNo = <%= resNo %>
   window.token = '<%= token %>'
 </script>
-<script src="/js/follow.js?<%= Time.now.to_i %>"></script>
+
+<%= erb :'component/block' %>
+<%= js_tag 'follow.js' %>

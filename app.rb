@@ -51,6 +51,10 @@ module HomuApi
       view_erb :report
     end
 
+    get '/search' do
+      view_erb :search
+    end
+
     get '/' do
       view_erb :index
     end

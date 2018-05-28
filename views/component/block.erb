@@ -1,0 +1,113 @@
+<script type="text/template" id="block-template">
+  <div :class="className">
+    <div v-if="!isFull" class="message"></div>
+    <div v-else-if="isHead" class="message">
+      {{ block.id }}發表了一篇<a :href="headLink" target="_blank">新文章</a>
+      [<a :href="followLink" target="_blank">追蹤</a>]
+    </div>
+    <div v-else-if="isSelf" class="message">
+      {{ block.id }}回應了自己的<a :href="headLink" target="_blank">討論串</a>
+      [<a :href="followLink" target="_blank">追蹤</a>]
+    </div>
+    <div v-else class="message">
+      {{ block.id }}回應了<a :href="headLink" target="_blank">討論串</a>
+      [<a :href="followLink" target="_blank">追蹤</a>]
+    </div>
+    <hr v-if="isFull" class="split-line">
+    <div>
+      <span class="title"><b>{{ block.title }}</b></span>
+      <span class="name"><b>{{ block.name }}</b></span>
+      {{ timestamp() }}
+      ID:{{ block.id }}
+      No.{{ block.number }}
+    </div>
+    <div v-if="isWebm()" class="dialog-img-link" target="_blank"
+      :data-video="pictureUrl()" onclick="television.loadVideo(this)">
+      <img class="dialog-img" :src="smallPictureUrl()"/>
+      <div class="dialog-img-after"></div>
+    </div>
+    <div v-else-if="hasPicture" class="dialog-img-link" target="_blank"
+      :data-image="pictureUrl()" onclick="television.loadImage(this)">
+      <img class="dialog-img" :src="smallPictureUrl()"/>
+      <div class="dialog-img-after"></div>
+    </div>
+    <div v-else class="dialog-img-link">
+      <img class="dialog-img small"/>
+    </div>
+    <div class="content">
+      <div v-for="line in block.content.split('\n')" :class="lineClass(line)">
+        {{ line }}
+      </div>
+    </div>
+  </div>
+</script>
+
+<script>
+  var Block = Vue.component('block', {
+    template: '#block-template',
+    props: {
+      type: {
+        type: String,
+        default: 'small',
+      },
+      isSelf: {
+        type: Boolean,
+        default: false,
+      },
+      block: {
+        type: Object,
+        required: true,
+      },
+    },
+    data: function() {
+      var isHead = this.block.headNumber == this.block.number
+      return {
+        className: isHead ? 'dialog head' : 'dialog',
+        isHead: isHead,
+        isFull: this.type == 'full',
+        headLink: Block.headUrl + this.block.headNumber,
+        followLink: '/follow/' + this.block.headNumber
+      }
+    },
+    created: function() {
+      this.hasPicture = !!this.block.picture
+    },
+    methods: {
+      isWebm: function() {
+        if (this.hasPicture) {
+          return this.block.picture.split('.')[1] == 'webm'
+        }
+      },
+      pictureUrl: function() {
+        if (this.hasPicture) {
+          return Block.imageHost + '/00/src/' + this.block.picture
+        }
+      },
+      smallPictureUrl: function() {
+        if (this.hasPicture) {
+          var picture = this.block.picture.split('.')[0] + 's.jpg'
+          return Block.imageHost + '/00/thumb/' + picture
+        }
+      },
+      timestamp: function() {
+        var date = moment(this.block.postAt)
+        return date.format('YY/MM/DD(dd)HH:mm:ss')
+      },
+      setupWeekday: function(date) {
+        var then = new Date(date)
+        var day = then.getDay()
+        return Block.weekDays[day]
+      },
+      lineClass: function(line) {
+        var classes = ['line']
+        if (line.startsWith('>')) {
+          classes.push('reuse')
+        }
+        return classes.join(' ')
+      },
+    },
+  })
+  Block.weekDays = ['日', '一', '二', '三', '四', '五', '六']
+  Block.imageHost = '//ram.komica2.net'
+  Block.headUrl = 'https://ram.komica2.net/00/pixmicat.php?res='
+</script>

@@ -1,7 +1,4 @@
 var isSSL = location.protocol == 'https:'
-var komica = 'https://ram.komica2.net'
-var image_host = '//ram.komica2.net'
-var weekday = ['日', '一', '二', '三', '四', '五', '六']
 var scheme = 'wss://'
 if (location.protocol == 'http:') {
   scheme = 'ws://'
@@ -40,52 +37,11 @@ setInterval(function() {
 }, 10000)
 
 $(document).ready(function() {
-  Vue.component('followBlock', {
-    template: '#follow-block',
-    props: {
-      isHead: false,
-      block: {},
-    },
-    created: function() {
-      this.hasPicture = !!this.block.Picture
-    },
-    methods: {
-      isWebm: function() {
-        if (this.hasPicture) {
-          return this.block.Picture.split('.')[1] == 'webm'
-        }
-      },
-      pictureUrl: function() {
-        if (this.hasPicture) {
-          return image_host + '/00/src/' + this.block.Picture
-        }
-      },
-      smallPictureUrl: function() {
-        if (this.hasPicture) {
-          var picture = this.block.Picture.split('.')[0] + 's.jpg'
-          return image_host + '/00/thumb/' + picture
-        }
-      },
-      setupWeekday: function(date) {
-        var then = new Date(date)
-        var theday = then.getDay()
-        return weekday[theday]
-      },
-      lineClass: function(line) {
-        var classes = ['line']
-        if (line.startsWith('>')) {
-          classes.push('reuse')
-        }
-        return classes.join(' ')
-      },
-    },
-  })
-
   window.followRes = new Vue({
     el: '#follow-res',
     data: {
-      Head: [],
-      Bodies: [],
+      head: null,
+      bodies: [],
       sound: true,
     },
     mounted: function() {
@@ -98,20 +54,29 @@ $(document).ready(function() {
           method: 'GET',
           url: '/' + headNo + '?token=' + window.token,
           success: function(res) {
-            that.Head = [res.Head];
-            that.Bodies = res.Bodies;
-            $('#follow-res').fadeIn();
+            that.head = that.transferBlock(res.Head);
+            that.bodies = res.Bodies.map(that.transferBlock);
           }
         })
       },
       receivedNotify: function(block) {
-        this.Bodies.push(block)
+        this.Bodies.push(this.transferBlock(block))
         if (this.sound) {
           responsiveVoice.speak('You got message!')
         }
       },
+      transferBlock: function(block) {
+        return {
+          id: block.Id,
+          title: block.Title,
+          name: block.Name,
+          postAt: '20' + block.Date.replace(/\//g, '-') + ' ' + block.Time,
+          number: block.No,
+          content: block.Content,
+          picture: block.Picture,
+        }
+      },
     },
   })
-
   followRes.follow(followResNo)
 })
