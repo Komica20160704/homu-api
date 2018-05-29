@@ -5,6 +5,11 @@ module AppHelpers
     settings.env == 'production'
   end
 
+  def homu_api_url
+    return 'https://homu.homu-api.com/' if production?
+    'https://api-homu.dev/'
+  end
+
   def vue_js_url
     @vue_js_url ||= begin
       return 'vue.min.js' if production?

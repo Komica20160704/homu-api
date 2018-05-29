@@ -26,8 +26,8 @@ module ViewHelpers
   def css_tag(css)
     url = css_url css
     title = css.split('.').first
-    "<link rel=\"stylesheet\" type=\"text/css\" \
-data-title=\"#{title}\" href=\"#{url}\">"
+    '<link rel="stylesheet" type="text/css" ' \
+    "data-title=\"#{title}\" href=\"#{url}\">"
   end
 
   def css_timestamp(css)

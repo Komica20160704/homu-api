@@ -1,3 +1,4 @@
+
 <html>
   <head>
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
@@ -19,6 +20,7 @@
     <%= js_tag 'jquery-2.2.3.min.js' %>
     <%= js_tag 'underscore-min.js' %>
     <%= js_tag vue_js_url %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js" integrity="sha256-L3S3EDEk31HcLA5C6T2ovHvOcD80+fgqaCDt2BAi92o=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/locale/zh-tw.js" integrity="sha256-go7Ghdg6dyr6iLFnj4zB0pRvjmKbqZBwEJolBVMkgMI=" crossorigin="anonymous"></script>
     <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
@@ -43,7 +45,7 @@
       </div>
       <div class="head_btn">
         <span>[<a href="https://ram.komica2.net/00/index.htm" target="_top">回綜合</a>]</span>
-        <span>[<a href="https://homu.homu-api.com/" target="_top">HomuAPI</a>]</span>
+        <span>[<a href="<%= homu_api_url %>" target="_top" id="homu-api-link">HomuAPI</a>]</span>
         <span>[<a href="/report" target="_top">留言</a>]</span>
         <span>[<a href="https://github.com/Komica20160704/homu-api" target="_blank"><i class="fa fa-github" style="color:<% if cookies[:dark] %>white<% else %>black<% end %>;" aria-hidden="true"></i></a>]</span>
         <span>[<a href="https://japariman.herokuapp.com/" target="_blank"><img src="/japariman<%= '-white' if cookies[:dark] %>.svg" class="japariman"></a>]</span>

@@ -29,21 +29,18 @@ new Vue({
     beforeSearch: function() {
       this.loading = true
     },
-    searchSuccess: function(data) {
+    searchSuccess: function(response) {
+      var data = response.data
       this.blocks = data.map(this.transferBlock)
     },
     afterSearch: function() {
       this.loading = false
     },
     searchAjax: function(data) {
-      $.ajax({
-        method: 'GET',
-        url: 'https://api-homu.dev/posts',
-        data: data,
-        beforeSend: this.beforeSearch,
-        success: this.searchSuccess,
-        complete: this.afterSearch,
-      })
+      this.beforeSearch()
+      axios.get(document.getElementById('homu-api-link').href + '/posts', data)
+        .then(this.searchSuccess)
+        .then(this.afterSearch)
     },
     transferBlock: function(block) {
       block.postAt = block.post_at
