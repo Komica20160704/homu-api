@@ -11,8 +11,7 @@ new Vue({
     var query = url.searchParams.get('id')
     if (query) {
       this.query = query
-      var data = { id: query }
-      this.searchAjax(data)
+      this.searchAjax()
     }
   },
   methods: {
@@ -24,21 +23,22 @@ new Vue({
       var data = { id: this.query }
       var replaceUrl = '/search?' + $.param(data)
       window.history.pushState(data, document.title, replaceUrl)
-      this.searchAjax(data)
+      this.searchAjax()
     },
     beforeSearch: function() {
       this.loading = true
     },
     searchSuccess: function(response) {
+      console.log(response)
       var data = response.data
       this.blocks = data.map(this.transferBlock)
     },
     afterSearch: function() {
       this.loading = false
     },
-    searchAjax: function(data) {
+    searchAjax: function() {
       this.beforeSearch()
-      axios.get(document.getElementById('homu-api-link').href + '/posts', data)
+      axios.get(document.getElementById('homu-api-link').href + 'posts?id=' + this.query)
         .then(this.searchSuccess)
         .then(this.afterSearch)
     },
