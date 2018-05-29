@@ -60,7 +60,7 @@ $(document).ready(function() {
         })
       },
       receivedNotify: function(block) {
-        this.Bodies.push(this.transferBlock(block))
+        this.bodies.push(this.transferBlock(block))
         if (this.sound) {
           responsiveVoice.speak('You got message!')
         }
@@ -70,7 +70,7 @@ $(document).ready(function() {
           id: block.Id,
           title: block.Title,
           name: block.Name,
-          postAt: '20' + block.Date.replace(/\//g, '-') + ' ' + block.Time,
+          postAt: block.Date.replace(/\//g, '-') + ' ' + block.Time,
           number: block.No,
           content: block.Content,
           picture: block.Picture,
