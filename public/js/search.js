@@ -29,7 +29,6 @@ new Vue({
       this.loading = true
     },
     searchSuccess: function(response) {
-      console.log(response)
       var data = response.data
       this.blocks = data.map(this.transferBlock)
     },

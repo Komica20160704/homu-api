@@ -48,11 +48,11 @@ module HomuApi
 
     def call(env)
       if Faye::WebSocket.websocket?(env)
-        @ws = Faye::WebSocket.new(env, nil, ping: KEEPALIVE_TIME)
-        on_open
-        on_message
-        on_close
-        @ws.rack_response
+        ws = Faye::WebSocket.new(env, nil, ping: KEEPALIVE_TIME)
+        on_open(ws)
+        on_message(ws)
+        on_close(ws)
+        ws.rack_response
       else
         env['WsClientCount'] = @clients.size
         @app.call(env)
@@ -61,30 +61,30 @@ module HomuApi
 
     private
 
-    def on_open
-      @ws.on :open do |_event|
-        @clients << @ws
-        @ws.send @data.to_json
+    def on_open(ws)
+      ws.on :open do |_event|
+        @clients << ws
+        ws.send @data.to_json
       end
     end
 
-    def on_message
-      @ws.on :message do |event|
+    def on_message(ws)
+      ws.on :message do |event|
         data = JSON.parse(event.data)
         if data['Event'] == 'Send'
           @clients.each { |client| client.send(event.data) }
         elsif data['Event'] == 'KeepAlive'
-          next if @clients.include?(@ws)
-          @ws.close
-          @ws = nil
+          next if @clients.include?(ws)
+          ws.close
+          ws = nil
         end
       end
     end
 
-    def on_close
-      @ws.on :close do |_event|
-        @clients.delete(@ws)
-        @ws = nil
+    def on_close(ws)
+      ws.on :close do |_event|
+        @clients.delete(ws)
+        ws = nil
       end
     end
   end
