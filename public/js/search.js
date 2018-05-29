@@ -2,22 +2,19 @@ new Vue({
   el: '#search',
   data: {
     loading: false,
+    prevQuery: null,
     query: '',
     blockType: 'full',
     blocks: [],
   },
   mounted: function() {
-    var url = new URL(location)
-    var query = url.searchParams.get('id')
-    if (query) {
-      this.query = query
-      this.searchAjax()
-    }
+    window.onpopstate = this.reSearchAjax
+    this.reSearchAjax()
   },
   methods: {
     search: function(event) {
       event.preventDefault()
-      if (!this.query) {
+      if (!this.query || this.query == this.prevQuery) {
         return
       }
       var data = { id: this.query }
@@ -34,12 +31,21 @@ new Vue({
     },
     afterSearch: function() {
       this.loading = false
+      this.prevQuery = this.query
     },
     searchAjax: function() {
       this.beforeSearch()
       axios.get(document.getElementById('homu-api-link').href + 'posts?id=' + this.query)
         .then(this.searchSuccess)
         .then(this.afterSearch)
+    },
+    reSearchAjax: function() {
+      var url = new URL(location)
+      var query = url.searchParams.get('id')
+      if (query && this.query != query) {
+        this.query = query
+        this.searchAjax()
+      }
     },
     transferBlock: function(block) {
       block.postAt = block.post_at
