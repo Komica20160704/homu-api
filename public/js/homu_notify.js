@@ -1,7 +1,6 @@
 var isSSL = location.protocol == 'https:';
 var index = 0;
 var isClosed = false;
-var followingHeadNo = null;
 var block_list = [];
 var komica = 'https://sora.komica.org';
 var image_host = '//ram.komica2.net';
@@ -132,14 +131,14 @@ function receivedNotify(data) {
     var id = index++;
     html = createDialog(id, e, heads) + html;
     id_list.push("#dialog" + id);
-    if (e.HeadNo == followingHeadNo) {
-      followRes.receivedNotify(e);
-    }
   });
-  $("#block-container")[0].innerHTML = html + $("#block-container")[0].innerHTML;
-  if (data.Type == 'Notify') {
+  var element = $(html);
+  if (data.Type === 'Notify') {
+    element.hide();
+  }
+  $("#block-container").prepend(element);
+  if (data.Type === 'Notify') {
     id_list.forEach(function(e, i) {
-      $(e).hide();
       setTimeout(function() {
         $(e).fadeIn();
       }, i * 500);
