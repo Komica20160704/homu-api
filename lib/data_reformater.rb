@@ -18,8 +18,8 @@ class DataReformater
   def perform_data
     @data.each do |dialog|
       head_no = dialog['Head']['No']
-      if dialog['Head']['Hidenbodycount']
-        dialog['Head']['Count'] = dialog['Head'].delete 'Hidenbodycount'
+      if dialog['Head']['HiddenBodyCount']
+        dialog['Head']['Count'] = dialog['Head'].delete 'HiddenBodyCount'
       end
       new_dialog = [dialog['Head']] + dialog['Bodies']
       new_dialog.each { |block| block['HeadNo'] = head_no }
