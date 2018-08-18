@@ -80,7 +80,7 @@ function setTooLongContent(id, lines) {
   var visiable = lines.splice(0, 4)
   var showButton = $('<a>').attr('id', 'dialog_show_button' + id)
   showButton.attr('onclick', 'showHideContent(' + id + ')')
-  showButton.attr('href', '#dialog_show_button' + id)
+  showButton.attr('href', 'javascript:void(0)')
   showButton.text('顯示完整內容')
   var unvisiable = $('<span>').attr('id', 'dialog_hide_content' + id)
   unvisiable.append(lines)
