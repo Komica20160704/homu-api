@@ -56,6 +56,12 @@
           <i class="fa fa-times" style="cursor: pointer;"></i>
           <script>
             $('#support_hatobatsugu').show()
+            $('#support_hatobatsugu a').click(function() {
+              gtag('event', 'support_hatobatsugu', {
+                event_category: 'support',
+                value: 'hatobatsugu',
+              })
+            })
             $('#support_hatobatsugu .fa.fa-times').click(function() { $('#new_host').remove() })
           </script>
         </div>
