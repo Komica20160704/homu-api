@@ -25,7 +25,10 @@ module HomuApi
     end
 
     before do
-      redirect to(homu_url), 301 unless request.url.start_with? homu_url
+      uri = URI homu_url
+      if request.host != uri.host
+        redirect to(uri.host), 301
+      end
     end
 
     get '/css/:style.css' do |style|
