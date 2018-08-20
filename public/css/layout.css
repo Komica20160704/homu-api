@@ -52,7 +52,7 @@ h1.title > a {
   height: 20px;
 }
 
-#new_host {
+.banner {
   display: none;
   z-index: 100;
   padding: 5px;
@@ -60,6 +60,10 @@ h1.title > a {
   position: fixed;
   left: 20px;
   top: 10px;
+}
+
+#new_host + #support_hatobatsugu {
+  top: 50px;
 }
 
 .main {
@@ -77,14 +81,14 @@ h1.title > a {
     background-size: contain;
   }
 
-  #new_host {
+  .banner {
     position: sticky;
     top: 0;
     left: 0;
     right: 0;
   }
 
-  #new_host .fa-times {
+  .banner .fa-times {
     float: right;
     line-height: 22px;
     font-size: 1.33333333em;

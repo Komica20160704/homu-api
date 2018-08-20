@@ -34,14 +34,30 @@
   </head>
   <body class="theme" style='background-image: url("<%= bg %>");'>
     <div class="head_bar">
-      <div id="new_host">
-        本站新網址
-        <a href="https://www.homu-api.com/">https://www.homu-api.com/</a>
-        <i class="fa fa-times" style="cursor: pointer;"></i>
-        <script>
-          if (location.host != 'www.homu-api.com') { $('#new_host').show() }
-          $('#new_host .fa.fa-times').click(function() { $('#new_host').hide() })
-        </script>
+      <div class="banners">
+        <div id="new_host" class="banner">
+          本站新網址
+          <a href="https://www.homu-api.com/">https://www.homu-api.com/</a>
+          <i class="fa fa-times" style="cursor: pointer;"></i>
+          <script>
+            if (location.host != 'www.homu-api.com')
+              $('#new_host').show()
+            else
+              $('#new_host').remove()
+            $('#new_host .fa.fa-times').click(function() { $('#new_host').remove() })
+          </script>
+        </div>
+        <div id="support_hatobatsugu" class="banner">
+          <i class="fa fa-star"></i>
+          <a target="_blank" href="https://camp-fire.jp/projects/view/89857?utm_source=https%3A%2F%2Fwww.homu-api.com%2Fhatobatsugu%3Fforce%3Dtrue&utm_medium=banner&utm_campaign=support_hatobatsugu">
+            鳩羽つぐ 夏休み (30分映像)
+          </a>
+          <i class="fa fa-times" style="cursor: pointer;"></i>
+          <script>
+            $('#support_hatobatsugu').show()
+            $('#support_hatobatsugu .fa.fa-times').click(function() { $('#new_host').remove() })
+          </script>
+        </div>
       </div>
       <div class="head_btn">
         <span>[<a href="https://sora.komica.org/00/index.htm" target="_top">回綜合</a>]</span>
