@@ -5,6 +5,15 @@ module AppHelpers
     settings.env == 'production'
   end
 
+  def token
+    md5 = Digest::MD5.new
+    secret = ENV['SECRET'].to_s
+    today = Time.now.strftime '%Y/%m/%d'
+    ip = request.ip.to_s
+    md5 << secret << today << ip
+    md5.hexdigest[9..16]
+  end
+
   def homu_url
     return 'https://www.homu-api.com' if production?
     'https://homu-api.dev'
