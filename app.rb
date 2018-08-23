@@ -27,7 +27,8 @@ module HomuApi
     before do
       uri = URI homu_url
       if request.host != uri.host
-        redirect to(uri.host), 301
+        uri.scheme = request.scheme
+        redirect uri, 301
       end
     end
 
