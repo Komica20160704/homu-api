@@ -43,7 +43,7 @@ h1.title > a {
   margin-right: 64px;
 }
 
-.head_btn a[href="https://japariman.herokuapp.com/"] {
+.head_btn a[href="https://japariman.homu-api.com/"] {
   display: inline-flex;
   vertical-align: sub;
 }
