@@ -1,9 +1,18 @@
-<div id="search" class="block-container">
+<div id="search" class="block-container" style="display: none;">
   <div class="nav" style="padding-left: 10px; margin-bottom: 10px;">
     <form v-on:submit.prevent="search">
-      搜尋ID:
-      <input type="text" size="30" v-model="query">
-      <input type="submit" value="搜尋">
+      <span>
+        搜尋:
+        <input type="text" size="30" v-model="query">
+        <input type="submit" v-on:click="searchBy" value="搜尋ID" data-key="id">
+      </span>
+      <span v-if="!token">
+        <input v-on:click="advSearch" type="button" value="進階搜尋">
+      </span>
+      <span v-else>
+        <input type="submit" v-on:click="searchBy" value="搜尋編號" data-key="number">
+        <input type="submit" v-on:click="searchBy" value="搜尋串" data-key="head_number">
+      </span>
     </form>
   </div>
   <div v-if="loading" style="text-align: center;">
@@ -16,8 +25,30 @@
     :type="blockType"
     :key="block.number"
     :block="block"
-  />
+  ></block>
+  <div v-if="totalPages > 1" class="dialog">
+    <button v-on:click="prevsPage" v-if="currentPage !== 1">
+      上一頁
+    </button>
+    <span v-for="n in totalPages">
+      <span v-if="Math.abs(n - currentPage) <= 4 || n === 0 || n === totalPages">
+        <span v-if="n === currentPage">
+          [<b>{{ n }}</b>]
+        </span>
+        <span v-else>
+          [<a v-on:click="changePage(n)" href="javascript:void(0)">{{ n }}</a>]
+        </span>
+      </span>
+    </span>
+    <button v-on:click="nextPage" v-if="currentPage !== totalPages">
+      下一頁
+    </button>
+  </div>
 </div>
+<script>
+  var japariman = '<%= japariman_url %>/harau/rhxr_rTftd4M-cHUCYSuZQ/'
+  var token = <%= token.to_json %>
+</script>
 
 <%= erb :'component/block' %>
 <%= js_tag 'search.js' %>

@@ -24,6 +24,10 @@ module AppHelpers
     'https://api-homu.dev'
   end
 
+  def japariman_url
+    'https://japariman.homu-api.com/'
+  end
+
   def vue_js_url
     @vue_js_url ||= begin
       return 'vue.min.js' if production?

@@ -16,6 +16,8 @@ require './lib/view_helpers'
 module HomuApi
   class App < Sinatra::Base
     set :env, ENV['RACK_ENV']
+    set :sabisu_id, ENV['SABISU_ID'].to_i
+    set :sabisu_key, ENV['SABISU_KEY'].to_s
     helpers Sinatra::Cookies
     helpers AppHelpers
     helpers ViewHelpers
@@ -58,7 +60,12 @@ module HomuApi
     end
 
     get '/search' do
-      view_erb :search
+      payload = {
+        id: ENV['SABISU_ID'].to_i,
+        redirect: "#{homu_api_url}/done"
+      }
+      token = JWT.encode payload, settings.sabisu_key, 'HS256'
+      view_erb :search, locals: { token: token }
     end
 
     get '/' do
