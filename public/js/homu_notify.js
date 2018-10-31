@@ -34,7 +34,7 @@ function setupMessage(id, block, heads) {
   var html = '<div class="message">';
   var follow = ' [<a href="./follow/' + block.HeadNo + '" target="_blank">追蹤</a>]';
   if (block.No == block.HeadNo) {
-    html += block.Id + '發表了一篇';
+    html += (block.Id || '') + '發表了一篇';
     html += '<a href = "' + url + '" target = "_blank"><b>新文章</b></a>';
     html += follow;
   } else {
@@ -44,14 +44,14 @@ function setupMessage(id, block, heads) {
         head = e;
       }
     });
-    html += block.Id + '回應了';
-    if (head.Id == block.Id) {
+    html += (block.Id || '') + '回應了';
+    if (head.Id && block.Id && head.Id == block.Id) {
       html += '自己的';
     }
     html += '<a href = "' + url + '" target = "_blank"><b>討論串</b></a>';
     html += follow;
     html += '<div class="head_block">';
-    html += '>>No.' + head.No + ' ID:' + head.Id + ': '
+    html += '>>No.' + head.No + (head.Id ? ' ID:' + head.Id : '') + ': '
     html += head.Content.split('\n').join(' ') + '</div>';
   }
   html += '</div>';
@@ -62,7 +62,7 @@ function setupData(id, block) {
   var then = new Date("20" + block.Date);
   var theday = then.getDay();
   var date_time = block.Date + "(" + weekday[theday] + ")" + block.Time;
-  var id_no = " ID:" + block.Id + " No." + block.No;
+  var id_no = (block.Id ? ' ID:' + block.Id : '') + " No." + block.No;
   var html = '<hr class="split-line"><div>'
   html += '<font class="title" size="+1"><b>' + block.Title + '</b></font>';
   html += ' <font class="name"><b>' + block.Name + '</b></font>';

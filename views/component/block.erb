@@ -18,7 +18,7 @@
       <span class="title"><b>{{ block.title }}</b></span>
       <span class="name"><b>{{ block.name }}</b></span>
       {{ timestamp() }}
-      ID:{{ block.id }}
+      <span v-if="block.id">ID:{{ block.id }}</span>
       No.{{ block.number }}
     </div>
     <div v-if="isWebm()" class="dialog-img-link" target="_blank"
