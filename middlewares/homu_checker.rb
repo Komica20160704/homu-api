@@ -40,7 +40,8 @@ module HomuApi
 
     def query_data
       data = JSON.parse(HomuGetter.get_page)
-      reform_data data
+      reformater = DataReformater.new(data)
+      reformater.perform
     end
 
     def check(data)
@@ -57,11 +58,6 @@ module HomuApi
       @last_block_no = block['No']
       new_data['Heads'] << head_hash[block['HeadNo']]
       new_data['Blocks'] << block
-    end
-
-    def reform_data(data)
-      reformater = DataReformater.new(data)
-      reformater.perform
     end
   end
 end

@@ -4,7 +4,7 @@ class DataReformater
   def initialize(data)
     @head_hash = {}
     @blocks = []
-    @data = data
+    @data = data || []
   end
 
   def perform

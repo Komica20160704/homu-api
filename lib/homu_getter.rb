@@ -14,7 +14,7 @@ module HomuApi
       puts '[ERROR] HomuApi::HomuGetter.get_page'
       puts e.message
       puts e.backtrace
-      '{}'
+      'null'
     end
 
     def self.get_res(res)
@@ -24,7 +24,7 @@ module HomuApi
       puts '[ERROR] HomuApi::HomuGetter.get_res'
       puts e.message
       puts e.backtrace
-      '{}'
+      'null'
     end
   end
 end
