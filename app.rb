@@ -60,12 +60,13 @@ module HomuApi
     end
 
     get '/search' do
-      payload = {
-        id: ENV['SABISU_ID'].to_i,
-        redirect: "#{homu_api_url}/done"
-      }
-      token = JWT.encode payload, settings.sabisu_key, 'HS256'
-      view_erb :search, locals: { token: token }
+      # payload = {
+      #   id: ENV['SABISU_ID'].to_i,
+      #   redirect: "#{homu_api_url}/done"
+      # }
+      # token = JWT.encode payload, settings.sabisu_key, 'HS256'
+      # view_erb :search, locals: { token: token }
+      view_erb :no_search
     end
 
     get '/' do
