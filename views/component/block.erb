@@ -1,17 +1,22 @@
 <script type="text/template" id="block-template">
   <div :class="className">
-    <div v-if="!isFull" class="message"></div>
-    <div v-else-if="isHead" class="message">
-      {{ block.id }}發表了一篇<a :href="headLink" target="_blank">新文章</a>
-      [<a :href="followLink" target="_blank">追蹤</a>]
-    </div>
-    <div v-else-if="isSelf" class="message">
-      {{ block.id }}回應了自己的<a :href="headLink" target="_blank">討論串</a>
-      [<a :href="followLink" target="_blank">追蹤</a>]
-    </div>
-    <div v-else class="message">
-      {{ block.id }}回應了<a :href="headLink" target="_blank">討論串</a>
-      [<a :href="followLink" target="_blank">追蹤</a>]
+    <div class="message">
+      <template v-if="!isFull"></template>
+      <template v-else-if="isHead">
+        {{ block.id }}發表了一篇<b><a :href="headLink" target="_blank">新文章</a></b>
+        [<a :href="followLink" target="_blank">追蹤</a>]
+      </template>
+      <template v-else-if="isSelf">
+        {{ block.id }}回應了自己的<b><a :href="headLink" target="_blank">討論串</a></b>
+        [<a :href="followLink" target="_blank">追蹤</a>]
+      </template>
+      <template v-else>
+        {{ block.id }}回應了<b><a :href="headLink" target="_blank">討論串</a></b>
+        [<a :href="followLink" target="_blank">追蹤</a>]
+      </template>
+      <div v-if="!isHead && block.headContent" class="head-block">
+        &gt;&gt;{{ block.headNumber }} {{ block.headId }}: {{ block.headContent.split('\n')[0] }}
+      </div>
     </div>
     <hr v-if="isFull" class="split-line">
     <div>
@@ -35,9 +40,19 @@
       <img class="dialog-img small"/>
     </div>
     <div class="content">
-      <div v-for="line in block.content.split('\n')" :class="lineClass(line)">
-        {{ line }}
-      </div>
+      <template v-if="expanded || lines.length <= 6">
+        <div v-for="line in lines" :class="lineClass(line)">
+          {{ line }}
+        </div>
+      </template>
+      <template v-else>
+        <div v-for="line in lines.slice(0, 4)" :class="lineClass(line)">
+          {{ line }}
+        </div>
+        <a href="javascript:void(0)" @click="expandContent">
+          顯示完整內容
+        </a>
+      </template>
     </div>
   </div>
 </script>
@@ -54,6 +69,10 @@
         type: Boolean,
         default: false,
       },
+      expand: {
+        type: Boolean,
+        default: true,
+      },
       block: {
         type: Object,
         required: true,
@@ -66,13 +85,18 @@
         isHead: isHead,
         isFull: this.type == 'full',
         headLink: Block.headUrl + this.block.headNumber,
-        followLink: '/follow/' + this.block.headNumber
+        followLink: '/follow/' + this.block.headNumber,
+        lines: this.block.content.split('\n'),
+        expanded: this.expand,
       }
     },
     created: function() {
       this.hasPicture = !!this.block.picture
     },
     methods: {
+      expandContent: function() {
+        this.expanded = true
+      },
       isWebm: function() {
         if (this.hasPicture) {
           return this.block.picture.split('.')[1] == 'webm'
