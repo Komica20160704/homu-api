@@ -75,7 +75,7 @@
   border-bottom-width: 0;
 }
 
-.head_block {
+.head-block {
   float: right;
   overflow: hidden;
   max-width: 400px;
@@ -129,8 +129,8 @@
     width: auto;
   }
 
-  .head_block {
+  .head-block {
     max-width: 100%;
-    float: left;
+    float: none;
   }
 }
