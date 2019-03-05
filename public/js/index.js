@@ -27,28 +27,37 @@ $(document).ready(function() {
     ws = new WebSocket(uri)
     ws.onmessage = function(message) {
       var data = JSON.parse(message.data)
-      if (data.Type == 'Notify' || (data.Type == 'Cache' && !isCached)) {
+      var isCache = data.Type == 'Cache' && !isCached
+      if (data.Type == 'Notify' || isCache) {
         receivedNotify(data)
+      }
+      if (isCache) {
+        app.loaded()
       }
     }
   }
 
-  startWebSocket(uri)
-  setInterval(function() {
-    if (ws.readyState == ws.OPEN) {
-      ws.send(JSON.stringify({ Event: 'KeepAlive' }))
-    } else {
-      startWebSocket(uri)
-    }
-  }, 10000)
-
   app = new Vue({
     el: '#app',
     data: {
+      loading: true,
       blockType: 'full',
       blocks: [],
     },
+    mounted: function() {
+      startWebSocket(uri)
+      setInterval(function() {
+        if (ws.readyState == ws.OPEN) {
+          ws.send(JSON.stringify({ Event: 'KeepAlive' }))
+        } else {
+          startWebSocket(uri)
+        }
+      }, 10000)
+    },
     methods: {
+      loaded: function() {
+        this.loading = false
+      },
       receivedBlock: function(block) {
         this.blocks.unshift(this.transferBlock(block))
       },

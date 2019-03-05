@@ -1,8 +1,5 @@
-html {
-  width: 99%;
-}
-
 body {
+  margin: 0;
   width: 100%;
   background-color: rgb(255, 255, 238);
   color: rgb(128, 0, 0);
@@ -73,10 +70,6 @@ h1.title > a {
 }
 
 @media only screen and (max-width: 768px) {
-  html {
-    width: 100vw;
-  }
-
   body {
     margin: 0;
     background-size: contain;
