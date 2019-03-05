@@ -131,7 +131,7 @@ new Vue({
     }
   },
   mounted: function() {
-    this.$el.style.display = 'inherit'
+    this.$el.style.display = null
     window.onpopstate = this.reSearchAjax
     this.token = localStorage.getItem('token')
     if (!history.state) {

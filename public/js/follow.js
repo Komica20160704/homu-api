@@ -5,7 +5,6 @@ if (location.protocol == 'http:') {
 }
 var uri = scheme + window.document.location.host + '/'
 var ws = null
-var isCached = false
 
 function receivedNotify(data) {
   var blocks = data.Blocks
