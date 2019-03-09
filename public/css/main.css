@@ -13,6 +13,19 @@
   background-color: transparent;
 }
 
+.dialog.fade-in {
+  animation: fadeIn .5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .dialog .message {
   margin-top: 8;
   margin-left: 8;

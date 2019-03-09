@@ -73,6 +73,10 @@
         type: Boolean,
         default: true,
       },
+      fadeIn: {
+        type: Boolean,
+        default: false,
+      },
       block: {
         type: Object,
         required: true,
@@ -80,8 +84,15 @@
     },
     data: function() {
       var isHead = this.block.headNumber == this.block.number
+      var className = ['dialog']
+      if (isHead) {
+        className.push('head')
+      }
+      if (this.fadeIn) {
+        className.push('fade-in')
+      }
       return {
-        className: isHead ? 'dialog head' : 'dialog',
+        className: className.join(' '),
         isHead: isHead,
         isFull: this.type == 'full',
         headLink: Block.headUrl + this.block.headNumber,
