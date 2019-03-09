@@ -59,7 +59,11 @@ $(document).ready(function() {
         this.loading = false
       },
       receivedBlock: function(block) {
-        this.blocks.unshift(this.transferBlock(block))
+        var blocks = this.blocks
+        blocks.unshift(this.transferBlock(block))
+        if (blocks.length > 100) {
+          this.blocks.pop()
+        }
       },
       transferBlock: function(block) {
         return {
